@@ -3,10 +3,11 @@
 ## 👥 Miembros del Equipo
 | Nombre y Apellidos | Correo URJC | Usuario GitHub |
 |:--- |:--- |:--- |
-| [Nombre 1] | [email1]@alumnos.urjc.es | [User1] |
-| [Nombre 2] | [email2]@alumnos.urjc.es | [User2] |
-| [Nombre 3] | [email3]@alumnos.urjc.es | [User3] |
-| [Nombre 4] | [email4]@alumnos.urjc.es | [User4] |
+| Mario | m.delcastillo.2023@alumnos.urjc.es | mdc1000 |
+| Javier | j.simon.2023@alumnos.urjc.es | javierSimc |
+| Adrián Varea Fernández | a.varea.2023@alumnos.urjc.es | blodresg |
+| Álvaro Gómez-Pimpollo García | al.gomezpimpoll.2023@alumnos.urjc.es | algomezpimpoll |
+| Adrián Villalba Cuello de Oro | a.villalba.2023@alumnos.urjc.es| AdrianVillalba26 |
 
 ---
 
