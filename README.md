@@ -3,8 +3,8 @@
 ## 👥 Miembros del Equipo
 | Nombre y Apellidos | Correo URJC | Usuario GitHub |
 |:--- |:--- |:--- |
-| Mario | m.delcastillo.2023@alumnos.urjc.es | mdc1000 |
-| Javier | j.simon.2023@alumnos.urjc.es | javierSimc |
+| Mario del Castillo Gómez | m.delcastillo.2023@alumnos.urjc.es | mdc1000 |
+| Javier Simón Clemente | j.simon.2023@alumnos.urjc.es | javierSimc |
 | Adrián Varea Fernández | a.varea.2023@alumnos.urjc.es | blodresg |
 | Álvaro Gómez-Pimpollo García | al.gomezpimpoll.2023@alumnos.urjc.es | algomezpimpoll |
 | Adrián Villalba Cuello de Oro | a.villalba.2023@alumnos.urjc.es| AdrianVillalba26 |
@@ -14,48 +14,49 @@
 ## 🎭 **Preparación 1: Definición del Proyecto**
 
 ### **Descripción del Tema**
-[Escribe aquí una descripción breve y concisa de qué trata tu aplicación, el sector al que pertenece y qué valor aporta al usuario].
+Nuestra aplicación es un simulador de carreras de canicas. La idea es sencilla: cada administrador y cada usuario registrado posee una canica, con la que puede competir en carreras que ocurren en intervalos de tiempo definidos (una ronda de carreras cada 5 minutos, por ejemplo). Cada participante de la carrera puede ver en tiempo real la posición de cada canica y el porcentaje de recorrido completado. Todos usuarios tienen acceso a un ranking global que muestra a los usuarios con más victorias/podios/puntos hasta el momento. Es posible que se añada una funcionalidad con la que los usuarios registrados puedan apostar dinero o puntos en carreras antes de que empiecen (pendiente de discusión).
 
 ### **Entidades**
-Indicar las entidades principales que gestionará la aplicación y las relaciones entre ellas:
+1. **Perfil de Usuario**: Contiene un nombre y una contraseña asociada para poder registrarse. También contiene una imagen, su canica y una cifra de victorias y/o participaciones.
+2. **Canica**: Una por usuario. Tiene nombre e imagen (la de su usuario).
+3. **Carrera**: Almacena las canicas (y/o usuarios) participantes y se autogestiona haciendo cálculos con números aleatorios para ver cuánto avanza cada canica en cada momento.
+4. **Ranking**: Se actualiza tras cada carrera. Contiene solo aquellos usuarios que hayan quedado en posiciones que puntúan, organizados de forma que aquellos con más puntos totales estén más altos.
 
-1. **[Entidad 1]**: [Ej: Usuario]
-2. **[Entidad 2]**: [Ej: Producto]
-3. **[Entidad 3]**: [Ej: Pedido]
-4. **[Entidad 4]**: [Ej: Categoría]
+**>>>>> Por motivos de claridad, se asume que "Perfil de Usuario" y "Usuario" hacen referencia a la misma entidad. <<<<<**
 
 **Relaciones entre entidades:**
-- [Ej: Usuario - Pedido: Un usuario puede tener múltiples pedidos (1:N)]
-- [Ej: Pedido - Producto: Un pedido puede contener múltiples productos y un producto puede estar en múltiples pedidos (N:M)]
-- [Ej: Producto - Categoría: Un producto pertenece a una categoría (N:1)]
+- Usuario - Canica: Un usuario tiene una canica (1:1).
+- Canica - Carrera: Una canica puede participar en varias carreras, y una carrera contiene varias canicas (N:M).
+- Ranking - Usuario: El ranking contiene varios usuarios, pero un usuario no tiene por qué estar en el ranking (N:0).
 - [Descripción de otras relaciones relevantes]
 
 ### **Permisos de los Usuarios**
 Describir los permisos de cada tipo de usuario e indicar de qué entidades es dueño:
 
 * **Usuario Anónimo**: 
-  - Permisos: [Ej: Visualización de catálogo, búsqueda de productos, registro]
-  - No es dueño de ninguna entidad
+  - Permisos: Visualización del ranking global, registro.
+  - No es dueño de ninguna entidad.
 
 * **Usuario Registrado**: 
-  - Permisos: [Ej: Gestión de perfil, realizar pedidos, crear valoraciones]
-  - Es dueño de: [Ej: Sus propios Pedidos, su Perfil de Usuario, sus Valoraciones]
+  - Permisos: Gestión de perfil, gestión de canica, visualización del ranking global.
+  - Es dueño de: Su canica, su propio perfil de usuario.
 
 * **Administrador**: 
-  - Permisos: [Ej: Gestión completa de productos (CRUD), visualización de estadísticas, moderación de contenido]
-  - Es dueño de: [Ej: Productos, Categorías, puede gestionar todos los Pedidos y Usuarios]
+  - Permisos: Gestión completa de usuarios registrados y de sus canicas y perfiles, modificación del algoritmo de las carreras, gestión del ranking global, visualización de estadísticas.
+  - Es dueño de: Su canica, su propio perfil de usuario. (¿Quizá incluir Carrera y Ranking?)
 
 ### **Imágenes**
 Indicar qué entidades tendrán asociadas una o varias imágenes:
 
-- **[Entidad con imágenes 1]**: [Ej: Usuario - Una imagen de avatar por usuario]
-- **[Entidad con imágenes 2]**: [Ej: Producto - Múltiples imágenes por producto (galería)]
-- **[Entidad con imágenes 3]**: [Ej: Categoría - Una imagen representativa por categoría]
+- **Usuario**: Una imagen de avatar por usuario.
+- **Canica**: Una imagen por canica (la de su usuario).
+- **Carrera**: Múltiples imágenes por carrera (las de las canicas de los usuarios participantes).
+- **Ranking**: Múltiples imágenes (una por cada usuario mostrado).
 
 ### **Gráficos**
 Indicar qué información se mostrará usando gráficos y de qué tipo serán:
 
-- **Gráfico 1**: [Ej: Ventas mensuales - Gráfico de barras]
+- **Clasificación de carrera**: Posición y porcentaje recorrido de cada canica - Gráfico de barras.
 - **Gráfico 2**: [Ej: Productos más vendidos - Gráfico de tarta/circular]
 - **Gráfico 3**: [Ej: Evolución de usuarios registrados - Gráfico de líneas]
 - **Gráfico 4**: [Ej: Distribución de pedidos por categoría - Gráfico de barras horizontales]
@@ -63,6 +64,7 @@ Indicar qué información se mostrará usando gráficos y de qué tipo serán:
 ### **Tecnología Complementaria**
 Indicar qué tecnología complementaria se empleará:
 
+- Websocket para avisos en tiempo real.
 - [Ej: Envío de correos electrónicos automáticos mediante JavaMailSender]
 - [Ej: Generación de PDFs de facturas usando iText o similar]
 - [Ej: Sistema de autenticación OAuth2 o JWT]
@@ -71,7 +73,7 @@ Indicar qué tecnología complementaria se empleará:
 ### **Algoritmo o Consulta Avanzada**
 Indicar cuál será el algoritmo o consulta avanzada que se implementará:
 
-- **Algoritmo/Consulta**: [Ej: Sistema de recomendaciones basado en el historial de compras del usuario]
+- **Algoritmo/Consulta**: Cálculo automático del ranking tras cada carrera.
 - **Descripción**: [Ej: Analiza los productos comprados previamente y sugiere productos similares o complementarios utilizando filtrado colaborativo]
 - **Alternativa**: [Ej: Consulta compleja que agrupe ventas por categoría, mes y región, con cálculo de tendencias]
 
