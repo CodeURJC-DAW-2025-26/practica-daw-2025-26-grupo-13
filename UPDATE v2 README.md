@@ -1,4 +1,4 @@
-# [Nombre de la Aplicación]
+# Marble Rush Arena
 
 ## 👥 Miembros del Equipo
 | Nombre y Apellidos | Correo URJC | Usuario GitHub |
@@ -14,7 +14,7 @@
 ## 🎭 **Preparación 1: Definición del Proyecto**
 
 ### **Descripción del Tema**
-Nuestra aplicación es un simulador de carreras de canicas. La idea es sencilla: cada administrador y cada usuario registrado posee una canica, con la que puede competir en carreras que ocurren en intervalos de tiempo definidos (una ronda de carreras cada 5 minutos, por ejemplo). Cada participante de la carrera puede ver en tiempo real la posición de cada canica y el porcentaje de recorrido completado. Todos usuarios tienen acceso a un ranking global que muestra a los usuarios con más victorias/podios/puntos hasta el momento. Es posible que se añada una funcionalidad con la que los usuarios registrados puedan apostar dinero o puntos en carreras antes de que empiecen (pendiente de discusión).
+Nuestra aplicación es un simulador de carreras de canicas. La idea es sencilla: cada administrador y cada usuario registrado posee una canica, con la que puede competir en carreras que ocurren en intervalos de tiempo definidos (una ronda de carreras cada 5 minutos, por ejemplo). Cada participante de la carrera puede ver en tiempo real la posición de cada canica y el porcentaje de recorrido completado. Todos los usuarios tienen acceso a un ranking global que muestra a los usuarios con más victorias/podios/puntos hasta el momento. Es posible que se añada una funcionalidad con la que los usuarios registrados puedan apostar dinero o puntos en carreras antes de que empiecen (pendiente de discusión).
 
 ### **Entidades**
 1. **Perfil de Usuario**: Contiene un nombre y una contraseña asociada para poder registrarse. También contiene una imagen, su canica y una cifra de victorias y/o participaciones.
@@ -43,13 +43,13 @@ Describir los permisos de cada tipo de usuario e indicar de qué entidades es du
 
 * **Administrador**: 
   - Permisos: Gestión completa de usuarios registrados y de sus canicas y perfiles, modificación del algoritmo de las carreras, gestión del ranking global, visualización de estadísticas.
-  - Es dueño de: Su canica, su propio perfil de usuario. (¿Quizá incluir Carrera y Ranking?)
+  - Es dueño de: Su canica, su propio perfil de usuario, las carreras y el ranking.
 
 ### **Imágenes**
 Indicar qué entidades tendrán asociadas una o varias imágenes:
 
 - **Usuario**: Una imagen de avatar por usuario.
-- **Canica**: Una imagen por canica (la de su usuario).
+- **Canica**: Una imagen por canica (distinta a la imagen de usuario).
 - **Carrera**: Múltiples imágenes por carrera (las de las canicas de los usuarios participantes).
 - **Ranking**: Múltiples imágenes (una por cada usuario mostrado).
 
@@ -57,25 +57,25 @@ Indicar qué entidades tendrán asociadas una o varias imágenes:
 Indicar qué información se mostrará usando gráficos y de qué tipo serán:
 
 - **Clasificación de carrera**: Posición y porcentaje recorrido de cada canica - Gráfico de barras.
-- **Gráfico 2**: [Ej: Productos más vendidos - Gráfico de tarta/circular]
-- **Gráfico 3**: [Ej: Evolución de usuarios registrados - Gráfico de líneas]
+- **Registro  de carreras ganadas y perdidas**: Cada usuario puede acceder a un gráfico propio que le indica las veces que ha ganado y que ha perdido - Gráfico de tarta / circular.
+- **Registro  de partidas por día**: Cada usuario puede acceder a un gráfico propio que le indica en cuántas carreras ha participado cada día - Gráfico de columnas.
 - **Gráfico 4**: [Ej: Distribución de pedidos por categoría - Gráfico de barras horizontales]
 
 ### **Tecnología Complementaria**
 Indicar qué tecnología complementaria se empleará:
 
 - Websocket para avisos en tiempo real.
-- [Ej: Envío de correos electrónicos automáticos mediante JavaMailSender]
-- [Ej: Generación de PDFs de facturas usando iText o similar]
-- [Ej: Sistema de autenticación OAuth2 o JWT]
+- JWT para autenticación de usuarios.
+- Librerías de gráficos y visualización para mostrar ranking, estadísticas y progreso de las carreras.
+- Base de datos relacional o no relacional (pendiente de discusión) para almacenar usuarios, canicas, carreras y ranking.
 - [Otras tecnologías externas que se integrarán]
 
 ### **Algoritmo o Consulta Avanzada**
 Indicar cuál será el algoritmo o consulta avanzada que se implementará:
 
 - **Algoritmo/Consulta**: Cálculo automático del ranking tras cada carrera.
-- **Descripción**: [Ej: Analiza los productos comprados previamente y sugiere productos similares o complementarios utilizando filtrado colaborativo]
-- **Alternativa**: [Ej: Consulta compleja que agrupe ventas por categoría, mes y región, con cálculo de tendencias]
+- **Descripción**: Asigna puntos a cada usuario según la posición final de su canica y actualiza el ranking global ordenando a los usuarios de mayor a menor puntuación.
+- **Alternativa**: Se puede hacer directamente con una consulta en la base de datos que sume los puntos de cada usuario y genere el ranking automáticamente.
 
 ---
 
