@@ -14,13 +14,16 @@
 ## 🎭 **Preparación 1: Definición del Proyecto**
 
 ### **Descripción del Tema**
-Nuestra aplicación es un simulador de carreras de canicas. La idea es sencilla: cada administrador y cada usuario registrado posee una canica, con la que puede competir en carreras que ocurren en intervalos de tiempo definidos (una ronda de carreras cada 5 minutos, por ejemplo). Cada participante de la carrera puede ver en tiempo real la posición de cada canica y el porcentaje de recorrido completado. Todos los usuarios tienen acceso a un ranking global que muestra a los usuarios con más victorias/podios/puntos hasta el momento. Es posible que se añada una funcionalidad con la que los usuarios registrados puedan apostar dinero o puntos en carreras antes de que empiecen (pendiente de discusión).
+Nuestra aplicación es un simulador de carreras de canicas. La idea es sencilla: cada administrador y cada usuario registrado posee una canica, con la que puede competir en carreras que ocurren en intervalos de tiempo definidos (una ronda de carreras cada 5 minutos, por ejemplo). Cada participante de la carrera puede ver en tiempo real la posición de cada canica y el porcentaje de recorrido completado. Todos los usuarios tienen acceso a un ranking global que muestra a los usuarios con más victorias/podios/puntos hasta el momento. 
+En esta aplicación los usuarios también pueden dejar reseñas o comentarios acerca de una liga que hayan visto, de manera que exista una funcionalidad en la aplicación que permita buscar una liga por categorías (mejor valoradas, más comentadas, entre otras).
+"Es posible que se añada una funcionalidad con la que los usuarios registrados puedan apostar dinero o puntos en carreras antes de que empiecen (pendiente de discusión)."
 
 ### **Entidades**
-1. **Perfil de Usuario**: Contiene un nombre y una contraseña asociada para poder registrarse. También contiene una imagen, su canica y una cifra de victorias y/o participaciones.
-2. **Canica**: Una por usuario. Tiene nombre e imagen (la de su usuario).
-3. **Carrera**: Almacena las canicas (y/o usuarios) participantes y se autogestiona haciendo cálculos con números aleatorios para ver cuánto avanza cada canica en cada momento.
-4. **Ranking**: Se actualiza tras cada carrera. Contiene solo aquellos usuarios que hayan quedado en posiciones que puntúan, organizados de forma que aquellos con más puntos totales estén más altos.
+1. **Perfil de Usuario**: Contiene un nombre y una contraseña asociada para poder registrarse. También contiene una imagen, su canica y una cifra de victorias y/o participaciones. Además, un usuario puede dejar comentarios o reseñas de una liga y puede tener como máximo 3 canicas, de las que podrá elegir una para participar en una liga o carrera.
+2. **Canica**: Una de las disponibles que tiene el usuario (máximo 3), que podrá usar en una carrera o liga. Tiene nombre, imagen/color (la de su usuario) y tamaño.
+3. **Carrera**: Almacena las canicas participantes (máximo 8) y se autogestiona haciendo cálculos con números aleatorios para ver cuánto avanza cada canica en cada momento.
+4. **Liga**: Contiene un conjunto determinado de carreras en las que pueden participar los mismos usuarios hasta que finalice la última carrera.
+5. 
 
 **>>>>> Por motivos de claridad, se asume que "Perfil de Usuario" y "Usuario" hacen referencia a la misma entidad. <<<<<**
 
