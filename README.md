@@ -14,47 +14,47 @@
 ## 🎭 **Preparación 1: Definición del Proyecto**
 
 ### **Descripción del Tema**
-Nuestra aplicación es un simulador de carreras de canicas. La idea es sencilla: cada administrador y cada usuario registrado posee una canica, con la que puede competir en carreras que ocurren en intervalos de tiempo definidos (una ronda de carreras cada 5 minutos, por ejemplo). Cada participante de la carrera puede ver en tiempo real la posición de cada canica y el porcentaje de recorrido completado. Todos los usuarios tienen acceso a un ranking global que muestra a los usuarios con más victorias/podios/puntos hasta el momento. 
-En esta aplicación los usuarios también pueden dejar reseñas o comentarios acerca de una liga que hayan visto, de manera que exista una funcionalidad en la aplicación que permita buscar una liga por categorías (mejor valoradas, más comentadas, entre otras).
-"Es posible que se añada una funcionalidad con la que los usuarios registrados puedan apostar dinero o puntos en carreras antes de que empiecen (pendiente de discusión)."
+Nuestra aplicación es un simulador de carreras de canicas. La idea es sencilla: Cada usuario registrado posee una o varias canicas, con la que puede competir en carreras que ocurren dentro de una serie de ligas. Cada participante de la carrera puede ver las posiciones finales de las carreras, junto a una puntuación. Todos los usuarios tienen acceso a un ranking global que muestra a los usuarios con más victorias/podios/puntos hasta el momento. 
+En esta aplicación los usuarios también pueden dejar reseñas o comentarios acerca de una liga que hayan visto, pudiendo dejar un comentario y una valoración. Habrá un tipo de usuario sin registrar llamado invitado, que únicamente podrá visualizar las ligas y su contenido. El usuario administrador posee la capacidad de editar/borrar/añadir elementos a otros usuarios/entidades del sistema.
+Se podrán filtrar las ligas en base a algunas configuraciones (por ejemplo por valoración, cantidad de comentarios, número de jugadores, etc).
+
 
 ### **Entidades**
 1. **Perfil de Usuario**: Contiene un nombre y una contraseña asociada para poder registrarse. También contiene una imagen, su canica y una cifra de victorias y/o participaciones. Además, un usuario puede dejar comentarios o reseñas de una liga y puede tener como máximo 3 canicas, de las que podrá elegir una para participar en una liga o carrera.
-2. **Canica**: Una de las disponibles que tiene el usuario (máximo 3), que podrá usar en una carrera o liga. Tiene nombre, imagen/color (la de su usuario) y tamaño.
-3. **Carrera**: Almacena las canicas participantes (máximo 8) y se autogestiona haciendo cálculos con números aleatorios para ver cuánto avanza cada canica en cada momento.
+2. **Canica**: uno de los elementos disponibles que tiene el usuario (máximo 3), que podrá usar en una carrera o liga. Tiene nombre, imagen/color (la de su usuario) y tamaño.
+3. **Carrera**: Almacena las canicas participantes (máximo 8) y se autogestiona haciendo cálculos con números aleatorios para ver en qué posición termina cada canica.
 4. **Liga**: Contiene un conjunto determinado de carreras en las que pueden participar los mismos usuarios hasta que finalice la última carrera.
-5. 
+5.  **comentario**: Dentro de cada liga (en cuerso o terminada), los usuarios pueden dejar comentarios y una valoración asociada a la liga.
 
 **>>>>> Por motivos de claridad, se asume que "Perfil de Usuario" y "Usuario" hacen referencia a la misma entidad. <<<<<**
 
 **Relaciones entre entidades:**
-- Usuario - Canica: Un usuario tiene una canica (1:1).
+- Usuario - Canica: Un usuario tiene hasta 3 canicas y cada canica pertenece a un usuario(1:N).
 - Canica - Carrera: Una canica puede participar en varias carreras, y una carrera contiene varias canicas (N:M).
-- Ranking - Usuario: El ranking contiene varios usuarios, pero un usuario no tiene por qué estar en el ranking (N:0).
-- [Descripción de otras relaciones relevantes]
+- Usuario - Comentario: Un usuario puede escribir varios comentarios y cada comentario pertenece a un usuario (1:N).
+- Liga - Carrera: Cada liga tiene varias carreras y las carreras están asociadas a una liga (1:N).
+- Liga - comentario: Cada liga contiene múltiples comentarios y cada comentario pertenece a una liga (1:N).
 
 ### **Permisos de los Usuarios**
 Describir los permisos de cada tipo de usuario e indicar de qué entidades es dueño:
 
-* **Usuario Anónimo**: 
-  - Permisos: Visualización del ranking global, registro.
+* **Usuario invitado**: 
+  - Permisos: Visualización de las ligas, ranking global, registro.
   - No es dueño de ninguna entidad.
 
 * **Usuario Registrado**: 
-  - Permisos: Gestión de perfil, gestión de canica, visualización del ranking global.
+  - Permisos: Gestión de perfil, gestión de canica, visualización del ranking global, participación en las ligas/carreras.
   - Es dueño de: Su canica, su propio perfil de usuario.
 
 * **Administrador**: 
-  - Permisos: Gestión completa de usuarios registrados y de sus canicas y perfiles, modificación del algoritmo de las carreras, gestión del ranking global, visualización de estadísticas.
-  - Es dueño de: Su canica, su propio perfil de usuario, las carreras y el ranking.
+  - Permisos: Gestión completa de usuarios registrados y de sus canicas y perfiles, modificación de las carreras y las ligas, gestión del ranking global, visualización de estadísticas.
+  - Es dueño de: Su propio perfil de usuario, las carreras y el ranking.
 
 ### **Imágenes**
 Indicar qué entidades tendrán asociadas una o varias imágenes:
 
 - **Usuario**: Una imagen de avatar por usuario.
 - **Canica**: Una imagen por canica (distinta a la imagen de usuario).
-- **Carrera**: Múltiples imágenes por carrera (las de las canicas de los usuarios participantes).
-- **Ranking**: Múltiples imágenes (una por cada usuario mostrado).
 
 ### **Gráficos**
 Indicar qué información se mostrará usando gráficos y de qué tipo serán:
@@ -62,23 +62,20 @@ Indicar qué información se mostrará usando gráficos y de qué tipo serán:
 - **Clasificación de carrera**: Posición y porcentaje recorrido de cada canica - Gráfico de barras.
 - **Registro  de carreras ganadas y perdidas**: Cada usuario puede acceder a un gráfico propio que le indica las veces que ha ganado y que ha perdido - Gráfico de tarta / circular.
 - **Registro  de partidas por día**: Cada usuario puede acceder a un gráfico propio que le indica en cuántas carreras ha participado cada día - Gráfico de columnas.
-- **Gráfico 4**: [Ej: Distribución de pedidos por categoría - Gráfico de barras horizontales]
 
 ### **Tecnología Complementaria**
 Indicar qué tecnología complementaria se empleará:
 
-- Websocket para avisos en tiempo real.
+- correos electrónicos para confirmar el registro a la web.
 - JWT para autenticación de usuarios.
-- Librerías de gráficos y visualización para mostrar ranking, estadísticas y progreso de las carreras.
-- Base de datos relacional o no relacional (pendiente de discusión) para almacenar usuarios, canicas, carreras y ranking.
-- [Otras tecnologías externas que se integrarán]
+- creación de PDF con la información de una liga al finalizar.
 
 ### **Algoritmo o Consulta Avanzada**
 Indicar cuál será el algoritmo o consulta avanzada que se implementará:
 
-- **Algoritmo/Consulta**: Cálculo automático del ranking tras cada carrera.
-- **Descripción**: Asigna puntos a cada usuario según la posición final de su canica y actualiza el ranking global ordenando a los usuarios de mayor a menor puntuación.
-- **Alternativa**: Se puede hacer directamente con una consulta en la base de datos que sume los puntos de cada usuario y genere el ranking automáticamente.
+- **Algoritmo/Consulta**: Filtrar las ligas por número de comentarios o valoración total.
+- **Descripción**: Contabiliza los comentarios asociados a cada liga y hace una media de la valoración de todos los comentarios, luego los ordena de mayor a menor y viceversa.
+- **Alternativa**: Se pueden hacer otro tipo de filtrados por ejemplo por número de usuarios.
 
 ---
 
