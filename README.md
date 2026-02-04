@@ -24,7 +24,7 @@ Se podrán filtrar las ligas en base a algunas configuraciones (por ejemplo por 
 2. **Canica**: uno de los elementos disponibles que tiene el usuario (máximo 3), que podrá usar en una carrera o liga. Tiene nombre, imagen/color (la de su usuario) y tamaño.
 3. **Carrera**: Almacena las canicas participantes (máximo 8) y se autogestiona haciendo cálculos con números aleatorios para ver en qué posición termina cada canica.
 4. **Liga**: Contiene un conjunto determinado de carreras en las que pueden participar los mismos usuarios hasta que finalice la última carrera.
-5.  **comentario**: Dentro de cada liga (en cuerso o terminada), los usuarios pueden dejar comentarios y una valoración asociada a la liga.
+5.  **Comentario**: Dentro de cada liga (en curso o terminada), los usuarios pueden dejar comentarios y una valoración asociada a la liga.
 
 **>>>>> Por motivos de claridad, se asume que "Perfil de Usuario" y "Usuario" hacen referencia a la misma entidad. <<<<<**
 
@@ -33,7 +33,7 @@ Se podrán filtrar las ligas en base a algunas configuraciones (por ejemplo por 
 - Canica - Carrera: Una canica puede participar en varias carreras, y una carrera contiene varias canicas (N:M).
 - Usuario - Comentario: Un usuario puede escribir varios comentarios y cada comentario pertenece a un usuario (1:N).
 - Liga - Carrera: Cada liga tiene varias carreras y las carreras están asociadas a una liga (1:N).
-- Liga - comentario: Cada liga contiene múltiples comentarios y cada comentario pertenece a una liga (1:N).
+- Liga - Comentario: Cada liga contiene múltiples comentarios y cada comentario pertenece a una liga (1:N).
 
 ### **Permisos de los Usuarios**
 Describir los permisos de cada tipo de usuario e indicar de qué entidades es dueño:
@@ -66,9 +66,9 @@ Indicar qué información se mostrará usando gráficos y de qué tipo serán:
 ### **Tecnología Complementaria**
 Indicar qué tecnología complementaria se empleará:
 
-- correos electrónicos para confirmar el registro a la web.
+- Correos electrónicos para confirmar el registro a la web.
 - JWT para autenticación de usuarios.
-- creación de PDF con la información de una liga al finalizar.
+- Creación de PDF con la información de una liga al finalizar.
 
 ### **Algoritmo o Consulta Avanzada**
 Indicar cuál será el algoritmo o consulta avanzada que se implementará:
