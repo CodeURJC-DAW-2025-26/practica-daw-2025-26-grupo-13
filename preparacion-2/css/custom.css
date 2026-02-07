@@ -8,3 +8,11 @@
 /* min-height: 400px;  ajusta según necesites 
   display: flex;
   align-items: center; */
+
+  .bg-bajo-header {
+    background-color:lightblue;
+  }
+
+  .boton-flex > button {
+    margin-right: 10px;
+  }
