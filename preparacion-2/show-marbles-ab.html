@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selector de Canicas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+        }
+
+        .canica-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .canica-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .canica-image:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-seleccionarA {
+            padding: 12px 30px;
+            background-color: #fff;
+            color: #667eea;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: none; /* Oculto por defecto */
+        }
+
+        .btn-seleccionarB {
+            padding: 12px 30px;
+            background-color: #fff;
+            color: #667eea;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: none; /* Oculto por defecto */
+        }
+
+        .btn-seleccionar:hover {
+            background-color: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-seleccionar:active {
+            transform: translateY(0);
+        }
+
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Clase para mostrar los botones cuando se cumple la condición */
+        .mostrar-botonesA .btn-seleccionarA {
+            display: block;
+        }
+        
+        .mostrar-botonesB .btn-seleccionarB {
+            display: block;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="canica-card">
+            <img src="https://via.placeholder.com/200/FF6B6B/FFFFFF?text=Canica+1" 
+                 alt="Canica 1"
+                 class="canica-image" 
+                 id="canica1">
+            <div class="buttons">
+                <button class="btn-seleccionarA" onclick="chooseMarble(1)">ELEGIR</button>
+                <button class="btn-seleccionarB" onclick="getMarbleStats(1)">ESTADÍSTICAS</button>
+                <button class="btn-seleccionarB" onclick="editMarble(1)">EDITAR</button>
+                <button class="btn-seleccionarB" onclick="deleteMarble(1)">BORRAR</button>
+            </div>
+        </div>
+
+        <div class="canica-card">
+            <img src="https://via.placeholder.com/200/4ECDC4/FFFFFF?text=Canica+2" 
+                 alt="Canica 2" 
+                 class="canica-image" 
+                 id="canica2">
+            <div class="buttons">
+                <button class="btn-seleccionarA" onclick="chooseMarble(2)">ELEGIR</button>
+                <button class="btn-seleccionarB" onclick="getMarbleStats(2)">ESTADÍSTICAS</button>
+                <button class="btn-seleccionarB" onclick="editMarble(2)">EDITAR</button>
+                <button class="btn-seleccionarB" onclick="deleteMarble(2)">BORRAR</button>
+            </div>
+        </div>
+
+        <div class="canica-card">
+            <img src="https://via.placeholder.com/200/95E1D3/FFFFFF?text=Canica+3" 
+                 alt="Canica 3" 
+                 class="canica-image" 
+                 id="canica3">
+            <div class="buttons">
+                <button class="btn-seleccionarA" onclick="chooseMarble(3)">ELEGIR</button>
+                <button class="btn-seleccionarB" onclick="getMarbleStats(3)">ESTADÍSTICAS</button>
+                <button class="btn-seleccionarB" onclick="editMarble(3)">EDITAR</button>
+                <button class="btn-seleccionarB" onclick="deleteMarble(3)">BORRAR</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variable que controla si se muestran los botones
+        let permitirSeleccion = true; // Cambia a false para ocultar los botones de vista B
+
+        // Función para mostrar/ocultar botones según la condición
+        function actualizarBotones() {
+            const container = document.getElementById('container');
+            if (permitirSeleccion) {
+                container.classList.add('mostrar-botonesA');
+                container.classList.remove('mostrar-botonesB');
+            } else {
+                container.classList.add('mostrar-botonesB');
+                container.classList.remove('mostrar-botonesA');
+            }
+        }
+
+        // Función que se ejecuta al seleccionar una canica
+        function seleccionarCanica(numero) {
+            console.log(`Canica ${numero} seleccionada`);
+            // Aquí puedes agregar la lógica para enviar al backend
+            alert(`Has seleccionado la canica ${numero}`);
+        }
+
+        // Actualizar estado inicial
+        actualizarBotones();
+
+        // Ejemplo: mostrar botones después de 2 segundos (solo para demostración)
+        // setTimeout(() => {
+        //     permitirSeleccion = true;
+        //     actualizarBotones();
+        // }, 2000);
+    </script>
+</body>
+</html>
