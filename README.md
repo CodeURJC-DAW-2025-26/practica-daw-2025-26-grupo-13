@@ -97,9 +97,91 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 #### **1. Página Principal / Home**
 ![Página Principal](images/home-page.png)
 
-> [Descripción breve: Ej: "Página de inicio que muestra los productos destacados, categorías principales y un banner promocional. Incluye barra de navegación y acceso a registro/login para usuarios no autenticados."]
+<b>Descripción: </b> 
 
-#### **AQUÍ AÑADIR EL RESTO DE PÁGINAS**
+#### **2. Página del formulario de inicio de sesión**
+![Página Principal](images/screenshots/login-form-image.png)
+
+<b>Descripción: </b> Página que muestra un formulario en el que el hay que introducir un nombre de usuario y una contraseña para poder iniciar sesión en la aplicación web. 
+
+#### **3. Página del formulario de registro**
+![Página Principal](images/screenshots/registration-form-image.png)
+
+<b>Descripción: </b> Si es la primera vez que el usuario inicia sesión en la aplicación web, podrá acceder a esta página en la que se le mostrará un formulario de registro. En él, tendrá que introducir sus datos personales (nombre de usuario y contraseña), y opcionalmente, podrá incluir un mensaje que saldrá en su perfil, además de decidir si quiere ponerse una foto de perfil o no. 
+
+#### **4. Página del ranking**
+<b>- En modo usuario registrado </b>
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b> En esta página se puede ver un ranking que muestra las diferentes posiciones o puestos actuales de los usuarios que han jugado, además de diferentes datos de interés de cada uno, como puede ser el número de victorias o el número de partidas jugadas.
+
+<b>- En modo administrador </b>
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b> 
+
+#### **5. Página principal tras iniciar sesión / registrarse**
+<b>- En modo usuario registrado </b>
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b> 
+
+<b>- En modo administrador </b>
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b> 
+
+#### **6. Página de selección de canica**
+<b>- En modo usuario registrado </b>
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b> Página que muestra la pantalla de selección de una canica, en la que se debe elegir una canica de las que el usuario tiene disponibles para poder participar en una carrera.
+
+<b>- En modo administrador </b>
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b> 
+
+#### **7. Página de una carrera**
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b> Página que muestra cómo se produce una carrera desde que esta empieza hasta que una de las canicas llega a la meta. Debajo de la carrera, hay una sección donde los usuarios pueden escribir uno o varios comentarios y evaluar la carrera que han visto. 
+
+#### **8. Página de selección de liga**
+<b>- En modo usuario registrado </b>
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b>  
+
+<b>- En modo administrador </b>
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b> 
+
+#### **9. Página de finalización de la carrera o de la liga**
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b>  
+
+#### **10. Página de selección de acciones hacia el usuario (modo administrador)**
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b>
+
+#### **11. Página de confirmación de creación / modificación / eliminación de usuario (modo administrador)**
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b>
+
+#### **12. Página de confirmación de creación / modificación / eliminación de liga (modo administrador)**
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b>
+
+#### **13. Página de visualización de estadísticas (modo administrador)**
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b>
 
 ---
 
