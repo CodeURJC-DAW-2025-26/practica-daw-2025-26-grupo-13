@@ -163,22 +163,27 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 <b>Descripción: </b>  
 
-#### **10. Página de selección de acciones hacia el usuario (modo administrador)**
+#### **10. Página de selección de acciones hacia un usuario (modo administrador)**
 ![Página Principal](images/home-page.png)
 
 <b>Descripción: </b>
 
-#### **11. Página de confirmación de creación / modificación / eliminación de usuario (modo administrador)**
+#### **11. Página de selección de acciones hacia una liga (modo administrador)**
 ![Página Principal](images/home-page.png)
 
 <b>Descripción: </b>
 
-#### **12. Página de confirmación de creación / modificación / eliminación de liga (modo administrador)**
+#### **12. Página de confirmación de creación / modificación / eliminación de usuario (modo administrador)**
 ![Página Principal](images/home-page.png)
 
 <b>Descripción: </b>
 
-#### **13. Página de visualización de estadísticas (modo administrador)**
+#### **13. Página de confirmación de creación / modificación / eliminación de liga (modo administrador)**
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b>
+
+#### **14. Página de visualización de estadísticas (modo administrador)**
 ![Página Principal](images/home-page.png)
 
 <b>Descripción: </b>
