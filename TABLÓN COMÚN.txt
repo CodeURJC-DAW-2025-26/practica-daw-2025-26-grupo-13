@@ -1,0 +1,4 @@
+
+--> en cuanto se pueda mustache con spring boot, unificar heads y putoreventar style.css. meter a cambio bootstrap en el head común.
+
+-->
