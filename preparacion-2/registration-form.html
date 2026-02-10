@@ -27,8 +27,6 @@
                     <img src="../images/marble-game.png" alt="Logo app" class="me-3 rounded" style="height:80px;">
                     <h1 class="display-4 fw-bolder">MARBLE RUSH ARENA</h1>
                 </div>
-
-                <!--<p class="lead fw-normal text-white-70 mb-0">¿Listo para jugar?</p>-->
             </div>
         </div>
     </header>
@@ -44,6 +42,7 @@
                 <div class="d-flex my-3 mx-4">
 
                     <div class="d-flex align-items-center gap-3">
+                        <button type="button" class="btn btn-primary">Ver estadisticas</button>
                         <button type="button" class="btn btn-primary">Ver ranking</button>
                         <button type="button" class="btn btn-primary">Página principal</button>
                         <button type="button" class="btn btn-primary">Iniciar sesión</button>
@@ -107,10 +106,14 @@
                         </div>
                     </div>
                     <br>
-                    <div class="d-flex justify-content-center">
-                        <button type="button" class="w-40 btn btn-lg btn-success" onclick=" "> Aceptar </button>
-
-                    </div>
+                    
+                        <div class="d-flex justify-content-center" id="container">
+                        <button type="button" class="btn btn-secondary me-2 btn-success" onclick="location.href='show-marbles-ab'">Ver canicas</button>
+                        </div>
+                        <div class="d-flex justify-content-center"></div>
+                        <button type="button" class="w-40 btn btn-lg btn-success" onclick="location.href='home-anonymous-user.html'"> Aceptar </button>
+                        </div>
+                    
 
                 </div>
             </div>
@@ -122,6 +125,37 @@
 
         </div>
     </section>
+    <script>
+        // Variable que controla si se muestran los botones
+        let permitirSeleccion = true; // Cambia a false para ocultar los botones de vista B
+
+        // Función para mostrar/ocultar botones según la condición
+        function actualizarBotones() {
+            const container = document.getElementById('container');
+            if (permitirSeleccion) {
+                container.classList.add('mostrar-botones');
+            } else {
+                container.classList.remove('mostrar-botones');
+            }
+        }
+
+        // Función que se ejecuta al seleccionar una canica
+        function seleccionarCanica(numero) {
+            console.log(`Canica ${numero} seleccionada`);
+            // Aquí puedes agregar la lógica para enviar al backend
+            alert(`Has seleccionado la canica ${numero}`);
+        }
+
+        // Actualizar estado inicial
+        actualizarBotones();
+
+        // Ejemplo: mostrar botones después de 2 segundos (solo para demostración)
+        // setTimeout(() => {
+        //     permitirSeleccion = true;
+        //     actualizarBotones();
+        // }, 2000);
+    </script>
+
     <!-- Footer-->
     <footer class="py-5 bg-dark">
         <div class="container">
