@@ -93,24 +93,26 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 ### **Capturas de Pantalla y Descripción de Páginas**
 
+<b>- En todas las pantallas hay una barra oscura con botones azules en la que se muestran opciones disponibles que el usuario puede realizar, aunque pueden variar o cambiar dependiendo del tipo de usuario. </b>
+
 #### **1. Página Principal / Home**
 <b>- En modo usuario anónimo</b>
-![Página Principal](images/screenshots/home-user-anonymous.png)
+![Página Principal](images/screenshots/home-anonymous-user.png)
 
 <b>Descripción: </b> Página que se le muestra al usuario anónimo o invitado al entrar a la aplicación web. En ella, se muestran las ligas a las que se pueden acceder.
 
-<b>- En modo usuario anónimo</b>
-![Página Principal](images/screenshots/)
+<b>- En modo usuario registrado</b>
+![Página Principal](images/screenshots/home-registered-user.png)
 
-<b>Descripción: </b> Página que se le muestra al usuario registrado al entrar a la aplicación web. En ella, se muestran las ligas a las que puede entrar para participar.
+<b>Descripción: </b> Página que se le muestra al usuario registrado al entrar a la aplicación web. En ella, se muestran las ligas a las que puede entrar para participar. 
  
 <b>- En modo usuario administrador </b>
-![Página Principal](images/screenshots/)
+![Página Principal](images/screenshots/home-admin.png)
 
 <b>Descripción: </b> Página que se le muestra al usuario administrador al entrar a la aplicación web. En ella, se muestran las diferentes opciones que el administrador tiene disponible para gestionar los usuarios, las ligas o las canicas.
 
 #### **2. Página del formulario de inicio de sesión**
-![Página Principal](images/screenshots/login-form-image.png)
+![Página Principal](images/screenshots/login-form.png)
 
 <b>Descripción: </b> Página que muestra un formulario en el que el hay que introducir un nombre de usuario y una contraseña para poder iniciar sesión en la aplicación web. 
 
@@ -120,9 +122,9 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 <b>Descripción: </b> Si es la primera vez que el usuario inicia sesión en la aplicación web, podrá acceder a esta página en la que se le mostrará un formulario de registro. En él, tendrá que introducir sus datos personales (nombre de usuario y contraseña), y opcionalmente, podrá incluir un mensaje que saldrá en su perfil, además de decidir si quiere ponerse una foto de perfil o no. 
 
 #### **4. Página del ranking**
-![Página Principal](images/screenshots/ranking-image.png)
+![Página Principal](images/screenshots/user-ranking.png)
 
-<b>Descripción: </b> En esta página se puede ver un ranking que muestra las diferentes posiciones o puestos actuales de los usuarios que han jugado, además de diferentes datos de interés de cada uno, como puede ser el número de victorias o el número de partidas jugadas. 
+<b>Descripción: </b> Página que muestra un ranking con las diferentes posiciones o puestos actuales de los 10 usuarios con la puntuación más alta de todos los que han jugado en la aplicación. En él, además de los puestos, se puede ver el nombre y la canica de cada jugador, así como la puntuación obtenida de cada uno. 
 
 #### **5. Página de selección de canica**
 ![Página Principal](images/home-page.png)
