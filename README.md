@@ -93,7 +93,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 ### **Capturas de Pantalla y Descripción de Páginas**
 
-<b>- En todas las pantallas hay una barra oscura con botones azules en la que se muestran opciones disponibles que el usuario puede realizar, aunque pueden variar o cambiar dependiendo del tipo de usuario. </b>
+<b>- En todas las pantallas hay una barra oscura con botones azules en la que se muestran opciones disponibles que el usuario puede realizar, aunque pueden variar o cambiar dependiendo del tipo de usuario y/o pantalla. </b>
 
 #### **1. Página Principal / Home**
 <b>- En modo usuario anónimo</b>
