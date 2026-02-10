@@ -59,7 +59,6 @@ Indicar qué entidades tendrán asociadas una o varias imágenes:
 ### **Gráficos**
 Indicar qué información se mostrará usando gráficos y de qué tipo serán:
 
-- **Clasificación de carrera**: Posición y porcentaje recorrido de cada canica - Gráfico de barras.
 - **Registro  de carreras ganadas y perdidas**: Cada usuario puede acceder a un gráfico propio que le indica las veces que ha ganado y que ha perdido - Gráfico de tarta / circular.
 - **Registro  de partidas por día**: Cada usuario puede acceder a un gráfico propio que le indica en cuántas carreras ha participado cada día - Gráfico de columnas.
 
