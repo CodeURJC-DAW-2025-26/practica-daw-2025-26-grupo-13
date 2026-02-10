@@ -97,17 +97,17 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 <b>- En modo usuario anónimo</b>
 ![Página Principal](images/screenshots/home-user-anonymous.png)
 
-<b>Descripción: </b> 
+<b>Descripción: </b> Página que se le muestra al usuario anónimo o invitado al entrar a la aplicación web. En ella, se muestran las ligas a las que se pueden acceder.
 
 <b>- En modo usuario anónimo</b>
 ![Página Principal](images/screenshots/)
 
-<b>Descripción: </b> 
+<b>Descripción: </b> Página que se le muestra al usuario registrado al entrar a la aplicación web. En ella, se muestran las ligas a las que puede entrar para participar.
  
 <b>- En modo usuario administrador </b>
 ![Página Principal](images/screenshots/)
 
-<b>Descripción: </b> 
+<b>Descripción: </b> Página que se le muestra al usuario administrador al entrar a la aplicación web. En ella, se muestran las diferentes opciones que el administrador tiene disponible para gestionar los usuarios, las ligas o las canicas.
 
 #### **2. Página del formulario de inicio de sesión**
 ![Página Principal](images/screenshots/login-form-image.png)
@@ -124,53 +124,25 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 <b>Descripción: </b> En esta página se puede ver un ranking que muestra las diferentes posiciones o puestos actuales de los usuarios que han jugado, además de diferentes datos de interés de cada uno, como puede ser el número de victorias o el número de partidas jugadas. 
 
-#### **6. Página de selección de canica**
-<b>- En modo usuario registrado </b>
-
+#### **5. Página de selección de canica**
+![Página Principal](images/home-page.png)
 
 <b>Descripción: </b> Página que muestra la pantalla de selección de una canica, en la que se debe elegir una canica de las que el usuario tiene disponibles para poder participar en una carrera.
 
-<b>- En modo administrador </b>
-
-
-<b>Descripción: </b> 
-
-#### **7. Página de una carrera**
-
-
-<b>Descripción: </b> Página que muestra cómo se produce una carrera desde que esta empieza hasta que una de las canicas llega a la meta. Debajo de la carrera, hay una sección donde los usuarios pueden escribir uno o varios comentarios y evaluar la carrera que han visto. 
-
-#### **8. Página de selección de liga**
-<b>- En modo usuario registrado </b>
+#### **6. Página de una carrera**
 ![Página Principal](images/home-page.png)
 
-<b>Descripción: </b>  
+<b>Descripción: </b> Página que muestra los resultados obtenidos tras haber realizado una carrera (las carreras son instántaneas, por lo que se realizan al momento y se muestran directamente los resultados cada vez que se accede a una).
 
-<b>- En modo administrador </b>
+#### **7. Página de una liga**
+![Página Principal](images/home-page.png)
+
+<b>Descripción: </b> Página en la que se muestra el contenido de una liga previamente seleccionada. En esta página, se pueden ver el total de carreras que tiene la liga, acceder a cada carrera para comprobar los resultados obtenidos en cada una, y visualizar los resultados finales globales de la liga. También se puede ver el nombre de la liga a la que se ha accedido además de tu resultado obtenido tras haber jugado en ella.
+
+#### **8. Página de visualización de estadísticas**
 ![Página Principal](images/home-page.png)
 
 <b>Descripción: </b> 
-
-#### **9. Página de finalización de la carrera o de la liga**
-
-
-<b>Descripción: </b>  
-
-
-#### **12. Página de confirmación de creación / modificación / eliminación de usuario (modo administrador)**
-![Página Principal](images/home-page.png)
-
-<b>Descripción: </b>
-
-#### **13. Página de confirmación de creación / modificación / eliminación de liga (modo administrador)**
-![Página Principal](images/home-page.png)
-
-<b>Descripción: </b>
-
-#### **14. Página de visualización de estadísticas (modo administrador)**
-
-
-<b>Descripción: </b>
 
 ---
 
