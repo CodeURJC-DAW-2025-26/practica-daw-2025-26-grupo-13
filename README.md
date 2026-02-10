@@ -139,20 +139,10 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 <b>Descripción: </b> Página en la que se muestra el contenido de una liga previamente seleccionada. En esta página, se pueden ver el total de carreras que tiene la liga, acceder a cada carrera para comprobar los resultados obtenidos en cada una, y visualizar los resultados finales globales de la liga. También se puede ver el nombre de la liga a la que se ha accedido además de tu resultado obtenido tras haber jugado en ella.
 
-#### **8. Página de confirmación de creación / modificación / eliminación de usuario (modo administrador)**
+#### **8. Página de visualización de estadísticas**
 ![Página Principal](images/home-page.png)
 
-<b>Descripción: </b>
-
-#### **9. Página de confirmación de creación / modificación / eliminación de liga (modo administrador)**
-![Página Principal](images/home-page.png)
-
-<b>Descripción: </b>
-
-#### **10. Página de visualización de estadísticas**
-
-
-<b>Descripción: </b>
+<b>Descripción: </b> 
 
 ---
 
