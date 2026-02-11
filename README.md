@@ -117,7 +117,7 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 <b>Descripción: </b> Página que muestra un formulario en el que el hay que introducir un nombre de usuario y una contraseña para poder iniciar sesión en la aplicación web. 
 
 #### **3. Página del formulario de registro**
-![Página Principal](images/screenshots/registration-form-image.png)
+![Página Principal](images/screenshots/registration-form.png)
 
 <b>Descripción: </b> Si es la primera vez que el usuario inicia sesión en la aplicación web, podrá acceder a esta página en la que se le mostrará un formulario de registro. En él, tendrá que introducir sus datos personales (nombre de usuario y contraseña), y opcionalmente, podrá incluir un mensaje que saldrá en su perfil, además de decidir si quiere ponerse una foto de perfil o no. 
 
@@ -127,24 +127,39 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 <b>Descripción: </b> Página que muestra un ranking con las diferentes posiciones o puestos actuales de los 10 usuarios con la puntuación más alta de todos los que han jugado en la aplicación. En él, además de los puestos, se puede ver el nombre y la canica de cada jugador, así como la puntuación obtenida de cada uno. 
 
 #### **5. Página de selección de canica**
-![Página Principal](images/home-page.png)
+![Página Principal](images/screenshots/show-marbles-a.png)
 
 <b>Descripción: </b> Página que muestra la pantalla de selección de una canica, en la que se debe elegir una canica de las que el usuario tiene disponibles para poder participar en una carrera.
 
 #### **6. Página de una carrera**
-![Página Principal](images/home-page.png)
+![Página Principal](images/screenshots/race.png)
 
 <b>Descripción: </b> Página que muestra los resultados obtenidos tras haber realizado una carrera (las carreras son instántaneas, por lo que se realizan al momento y se muestran directamente los resultados cada vez que se accede a una).
 
 #### **7. Página de una liga**
-![Página Principal](images/home-page.png)
+![Página Principal](images/screenshots/league.png)
 
 <b>Descripción: </b> Página en la que se muestra el contenido de una liga previamente seleccionada. En esta página, se pueden ver el total de carreras que tiene la liga, acceder a cada carrera para comprobar los resultados obtenidos en cada una, y visualizar los resultados finales globales de la liga. También se puede ver el nombre de la liga a la que se ha accedido además de tu resultado obtenido tras haber jugado en ella.
 
-#### **8. Página de visualización de estadísticas**
-![Página Principal](images/home-page.png)
+#### **8. Página de creación o modificación de una liga**
+![Página Principal](images/screenshots/create-league.png)
 
-<b>Descripción: </b> 
+<b>Descripción: </b> Página en la que se muestra los campos que hay que rellenar (nombre y número de carreras) para poder crear una nueva liga o para actualizar dichos datos por los introducidos en caso de que se modifique una liga.
+
+#### **9. Página de selección de un usuario**
+![Página Principal](images/screenshots/user-selection-list.png)
+
+<b>Descripción: </b> Página en la que se muestra una lista con los usuarios que han accedido a la aplicación web, de manera que se tiene la opción de seleccionar a uno de ellos.
+
+#### **10. Página de selección de una liga**
+![Página Principal](images/screenshots/league-selection-list.png)
+
+<b>Descripción: </b> Página en la que se muestra una lista con las ligas que tiene la aplicación web, de manera que se puede seleccionar una de ellas.
+
+#### **11. Página de visualización de estadísticas**
+![Página Principal](images/screenshots/statistics.png)
+
+<b>Descripción: </b> Página que muestra una serie de gráficos a los que el usuario puede acceder para consultar sus estadísticas.
 
 ---
 
