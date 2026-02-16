@@ -161,6 +161,16 @@ Diagrama que muestra cómo se navega entre las diferentes páginas de la aplicac
 
 <b>Descripción: </b> Página que muestra una serie de gráficos a los que el usuario puede acceder para consultar sus estadísticas.
 
+#### **12. Página de edición de usuario**
+![Página Principal](images/screenshots/edit_user.png)
+
+<b>Descripción: </b> Página que muestra los atributos de un usuario con la opción de poder editar la información.
+
+#### **13. Página de edición de canica**
+![Página Principal](images/screenshots/edit_marble.png)
+
+<b>Descripción: </b> Página que muestra los atributos de una canica con la opción de poder editar la información.
+
 ---
 
 ## 🛠 **Práctica 1: Web con HTML generado en servidor y AJAX**
