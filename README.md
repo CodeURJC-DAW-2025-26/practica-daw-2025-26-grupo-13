@@ -66,7 +66,6 @@ Indicar qué información se mostrará usando gráficos y de qué tipo serán:
 Indicar qué tecnología complementaria se empleará:
 
 - Correos electrónicos para confirmar el registro a la web.
-- JWT para autenticación de usuarios.
 - Creación de PDF con la información de una liga al finalizar.
 
 ### **Algoritmo o Consulta Avanzada**
