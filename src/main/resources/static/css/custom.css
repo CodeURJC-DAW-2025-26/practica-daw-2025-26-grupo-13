@@ -1,0 +1,18 @@
+.bg-dark {
+  /* degradado azul oscuro */
+  background: linear-gradient(to bottom, #0d2f66, #214ca8) !important;
+
+  
+}
+
+/* min-height: 400px;  
+  display: flex;
+  align-items: center; */
+
+  .bg-under-header {
+    background-color:lightblue;
+  }
+
+  .boton-flex > button {
+    margin-right: 10px;
+  }

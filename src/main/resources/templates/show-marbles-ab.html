@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Shop Homepage - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="css/custom.css" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            flex: 1;
+        }
+
+        .container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+        }
+
+        .canica-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .canica-image {
+            width: 150px;
+            height: 150px;
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .canica-image:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-seleccionarA {
+            padding: 12px 30px;
+            background-color: #fff;
+            color: #667eea;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: none;
+            /* Oculto por defecto */
+        }
+
+        .btn-seleccionarB {
+            padding: 12px 30px;
+            background-color: #fff;
+            color: #667eea;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            display: none;
+            /* Oculto por defecto */
+        }
+
+        .btn-seleccionarA:hover {
+            background-color: #667eea;
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-seleccionarB:hover {
+            background-color: #667eea;
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-seleccionarA:active {
+            transform: translateY(0);
+        }
+
+        .btn-seleccionarB:active {
+            transform: translateY(0);
+        }
+
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Clase para mostrar los botones cuando se cumple la condición */
+        .mostrar-botonesA .btn-seleccionarA {
+            display: block;
+        }
+
+        .mostrar-botonesB .btn-seleccionarB {
+            display: block;
+        }
+
+        .skibid {
+            width: 20.5vw;
+            height: 20.5vw;
+            max-width: 200px;
+            max-height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header-->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+
+                <div class="d-flex align-items-center justify-content-center skibid">
+                    <img src="../images/marble-game.png" alt="Logo app" class="me-3 rounded skibid">
+                    <h1 class="display-4 fw-bolder skibid">MARBLE RUSH ARENA</h1>
+                </div>
+
+            </div>
+        </div>
+    </header>
+    <div class="px-3 py-2 text-bg-dark border-bottom">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                        <use xlink:href="#bootstrap"></use>
+                    </svg>
+                </a>
+
+                <div class="d-flex justify-content-between my-3 mx-4">
+                    <div class="d-flex gap-3">
+                        <button type="button" class="btn btn-primary">Ver estadisticas</button>
+                        <button type="button" class="btn btn-primary">Ver ranking</button>
+                        <button type="button" class="btn btn-primary">Página principal</button>
+                        <button type="button" class="btn btn-primary">Editar perfil</button>
+                        <button type="button" class="btn btn-primary">Cerrar sesión</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <div class="container" id="container" style="padding: 20px;">
+            <div class="canica-card">
+                <img src="../images/Canica_base.jpg" alt="Canica 1" class="canica-image" id="canica1">
+                <div class="buttons">
+                    <button class="btn-seleccionarA" onclick="chooseMarble(1)">ELEGIR</button>
+                    <button class="btn-seleccionarB" onclick="getMarbleStats(1)">ESTADÍSTICAS</button>
+                    <button class="btn-seleccionarB" onclick="editMarble(1)">EDITAR</button>
+                    <button class="btn-seleccionarB" onclick="deleteMarble(1)">BORRAR</button>
+                </div>
+            </div>
+
+            <div class="canica-card">
+                <img src="../images/Canica_base.jpg" alt="Canica 2" class="canica-image" id="canica2">
+                <div class="buttons">
+                    <button class="btn-seleccionarA" onclick="chooseMarble(2)">ELEGIR</button>
+                    <button class="btn-seleccionarB" onclick="getMarbleStats(2)">ESTADÍSTICAS</button>
+                    <button class="btn-seleccionarB" onclick="editMarble(2)">EDITAR</button>
+                    <button class="btn-seleccionarB" onclick="deleteMarble(2)">BORRAR</button>
+                </div>
+            </div>
+
+            <div class="canica-card">
+                <img src="../images/Canica_base.jpg" alt="Canica 3" class="canica-image" id="canica3">
+                <div class="buttons">
+                    <button class="btn-seleccionarA" onclick="chooseMarble(3)">ELEGIR</button>
+                    <button class="btn-seleccionarB" onclick="getMarbleStats(3)">ESTADÍSTICAS</button>
+                    <button class="btn-seleccionarB" onclick="editMarble(3)">EDITAR</button>
+                    <button class="btn-seleccionarB" onclick="deleteMarble(3)">BORRAR</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Variable que controla si se muestran los botones
+            let permitirSeleccion = true; // Cambia a false para ocultar los botones de vista B
+
+            // Función para mostrar/ocultar botones según la condición
+            function actualizarBotones() {
+                const container = document.getElementById('container');
+                if (permitirSeleccion) {
+                    container.classList.add('mostrar-botonesA');
+                    container.classList.remove('mostrar-botonesB');
+                } else {
+                    container.classList.add('mostrar-botonesB');
+                    container.classList.remove('mostrar-botonesA');
+                }
+            }
+
+            // Función que se ejecuta al seleccionar una canica
+            function seleccionarCanica(numero) {
+                console.log(`Canica ${numero} seleccionada`);
+                // Aquí puedes agregar la lógica para enviar al backend
+                alert(`Has seleccionado la canica ${numero}`);
+            }
+
+            // Actualizar estado inicial
+            actualizarBotones();
+
+            // Ejemplo: mostrar botones después de 2 segundos (solo para demostración)
+            // setTimeout(() => {
+            //     permitirSeleccion = true;
+            //     actualizarBotones();
+            // }, 2000);
+        </script>
+
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container" id="container" style="padding: 20px;">
+            <p class="m-0 text-center text-white"> Desarrollo de Aplicaciones Web - Grupo 13 - 2026 </p>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+</body>
+
+</html>
