@@ -40,11 +40,11 @@ public class WebSecurityConfig {
 						// PUBLIC PAGES
 						.requestMatchers("/").permitAll()
 						.requestMatchers("/images/**").permitAll()
-						.requestMatchers("/books/**").permitAll()
+						.requestMatchers("/login-or-register-form/**").permitAll()
 						.requestMatchers("/assets/**").permitAll() // Allow access to static resources
 						.requestMatchers("/favicon.ico").permitAll()
 						// PRIVATE PAGES
-						.requestMatchers("/newbook").hasAnyRole("USER")
+						.requestMatchers("/statistics").hasAnyRole("USER")
 						.requestMatchers("/editbook").hasAnyRole("USER")
 						.requestMatchers("/editbook/*").hasAnyRole("USER")
 						.requestMatchers("/removebook/*").hasAnyRole("ADMIN"))
