@@ -37,7 +37,7 @@ public class League {
 		this.users = new ArrayList<>();
 		this.races = new ArrayList<>();
         this.comments = new ArrayList<>();
-        this.status = True;
+        this.status = true;
 	}
 
     public Long getId() {
@@ -76,7 +76,7 @@ public class League {
 		return users;
 	}
 
-	public void addUser(User> user) {
+	public void addUser(User user) {
 		this.users.add(user);
 	}
 
