@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Marble {
@@ -19,23 +20,17 @@ public class Marble {
 
 	private String name;
 
-	@Column(columnDefinition = "TEXT")
-	private String description;
-
 	@OneToOne
 	private Image image;
-
-	@ManyToMany
-	private List<Shop> shops;
 
 	public Marble() {
 	}
 
-	public Marble(String nombre, String description, List<Shop> shops) {
+	public Marble(String nombre, Image image, User user) {
 		super();
 		this.name = nombre;
-		this.description = description;
-		this.shops = shops;
+		this.image = image;
+		this.user = user;
 	}
 
 	public String getName() {
@@ -46,15 +41,7 @@ public class Marble {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Image getImage() {
+	public String getImage() {
 		return image;
 	}
 
@@ -70,16 +57,12 @@ public class Marble {
 		this.id = id;
 	}
 
-	public List<Shop> getShops() {
-		return shops;
-	}
-
-	public void setShops(List<Shop> shops) {
-		this.shops = shops;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
 	public String toString() {
-		return "Marble [id=" + id + ", name=" + name + ", description=" + description + "]";
+		return "Marble [id=" + id + ", name=" + name + "]"; //no user?
 	}
 }

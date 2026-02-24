@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import es.codeurjc.daw.library.model.Book;
+import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.model.Image;
-import es.codeurjc.daw.library.service.BookService;
+import es.codeurjc.daw.library.service.MarbleService;
 import es.codeurjc.daw.library.service.ImageService;
 import es.codeurjc.daw.library.service.ShopService;
 
@@ -28,13 +28,16 @@ import es.codeurjc.daw.library.service.ShopService;
 public class BookWebController {
 
 	@Autowired
-	private BookService bookService;
+	private MarbleService marbleService;
 
 	@Autowired
 	private ShopService shopService;
 
 	@Autowired
 	private ImageService imageService;
+
+	@Autowired
+	private LeagueService leagueService;
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -53,11 +56,11 @@ public class BookWebController {
 	}
 
 	@GetMapping("/")
-	public String showBooks(Model model) {
+	public String showLeagues(Model model) {
 
-		model.addAttribute("books", bookService.findAll());
+		model.addAttribute("leagues", leagueService.findAll()); //rellenar con ligas el html home (meter mustache "leagues")
 
-		return "books";
+		return "home";
 	}
 
 	@GetMapping("/books/{id}")
