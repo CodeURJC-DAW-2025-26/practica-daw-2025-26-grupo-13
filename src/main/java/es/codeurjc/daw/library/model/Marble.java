@@ -23,9 +23,6 @@ public class Marble {
 	@OneToOne
 	private Image image;
 
-	//@ManyToOne
-	//private User user;
-
 	public Marble() {
 	}
 
@@ -60,16 +57,12 @@ public class Marble {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
 	public void setUser(User user) {
 		this.user = user;
 	}
 
 	@Override
 	public String toString() {
-		return "Marble [id=" + id + ", name=" + name + ", user=" + user + "]";
+		return "Marble [id=" + id + ", name=" + name + "]"; //no user?
 	}
 }
