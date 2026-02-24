@@ -18,6 +18,8 @@ public class League {
 
 	private String name;
 
+    private boolean status;
+
     @OneToMany(cascade=CascadeType.ALL)
 	private List<Race> races;
 
@@ -35,11 +37,16 @@ public class League {
 		this.users = new ArrayList<>();
 		this.races = new ArrayList<>();
         this.comments = new ArrayList<>();
+        this.status = True;
 	}
 
     public Long getId() {
 		return id;
 	}
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
 	public String getName() {
 		return name;
@@ -48,6 +55,14 @@ public class League {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
 	public List<Race> getRaces() {
 		return races;
