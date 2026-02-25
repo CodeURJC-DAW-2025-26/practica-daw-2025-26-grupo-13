@@ -126,41 +126,41 @@ public class BookWebController {
 	}
 
 	@PostMapping("/editbook")
-	public String editBookProcess(Model model, Book book, boolean removeImage, MultipartFile imageField)
+	public String editMarbleProcess(Model model, Marble marble, boolean removeImage, MultipartFile imageField)
 			throws IOException, SQLException {
 
-		updateImage(book, removeImage, imageField);
+		updateImage(marble, removeImage, imageField);
 
-		bookService.save(book);
+		marbleService.save(marble);
 
-		model.addAttribute("bookId", book.getId());
+		model.addAttribute("marbleId", marble.getId());
 
-		return "redirect:/books/" + book.getId();
+		return "redirect:/marbles/" + marble.getId();
 	}
 
-	private void updateImage(Book book, boolean removeImage, MultipartFile imageField)
+	private void updateImage(Marble marble, boolean removeImage, MultipartFile imageField)
 			throws IOException, SQLException {
 
 		if (!imageField.isEmpty()) {
-			Book dbBook = bookService.findById(book.getId()).orElseThrow();
+			Marble dbMarble = marbleService.findById(marble.getId()).orElseThrow();
 
-			if (dbBook.getImage() == null) {
+			if (dbMarble.getImage() == null) {
 				Image image = imageService.createImage(imageField.getInputStream());
-				book.setImage(image);
+				marble.setImage(image);
 			} else {
-				Image image = imageService.replaceImageFile(dbBook.getImage().getId(), imageField.getInputStream());
-				book.setImage(image);
+				Image image = imageService.replaceImageFile(dbMarble.getImage().getId(), imageField.getInputStream());
+				marble.setImage(image);
 			}
 		} else {
 			if (removeImage) {
-				if (book.getImage() != null) {
-					imageService.deleteImage(book.getImage().getId());
-					book.setImage(null);
+				if (marble.getImage() != null) {
+					imageService.deleteImage(marble.getImage().getId());
+					marble.setImage(null);
 				}
 			} else {
-				// Maintain the same image loading it before updating the book
-				Book dbBook = bookService.findById(book.getId()).orElseThrow();
-				book.setImage(dbBook.getImage());
+				// Maintain the same image loading it before updating the marble
+				Marble dbMarble = marbleService.findById(marble.getId()).orElseThrow();
+				marble.setImage(dbMarble.getImage());
 			}
 		}
 	}

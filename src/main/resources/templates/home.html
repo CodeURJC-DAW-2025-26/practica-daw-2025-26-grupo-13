@@ -11,17 +11,17 @@
                     <p class="text-muted text-center mb-4">Selecciona una liga para unirte.</p>
                     
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                        <!-- {{#league}} -->
+                        {{#leagues}}
                         <div class="col">
                             <div class="card h-100 text-center shadow-sm league-card">
                                 <div class="card-body">
                                     <div class="league-icon"><i class="bi bi-trophy"></i></div>
-                                    <h5 class="card-title fw-bold"><!-- {{name}} --></h5>
-                                    <span class="badge rounded-pill bg-success"><!-- {{status}} --></span>
+                                    <h5 class="card-title fw-bold">{{name}}</h5>
+                                    <span class="badge rounded-pill bg-success">{{status}}</span>
                                 </div>
                             </div>
                         </div>
-                        <!-- {{/league}} -->
+                        {{/leagues}}
                     </div> </div>
             </div>
 

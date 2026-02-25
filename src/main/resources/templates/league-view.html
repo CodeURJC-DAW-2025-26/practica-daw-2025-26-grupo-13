@@ -13,6 +13,7 @@
      <section class="py-5 bg-bajo-header" style="flex: 1;">
         <div class="container px-4 px-lg-5 ">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {{#races}}
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Product image-->
@@ -21,7 +22,7 @@
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <!-- Product name-->
-                                <h5 class="fw-bolder">Carrera 1</h5>
+                                <h5 class="fw-bolder">Carrera {{-index}}</h5>
                                 <!-- Product price-->
                                 info.
                             </div>
@@ -34,6 +35,7 @@
                         </div>
                     </div>
                 </div>
+                {{/races}}
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Product image-->

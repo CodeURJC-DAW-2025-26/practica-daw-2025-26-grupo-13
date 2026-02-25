@@ -26,9 +26,9 @@ public class Marble {
 	public Marble() {
 	}
 
-	public Marble(String nombre, Image image, User user) {
+	public Marble(String name, Image image, User user) {
 		super();
-		this.name = nombre;
+		this.name = name;
 		this.image = image;
 		this.user = user;
 	}
@@ -55,6 +55,10 @@ public class Marble {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public Long getUser() {
+		return user;
 	}
 
 	public void setUser(User user) {
