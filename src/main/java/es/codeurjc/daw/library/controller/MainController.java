@@ -25,7 +25,7 @@ import es.codeurjc.daw.library.service.ImageService;
 import es.codeurjc.daw.library.service.ShopService;
 
 @Controller
-public class BookWebController {
+public class ArenaMainController {
 
 	@Autowired
 	private MarbleService marbleService;
