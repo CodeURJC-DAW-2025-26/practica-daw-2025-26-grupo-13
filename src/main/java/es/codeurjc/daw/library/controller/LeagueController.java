@@ -26,7 +26,7 @@ import es.codeurjc.daw.library.service.CommentService;
 import es.codeurjc.daw.library.service.RaceService;
 
 @Controller
-public class BookWebController {
+public class LeagueController {
 
 	@Autowired
 	private LeagueService leagueService;
