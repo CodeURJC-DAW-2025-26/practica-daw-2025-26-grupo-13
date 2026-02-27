@@ -16,22 +16,23 @@
                 {{#races}}
                 <div class="col mb-5">
                     <div class="card h-100">
-                        <!-- Product image-->
-                        <!--<img class="card-img-top" src="/images/anonymous-user.PNG" alt="..."  /> --> 
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <!-- Product name-->
-                                <h5 class="fw-bolder">Carrera {{-index}}</h5>
-                                <!-- Product price-->
-                                info.
+                                <h5 class="fw-bolder">Carrera {{-index}}: {{name}}</h5>
+                                <!-- show first three results for this race -->
+                                <ul class="list-unstyled mt-2 mb-0">
+                                    {{#topThreeResults}}
+                                        <li>{{name}}</li>
+                                    {{/topThreeResults}}
+                                </ul>
                             </div>
                             
                         </div>
                         <!-- Product actions-->
                         <div class="card-body d-flex flex-column align-items-center gap-3">
-                            <button type="button" class="w-40 btn btn-lg btn-secondary" onclick=" "> Seleccionar</button>
-                            
+                            <a class="w-40 btn btn-lg btn-secondary" href="/race/{{id}}">Ver detalles</a>
                         </div>
                     </div>
                 </div>

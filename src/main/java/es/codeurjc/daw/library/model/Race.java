@@ -2,6 +2,8 @@ package es.codeurjc.daw.library.model;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -61,8 +63,24 @@ public class Race {
 	}
 
 	public List<User> calculateResults(List<User> results) {
-
+		// if you only want this for races with
+		// exactly eight participants you can add a size check here.
+		if (results != null) {
+			Collections.shuffle(results);
+		}
 		return results;
+	}
+
+	/**
+	 * Helper for templates: returns at most three users from the current results.
+	 */
+	public List<User> getTopThreeResults() {
+		if (this.results == null) {
+			return Collections.emptyList();
+		}
+		return this.results.stream()
+			.limit(3)
+			.collect(Collectors.toList());
 	}
 
 }

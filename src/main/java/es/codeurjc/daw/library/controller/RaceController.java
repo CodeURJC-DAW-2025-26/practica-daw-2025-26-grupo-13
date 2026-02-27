@@ -106,4 +106,17 @@ public class RaceController {
 		return "redirect:/race-view/" + race.getId();
 	}
 
+	@GetMapping("/playRace/{id}")
+	public String playRace(Model model, @PathVariable long id) {
+
+		Optional<Race> race = raceService.findById(id);
+		if (race.isPresent()) {
+			model.addAttribute("race", race.get());
+			return "race";
+		} else {
+			return "race-view";
+		}
+
+	}
+
 }

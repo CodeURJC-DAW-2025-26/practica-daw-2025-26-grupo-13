@@ -120,4 +120,18 @@ public class LeagueController {
 		return "redirect:/league-view/" + league.getId();
 	}
 
+	@GetMapping("/playLeague/{id}")
+	public String playLeague(Model model, @PathVariable long id) {
+
+		Optional<League> league = leagueService.findById(id);
+		if (league.isPresent()) {
+			model.addAttribute("league", league.get());
+			return "league";
+		} else {
+			return "league-view";
+		}
+
+		return "redirect:/league-view/" + league.getId();
+	}
+
 }
