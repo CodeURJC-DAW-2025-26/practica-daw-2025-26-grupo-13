@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.model.Image;
-import es.codeurjc.daw.library.model.Shop;
 import es.codeurjc.daw.library.model.User;
 import es.codeurjc.daw.library.repository.UserRepository;
 
@@ -24,9 +23,6 @@ public class DatabaseInitializer {
 
 	@Autowired
 	private MarbleService marbleService;
-
-	@Autowired
-	private ShopService shopService;
 
 	@Autowired
 	private ImageService imageService;

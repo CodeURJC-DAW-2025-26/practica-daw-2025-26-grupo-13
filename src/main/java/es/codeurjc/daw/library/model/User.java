@@ -46,7 +46,6 @@ public class User {
 		this.roles = List.of(roles);
 		this.comments = new ArrayList<>();
 		this.marbles = new ArrayList<>();
-		this.message = null; //DELETE?
 	}
 
 	public String getName() {
@@ -72,5 +71,10 @@ public class User {
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
 	}
+
+    public void setImage(Image image2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setImage'");
+    }
 
 }
