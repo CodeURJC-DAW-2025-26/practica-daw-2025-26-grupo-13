@@ -20,10 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.model.Image;
-import es.codeurjc.daw.library.model.League;
+import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.service.MarbleService;
 import es.codeurjc.daw.library.service.ImageService;
-import es.codeurjc.daw.library.service.LeagueService;
+import es.codeurjc.daw.library.service.MarbleService;
 
 @Controller
 public class MarbleController {
@@ -35,7 +35,7 @@ public class MarbleController {
 	private ImageService imageService;
 
 	@Autowired
-	private LeagueService leagueService;
+	private MarbleService marbleService;
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -53,71 +53,63 @@ public class MarbleController {
 		}
 	}
 
-	@GetMapping("/")
-	public String showLeagues(Model model) {
-
-		model.addAttribute("leagues", leagueService.findAll()); //rellenar con ligas el html home (meter mustache "leagues")
-
-		return "home";
-	}
-
-	@GetMapping("/league/{id}")
+	@GetMapping("/marble/{id}")
 	public String showBook(Model model, @PathVariable long id) {
 
-		Optional<League> league = leagueService.findById(id);
-		if (league.isPresent()) {
-			model.addAttribute("league", league.get());
-			return "league";
+		Optional<Marble> marble = marbleService.findById(id);
+		if (marble.isPresent()) {
+			model.addAttribute("marble", marble.get());
+			return "marble";
 		} else {
-			return "league-view";
+			return "marble-view";
 		}
 
 	}
 
-	@PostMapping("/removeleague/{id}")
-	public String removeleague(Model model, @PathVariable long id) {
+	@PostMapping("/removeMarble/{id}")
+	public String removeMarble(Model model, @PathVariable long id) {
 
-		Optional<League> league = leagueService.findById(id);
-		if (league.isPresent()) {
-			leagueService.delete(id);
-			model.addAttribute("league", league.get());
+		Optional<Marble> marble = marbleService.findById(id);
+		if (marble.isPresent()) {
+			marbleService.delete(id);
+			model.addAttribute("marble", marble.get());
 		}
-		return "league-removed";
+		return "marble-removed";
 	}
 
-	@GetMapping("/listLeagues")
-	public String listLeagues(Model model) {
+	@GetMapping("/listMarbles")
+	public String listMarbles(Model model) {
 
-		model.addAttribute("leagueList", leagueService.findAll());
+		model.addAttribute("marbleList", marbleService.findAll());
 
-		return "league-list";
+		return "marble-list";
 	}
 
-	@PostMapping("/newLeague")
-	public String newLeague(Model model, League league,
+	@PostMapping("/newMarble")
+	public String newMarble(Model model, Marble marble,
 			@RequestParam String name) throws IOException {
         
-        league(name);
+        marble(name);
 
-		leagueService.save(league);
+		marbleService.save(marble);
 
-		model.addAttribute("leagueId", league.getId());
+		model.addAttribute("marbleId", marble.getId());
 
-		return "redirect:/league-view/" + league.getId();
+		return "redirect:/marble-view/" + marble.getId();
 	}
 
-	@PostMapping("/editLeague")
-	public String editBookProcess(Model model, League league, String name, boolean status)
+	@PostMapping("/editMarble")
+	public String editBookProcess(Model model, Marble marble, String name, boolean status)
 			throws IOException, SQLException {
 
-		league.setName(name);
-        league.setName(status);
+		marble.setName(name);
+        marble.setName(status);
 
-		leagueService.save(league);
+		marbleService.save(marble);
 
-		model.addAttribute("leagueId", league.getId());
+		model.addAttribute("marbleId", marble.getId());
 
-		return "redirect:/league-view/" + league.getId();
+		return "redirect:/marble-view/" + marble.getId();
 	}
 
 	private void updateImage(Marble marble, boolean removeImage, MultipartFile imageField)

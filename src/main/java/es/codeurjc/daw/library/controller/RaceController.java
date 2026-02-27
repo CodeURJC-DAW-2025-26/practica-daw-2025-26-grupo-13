@@ -20,22 +20,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.model.Image;
-import es.codeurjc.daw.library.model.League;
+import es.codeurjc.daw.library.model.Race;
 import es.codeurjc.daw.library.service.MarbleService;
 import es.codeurjc.daw.library.service.ImageService;
-import es.codeurjc.daw.library.service.LeagueService;
+import es.codeurjc.daw.library.service.RaceService;
 
 @Controller
 public class RaceController {
 
 	@Autowired
-	private MarbleService marbleService;
-
-	@Autowired
-	private ImageService imageService;
-
-	@Autowired
-	private LeagueService leagueService;
+	private RaceService raceService;
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -53,98 +47,63 @@ public class RaceController {
 		}
 	}
 
-	@GetMapping("/")
-	public String showLeagues(Model model) {
-
-		model.addAttribute("leagues", leagueService.findAll()); //rellenar con ligas el html home (meter mustache "leagues")
-
-		return "home";
-	}
-
-	@GetMapping("/league/{id}")
+	@GetMapping("/race/{id}")
 	public String showBook(Model model, @PathVariable long id) {
 
-		Optional<League> league = leagueService.findById(id);
-		if (league.isPresent()) {
-			model.addAttribute("league", league.get());
-			return "league";
+		Optional<Race> race = raceService.findById(id);
+		if (race.isPresent()) {
+			model.addAttribute("race", race.get());
+			return "race";
 		} else {
-			return "league-view";
+			return "race-view";
 		}
 
 	}
 
-	@PostMapping("/removeleague/{id}")
-	public String removeleague(Model model, @PathVariable long id) {
+	@PostMapping("/removeRace/{id}")
+	public String removerace(Model model, @PathVariable long id) {
 
-		Optional<League> league = leagueService.findById(id);
-		if (league.isPresent()) {
-			leagueService.delete(id);
-			model.addAttribute("league", league.get());
+		Optional<Race> race = raceService.findById(id);
+		if (race.isPresent()) {
+			raceService.delete(id);
+			model.addAttribute("race", race.get());
 		}
-		return "league-removed";
+		return "race-removed";
 	}
 
-	@GetMapping("/listLeagues")
-	public String listLeagues(Model model) {
+	@GetMapping("/listRaces")
+	public String listRaces(Model model) {
 
-		model.addAttribute("leagueList", leagueService.findAll());
+		model.addAttribute("raceList", raceService.findAll());
 
-		return "league-list";
+		return "race-list";
 	}
 
-	@PostMapping("/newLeague")
-	public String newLeague(Model model, League league,
+	@PostMapping("/newRace")
+	public String newRace(Model model, Race race,
 			@RequestParam String name) throws IOException {
         
-        league(name);
+        race(name);
 
-		leagueService.save(league);
+		raceService.save(race);
 
-		model.addAttribute("leagueId", league.getId());
+		model.addAttribute("raceId", race.getId());
 
-		return "redirect:/league-view/" + league.getId();
+		return "redirect:/race-view/" + race.getId();
 	}
 
-	@PostMapping("/editLeague")
-	public String editBookProcess(Model model, League league, String name, boolean status)
+	@PostMapping("/editRace")
+	public String editBookProcess(Model model, Race race, String name, boolean status)
 			throws IOException, SQLException {
 
-		league.setName(name);
-        league.setName(status);
+		race.setName(name);
+        race.setName(status);
 
-		leagueService.save(league);
+		raceService.save(race);
 
-		model.addAttribute("leagueId", league.getId());
+		model.addAttribute("raceId", race.getId());
 
-		return "redirect:/league-view/" + league.getId();
-	}
-
-	private void updateImage(Marble marble, boolean removeImage, MultipartFile imageField)
-			throws IOException, SQLException {
-
-		if (!imageField.isEmpty()) {
-			Marble dbMarble = marbleService.findById(marble.getId()).orElseThrow();
-
-			if (dbMarble.getImage() == null) {
-				Image image = imageService.createImage(imageField.getInputStream());
-				marble.setImage(image);
-			} else {
-				Image image = imageService.replaceImageFile(dbMarble.getImage().getId(), imageField.getInputStream());
-				marble.setImage(image);
-			}
-		} else {
-			if (removeImage) {
-				if (marble.getImage() != null) {
-					imageService.deleteImage(marble.getImage().getId());
-					marble.setImage(null);
-				}
-			} else {
-				// Maintain the same image loading it before updating the marble
-				Marble dbMarble = marbleService.findById(marble.getId()).orElseThrow();
-				marble.setImage(dbMarble.getImage());
-			}
-		}
+		return "redirect:/race-view/" + race.getId();
 	}
 
 }

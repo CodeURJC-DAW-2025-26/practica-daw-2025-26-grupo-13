@@ -34,6 +34,7 @@ public class League {
 	}
 
 	public League(String name) {
+		super();
 		this.name = name;
 		this.users = new ArrayList<>();
 		this.races = new ArrayList<>();

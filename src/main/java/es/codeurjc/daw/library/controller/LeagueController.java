@@ -74,7 +74,7 @@ public class LeagueController {
 
 	}
 
-	@PostMapping("/removeleague/{id}")
+	@PostMapping("/removeLeague/{id}")
 	public String removeleague(Model model, @PathVariable long id) {
 
 		Optional<League> league = leagueService.findById(id);
@@ -111,7 +111,7 @@ public class LeagueController {
 			throws IOException, SQLException {
 
 		league.setName(name);
-        league.setName(status);
+        league.setStatus(status);
 
 		leagueService.save(league);
 
