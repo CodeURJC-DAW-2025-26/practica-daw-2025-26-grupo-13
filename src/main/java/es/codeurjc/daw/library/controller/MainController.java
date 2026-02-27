@@ -22,16 +22,13 @@ import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.model.Image;
 import es.codeurjc.daw.library.service.MarbleService;
 import es.codeurjc.daw.library.service.ImageService;
-import es.codeurjc.daw.library.service.ShopService;
+import es.codeurjc.daw.library.service.LeagueService;
 
 @Controller
-public class ArenaMainController {
+public class MainController {
 
 	@Autowired
 	private MarbleService marbleService;
-
-	@Autowired
-	private ShopService shopService;
 
 	@Autowired
 	private ImageService imageService;

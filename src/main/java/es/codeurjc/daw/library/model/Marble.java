@@ -1,8 +1,5 @@
 package es.codeurjc.daw.library.model;
 
-import java.util.List;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +14,7 @@ public class Marble {
 	private Long id = null;
 
 	private String name;
+	private Long userID;
 
 	@OneToOne
 	private Image image;
@@ -24,11 +22,11 @@ public class Marble {
 	public Marble() {
 	}
 
-	public Marble(String name, Image image, User user) {
+	public Marble(String name, Image image, Long userID) {
 		super();
 		this.name = name;
 		this.image = image;
-		this.user = user;
+		this.userID = userID;
 	}
 
 	public String getName() {
@@ -56,11 +54,11 @@ public class Marble {
 	}
 
 	public Long getUser() {
-		return user;
+		return userID;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser(Long userId) {
+		this.userID = userId;
 	}
 
 	@Override
