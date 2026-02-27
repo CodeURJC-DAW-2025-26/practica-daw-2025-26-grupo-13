@@ -46,7 +46,7 @@ public class User {
 		this.roles = List.of(roles);
 		this.comments = new ArrayList<>();
 		this.marbles = new ArrayList<>();
-		this.message =null;
+		this.message = null; //DELETE?
 	}
 
 	public String getName() {
