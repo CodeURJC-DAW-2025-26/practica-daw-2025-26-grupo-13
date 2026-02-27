@@ -41,7 +41,7 @@ public class Marble {
 		this.name = name;
 	}
 
-	public String getImage() {
+	public Image getImage() {
 		return image;
 	}
 

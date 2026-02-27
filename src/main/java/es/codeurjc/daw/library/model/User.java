@@ -1,6 +1,7 @@
 package es.codeurjc.daw.library.model;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -8,6 +9,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
 
 @Entity(name = "UserTable")
 public class User {

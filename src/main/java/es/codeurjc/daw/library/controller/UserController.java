@@ -20,9 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.model.Image;
+import es.codeurjc.daw.library.model.User;
 import es.codeurjc.daw.library.service.MarbleService;
 import es.codeurjc.daw.library.service.ImageService;
-import es.codeurjc.daw.library.service.ShopService;
+import es.codeurjc.daw.library.service.UserService;
 
 
 @Controller

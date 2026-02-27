@@ -13,7 +13,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
 
 @Entity
-public class League {
+public class Race {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,10 +32,10 @@ public class League {
     @OneToMany(cascade=CascadeType.ALL)
     private List<Comment> comments;
 
-	public League() {
+	public Race() {
 	}
 
-	public League(String name) {
+	public Race(String name) {
 		this.name = name;
 		this.users = new ArrayList<>();
 		this.races = new ArrayList<>();
