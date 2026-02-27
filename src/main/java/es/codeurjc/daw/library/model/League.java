@@ -27,7 +27,7 @@ public class League {
     @OneToMany
     private List<User> users;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "league", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
 	public League() {
