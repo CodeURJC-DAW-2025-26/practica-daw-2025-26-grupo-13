@@ -20,12 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.model.Image;
+import es.codeurjc.daw.library.model.League;
 import es.codeurjc.daw.library.service.MarbleService;
 import es.codeurjc.daw.library.service.ImageService;
 import es.codeurjc.daw.library.service.LeagueService;
 
 @Controller
-public class MainController {
+public class MarbleController {
 
 	@Autowired
 	private MarbleService marbleService;
@@ -60,79 +61,63 @@ public class MainController {
 		return "home";
 	}
 
-	@GetMapping("/books/{id}")
+	@GetMapping("/league/{id}")
 	public String showBook(Model model, @PathVariable long id) {
 
-		Optional<Book> book = bookService.findById(id);
-		if (book.isPresent()) {
-			model.addAttribute("book", book.get());
-			return "book";
+		Optional<League> league = leagueService.findById(id);
+		if (league.isPresent()) {
+			model.addAttribute("league", league.get());
+			return "league";
 		} else {
-			return "books";
+			return "league-view";
 		}
 
 	}
 
-	@PostMapping("/removebook/{id}")
-	public String removeBook(Model model, @PathVariable long id) {
+	@PostMapping("/removeleague/{id}")
+	public String removeleague(Model model, @PathVariable long id) {
 
-		Optional<Book> book = bookService.findById(id);
-		if (book.isPresent()) {
-			bookService.delete(id);
-			model.addAttribute("book", book.get());
+		Optional<League> league = leagueService.findById(id);
+		if (league.isPresent()) {
+			leagueService.delete(id);
+			model.addAttribute("league", league.get());
 		}
-		return "removedbook";
+		return "league-removed";
 	}
 
-	@GetMapping("/newbook")
-	public String newBook(Model model) {
+	@GetMapping("/listLeagues")
+	public String listLeagues(Model model) {
 
-		model.addAttribute("availableShops", shopService.findAll());
+		model.addAttribute("leagueList", leagueService.findAll());
 
-		return "newBookPage";
+		return "league-list";
 	}
 
-	@PostMapping("/newbook")
-	public String newBookProcess(Model model, Book book, MultipartFile imageField,
-			@RequestParam List<Long> selectedShops) throws IOException {
+	@PostMapping("/newLeague")
+	public String newLeague(Model model, League league,
+			@RequestParam String name) throws IOException {
+        
+        league(name);
 
-		if (!imageField.isEmpty()) {
-			Image image = imageService.createImage(imageField.getInputStream());
-			book.setImage(image);
-		}
+		leagueService.save(league);
 
-		book.setShops(shopService.findById(selectedShops));
+		model.addAttribute("leagueId", league.getId());
 
-		bookService.save(book);
-
-		model.addAttribute("bookId", book.getId());
-
-		return "redirect:/books/" + book.getId();
+		return "redirect:/league-view/" + league.getId();
 	}
 
-	@GetMapping("/editbook/{id}")
-	public String editBook(Model model, @PathVariable long id) {
-
-		Optional<Book> book = bookService.findById(id);
-		if (book.isPresent()) {
-			model.addAttribute("book", book.get());
-			return "editBookPage";
-		} else {
-			return "books";
-		}
-	}
-
-	@PostMapping("/editbook")
-	public String editMarbleProcess(Model model, Marble marble, boolean removeImage, MultipartFile imageField)
+	@PostMapping("/editLeague")
+	public String editBookProcess(Model model, League league, String name, boolean status)
 			throws IOException, SQLException {
 
-		updateImage(marble, removeImage, imageField);
+		league.setName(name);
+        league.setName(status);
 
-		marbleService.save(marble);
+		leagueService.save(league);
 
-		model.addAttribute("marbleId", marble.getId());
+		model.addAttribute("leagueId", league.getId());
 
-		return "redirect:/marbles/" + marble.getId();
+		return "redirect:/league-view/" + league.getId();
 	}
 
 	private void updateImage(Marble marble, boolean removeImage, MultipartFile imageField)

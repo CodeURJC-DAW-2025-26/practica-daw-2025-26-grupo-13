@@ -26,7 +26,7 @@ import es.codeurjc.daw.library.service.ImageService;
 import es.codeurjc.daw.library.service.LeagueService;
 
 @Controller
-public class LeagueController {
+public class RaceController {
 
 	@Autowired
 	private MarbleService marbleService;
@@ -118,6 +118,33 @@ public class LeagueController {
 		model.addAttribute("leagueId", league.getId());
 
 		return "redirect:/league-view/" + league.getId();
+	}
+
+	private void updateImage(Marble marble, boolean removeImage, MultipartFile imageField)
+			throws IOException, SQLException {
+
+		if (!imageField.isEmpty()) {
+			Marble dbMarble = marbleService.findById(marble.getId()).orElseThrow();
+
+			if (dbMarble.getImage() == null) {
+				Image image = imageService.createImage(imageField.getInputStream());
+				marble.setImage(image);
+			} else {
+				Image image = imageService.replaceImageFile(dbMarble.getImage().getId(), imageField.getInputStream());
+				marble.setImage(image);
+			}
+		} else {
+			if (removeImage) {
+				if (marble.getImage() != null) {
+					imageService.deleteImage(marble.getImage().getId());
+					marble.setImage(null);
+				}
+			} else {
+				// Maintain the same image loading it before updating the marble
+				Marble dbMarble = marbleService.findById(marble.getId()).orElseThrow();
+				marble.setImage(dbMarble.getImage());
+			}
+		}
 	}
 
 }
