@@ -15,13 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.model.Image;
 import es.codeurjc.daw.library.model.User;
-import es.codeurjc.daw.library.service.MarbleService;
 import es.codeurjc.daw.library.service.ImageService;
 import es.codeurjc.daw.library.service.UserService;
 
@@ -101,11 +98,8 @@ public class UserController {
 		List<User> users = userService.findAll();
 		model.addAttribute("users", users);
 			return "user-list";
-		} else {
-			return "redirect:/login";
-		}
-
-	}
+	} 
+	
 
 
 	private void updateImage(User user, boolean removeImage, MultipartFile imageField)

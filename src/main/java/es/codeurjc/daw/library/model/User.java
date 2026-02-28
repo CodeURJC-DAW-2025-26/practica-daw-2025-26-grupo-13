@@ -48,6 +48,15 @@ public class User {
 		this.marbles = new ArrayList<>();
 	}
 
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
 	public String getName() {
 		return name;
 	}
@@ -77,4 +86,7 @@ public class User {
         throw new UnsupportedOperationException("Unimplemented method 'setImage'");
     }
 
+	public Image getImage() {
+		return image;
+	}
 }

@@ -3,7 +3,6 @@ package es.codeurjc.daw.library.controller;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,23 +15,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import es.codeurjc.daw.library.model.Marble;
-import es.codeurjc.daw.library.model.Image;
+
+
 import es.codeurjc.daw.library.model.League;
-import es.codeurjc.daw.library.service.MarbleService;
-import es.codeurjc.daw.library.service.ImageService;
 import es.codeurjc.daw.library.service.LeagueService;
 
 @Controller
 public class LeagueController {
-
-	@Autowired
-	private MarbleService marbleService;
-
-	@Autowired
-	private ImageService imageService;
 
 	@Autowired
 	private LeagueService leagueService;
@@ -71,7 +61,6 @@ public class LeagueController {
 		} else {
 			return "league-view";
 		}
-
 	}
 
 	@PostMapping("/removeLeague/{id}")
@@ -97,7 +86,7 @@ public class LeagueController {
 	public String newLeague(Model model, League league,
 			@RequestParam String name) throws IOException {
         
-        league(name);
+        league = new League(name);
 
 		leagueService.save(league);
 
@@ -130,8 +119,6 @@ public class LeagueController {
 		} else {
 			return "league-view";
 		}
-
-		return "redirect:/league-view/" + league.getId();
 	}
 
 }

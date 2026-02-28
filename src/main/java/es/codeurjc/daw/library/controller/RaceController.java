@@ -3,7 +3,6 @@ package es.codeurjc.daw.library.controller;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,13 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
-import es.codeurjc.daw.library.model.Marble;
-import es.codeurjc.daw.library.model.Image;
 import es.codeurjc.daw.library.model.Race;
-import es.codeurjc.daw.library.service.MarbleService;
-import es.codeurjc.daw.library.service.ImageService;
 import es.codeurjc.daw.library.service.RaceService;
 
 @Controller
@@ -83,7 +76,7 @@ public class RaceController {
 	public String newRace(Model model, Race race,
 			@RequestParam String name) throws IOException {
         
-        race(name);
+        race = new Race(name);
 
 		raceService.save(race);
 
@@ -97,7 +90,6 @@ public class RaceController {
 			throws IOException, SQLException {
 
 		race.setName(name);
-        race.setName(status);
 
 		raceService.save(race);
 

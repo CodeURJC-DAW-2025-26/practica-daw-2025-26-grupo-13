@@ -3,7 +3,6 @@ package es.codeurjc.daw.library.controller;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,14 +15,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+//import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.daw.library.model.Marble;
+import es.codeurjc.daw.library.model.User;
 import es.codeurjc.daw.library.model.Image;
-import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.service.MarbleService;
-import es.codeurjc.daw.library.service.ImageService;
-import es.codeurjc.daw.library.service.MarbleService;
+//import es.codeurjc.daw.library.service.ImageService;
+
 
 @Controller
 public class MarbleController {
@@ -31,11 +30,8 @@ public class MarbleController {
 	@Autowired
 	private MarbleService marbleService;
 
-	@Autowired
-	private ImageService imageService;
-
-	@Autowired
-	private MarbleService marbleService;
+	//@Autowired
+	//private ImageService imageService;
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -87,9 +83,9 @@ public class MarbleController {
 
 	@PostMapping("/newMarble")
 	public String newMarble(Model model, Marble marble,
-			@RequestParam String name) throws IOException {
+			@RequestParam String name, User user, Image image) throws IOException {
         
-        marble(name);
+        marble = new Marble(name, image, user.getId());
 
 		marbleService.save(marble);
 
@@ -103,7 +99,6 @@ public class MarbleController {
 			throws IOException, SQLException {
 
 		marble.setName(name);
-        marble.setName(status);
 
 		marbleService.save(marble);
 
@@ -112,7 +107,7 @@ public class MarbleController {
 		return "redirect:/marble-view/" + marble.getId();
 	}
 
-	private void updateImage(Marble marble, boolean removeImage, MultipartFile imageField)
+	/*private void updateImage(Marble marble, boolean removeImage, MultipartFile imageField)
 			throws IOException, SQLException {
 
 		if (!imageField.isEmpty()) {
@@ -137,6 +132,6 @@ public class MarbleController {
 				marble.setImage(dbMarble.getImage());
 			}
 		}
-	}
+	} */
 
 }
