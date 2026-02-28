@@ -30,134 +30,31 @@
     <section class="py-5 bg-bajo-header" style="flex: 1;">
         <div class="container px-4 px-lg-5 ">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {{#Users}}
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Product image-->
-                        <img class="card-img-top" src="../images/anonymous-user.PNG" alt="..."  /> 
+                        <img class="card-img-top" src="../images/{{image}}" alt="..."  /> 
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <!-- Product name-->
-                                <h5 class="fw-bolder">(nombre usuario)</h5>
-                                <!-- Product price-->
-                                info usuario.
+                                <h5 class="fw-bolder">{{name}}</h5>
                             </div>
                         </div>
                         <!-- Product actions-->
                         <div class="card-body d-flex flex-column align-items-center gap-3">
-                            <button type="button" class="w-40 btn btn-lg btn-secondary" onclick=" "> Seleccionar</button>
-                            
+                            <button type="button" class="w-40 btn btn-lg btn-secondary" onclick="location.href='/user/{{id}}'"> Seleccionar</button>
                         </div>
                     </div>
                 </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="../images/anonymous-user.PNG" alt="..."  /> 
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">(nombre usuario)</h5>
-                                <!-- Product price-->
-                                info usuario.
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-body d-flex flex-column align-items-center gap-3">
-                            <button type="button" class="w-40 btn btn-lg btn-secondary" onclick=" "> Seleccionar</button>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="../images/anonymous-user.PNG" alt="..."  /> 
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">(nombre usuario)</h5>
-                                <!-- Product price-->
-                                info usuario.
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-body d-flex flex-column align-items-center gap-3">
-                            <button type="button" class="w-40 btn btn-lg btn-secondary" onclick=" "> Seleccionar</button>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="../images/anonymous-user.PNG" alt="..."  /> 
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">(nombre usuario)</h5>
-                                <!-- Product price-->
-                                info usuario.
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-body d-flex flex-column align-items-center gap-3">
-                            <button type="button" class="w-40 btn btn-lg btn-secondary" onclick=" "> Seleccionar</button>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="../images/anonymous-user.PNG" alt="..."  /> 
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">(nombre usuario)</h5>
-                                <!-- Product price-->
-                                info usuario.
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-body d-flex flex-column align-items-center gap-3">
-                            <button type="button" class="w-40 btn btn-lg btn-secondary" onclick=" "> Seleccionar</button>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="../images/anonymous-user.PNG" alt="..."  /> 
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">(nombre usuario)</h5>
-                                <!-- Product price-->
-                                info usuario.
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-body d-flex flex-column align-items-center gap-3">
-                            <button type="button" class="w-40 btn btn-lg btn-secondary" onclick=" "> Seleccionar</button>
-                            
-                        </div>
-                    </div>
-                </div>
-                
+                {{/Users}}
 
             </div>
 
             <div class="d-flex align-items-center justify-content-between w-100">
                 <!-- Botón izquierdo -->
-                <button type="button" class="btn btn-danger" onclick=" ">Atrás</button>
-                <!-- Botón derecho -->
+                <button type="button" class="btn btn-danger" onclick="location.href='/admin'">Atrás</button>
                 
             </div>
 
