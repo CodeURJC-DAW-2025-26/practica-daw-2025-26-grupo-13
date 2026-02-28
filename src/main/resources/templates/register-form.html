@@ -8,64 +8,40 @@
                 <div class="card-header py-3 text-bg-primary border-primary">
                     <h4 class="my-0 fw-normal text-center">Introduce tus datos de usuario</h4>
                 </div>
-                <br>
-                <div class="d-flex justify-content-center">
-                    <img src="../images/anonymous-user.png" alt="Logo app" class="me-3 rounded-circle"
-                        style="height:80px;">
-                </div>
-                <br>
-                <div class="d-flex boton-flex justify-content-center">
-                    <button type="button" class="btn btn-secondary" onclick=" ">Cargar imagen</button>
-                    <button type="button" class="btn btn-secondary" onclick=" ">Borrar imagen</button>
-                </div>
-                <div class="card-body">
+                
+                <form method="POST" action="/register" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center mb-3">
+                            <img src="/assets/images/no_image.png" alt="Foto de usuario" class="rounded-circle"
+                                style="height:80px; width:80px; object-fit:cover;">
+                        </div>
 
-                    <div class="col-12">
-                        <label for="username" class="form-label">Nombre de usuario: </label>
-                        <div class="input-group has-validation">
-                            <span class="input-group-text">@</span>
-                            <input type="text" class="form-control" id="name" placeholder="" required="">
-                            <div class="invalid-feedback">
-                                Se debe introducir un nombre de usuario.
+                        <div class="mb-3">
+                            <label for="imageField" class="form-label">Imagen de perfil:</label>
+                            <input type="file" name="imageField" id="imageField" class="form-control" accept=".jpg,.jpeg,.png" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre de usuario:</label>
+                            <div class="input-group">
+                                <span class="input-group-text">@</span>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Introduce tu nombre de usuario" required>
                             </div>
                         </div>
-                    </div>
-                    <br>
-                    <div class="col-12">
-                        <label for="password" class="form-label">Contraseña: </label>
-                        <div class="input-group has-validation">
 
-                            <input type="text" class="form-control" id="encodedpassword" placeholder="" required="">
-                            <div class="invalid-feedback">
-                                Se debe introducir una contraseña.
-                            </div>
+                        <div class="mb-3">
+                            <label for="encodedPassword" class="form-label">Contraseña:</label>
+                            <input type="password" class="form-control" id="encodedPassword" name="encodedPassword" placeholder="Introduce tu contraseña" required>
+                        </div>
+
+                        <div class="d-flex justify-content-center gap-2">
+                            <button type="submit" class="btn btn-success btn-lg" onclick="location.href='show-marbles-ab'">Registrarse</button>
+                            <a href="/" class="btn btn-secondary btn-lg">Cancelar</a>
                         </div>
                     </div>
-                    <br>
-                    <div class="col-12">
-                        <label for="message" class="form-label">Introduzca un mensaje en su perfil de usuario
-                            (opcional): </label>
-
-                        <div class="input-group has-validation">
-                            <input type="text" class="form-control" id="message" placeholder="" required="">
-
-                        </div>
-                    </div>
-                    <br>
-
-                    <div class="d-flex justify-content-center" id="container">
-                        <button type="button" class="btn btn-secondary me-2 btn-success"
-                            onclick="location.href='show-marbles-ab'">Aceptar</button>
-                    </div>
-                </div>
+                </form>
 
             </div>
-
-            <div class="d-flex align-items-center justify-content-between w-100">
-                <!-- Botón izquierdo -->
-                <button type="button" class="btn btn-danger" onclick=" ">Atrás</button>
-            </div>
-        </div>
 
         </div>
     </section>
