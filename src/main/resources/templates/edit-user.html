@@ -14,7 +14,12 @@
                         <div class="card-body p-5">
                             
                             <div class="text-center mb-4">
-                                <img src="/assets/images/no_image.png" alt="Foto de perfil" class="rounded-circle img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;">
+                                {{#user.image}}
+                                <img src="{{user.image}}" alt="Foto de perfil" class="rounded-circle img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;">
+                                {{/user.image}}
+                                {{^user.image}}
+                                <img src="../images/anonymous-user.PNG" alt="Foto de perfil" class="rounded-circle img-thumbnail" style="width: 150px; height: 150px; object-fit: cover;">
+                                {{/user.image}}
                                 <div class="mt-2">
                                     <button class="btn btn-sm btn-outline-secondary">Cambiar foto</button>
                                 </div>
@@ -24,7 +29,7 @@
                                 <div class="mb-3">
                                     <label for="username" class="form-label fw-bold">Nombre de usuario</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="username" value="Gin&Ron" readonly>
+                                        <input type="text" class="form-control" id="username"  placeholder="{{name}}" readonly>
                                         <button class="btn btn-outline-primary" type="button">
                                             <i class="bi bi-pencil"></i> Editar
                                         </button>
@@ -34,7 +39,7 @@
                                 <div class="mb-4">
                                     <label for="password" class="form-label fw-bold">Contraseña</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="password" value="qwe123" readonly>
+                                        <input type="text" class="form-control" id="password"  readonly>
                                         <button class="btn btn-outline-primary" type="button">
                                             <i class="bi bi-pencil"></i> Editar
                                         </button>
