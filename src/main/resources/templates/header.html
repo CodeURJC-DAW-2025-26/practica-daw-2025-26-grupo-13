@@ -79,7 +79,7 @@
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
                 <div class="d-flex align-items-center justify-content-center justify-content-xl-start">
-                    <img src="../images/marble-game.png" alt="Logo app" class="me-3 rounded" style="height:80px;">
+                    <img src="/assets/images/marble-game.png" alt="Logo app" class="me-3 rounded" style="height:80px;">
                     <h1 class="display-4 fw-bolder">MARBLE RUSH ARENA</h1>
                 </div>
             </div>
@@ -99,24 +99,24 @@
                         {{#logged}}
                             {{#admin}}
                             <span class="badge bg-danger d-flex align-items-center px-3">MODO ADMINISTRADOR</span>
-                            <button type="button" class="btn btn-primary">Página principal</button>
-                            <button type="button" class="btn btn-outline-light">Cerrar Sesión</button>
+                            <a href="/" class="btn btn-primary">Página principal</a>
+                            <a href="/logout" class="btn btn-outline-light">Cerrar Sesión</a>
                             {{/admin}}
                             <!--botones registrado-->
                             {{^admin}}
-                            <button type="button" class="btn btn-primary">Ver estadísticas</button>
-                            <button type="button" class="btn btn-primary">Ver ranking</button>
-                            <button type="button" class="btn btn-primary">Página principal</button>
-                            <button type="button" class="btn btn-primary">Editar perfil</button>
-                            <button type="button" class="btn btn-primary">Cerrar sesión</button>
+                            <a href="/statistics" class="btn btn-primary">Ver estadísticas</a>
+                            <a href="/user-ranking" class="btn btn-primary">Ver ranking</a>
+                            <a href="/" class="btn btn-primary">Página principal</a>
+                            <a href="/edit-user" class="btn btn-primary">Editar perfil</a>
+                            <a href="/logout" class="btn btn-primary">Cerrar sesión</a>
                             {{/admin}}
                         {{/logged}}
                         <!--botones anonimo-->
                         {{^logged}}
-                            <button type="button" class="btn btn-primary">Ver ranking</button>
-                            <button type="button" class="btn btn-primary">Página principal</button>
-                            <button type="button" class="btn btn-primary">Iniciar sesión</button>
-                            <button type="button" class="btn btn-primary">Registrarse</button>
+                            <a href="/user-ranking" class="btn btn-primary">Ver ranking</a>
+                            <a href="/" class="btn btn-primary">Página principal</a>
+                            <a href="/login" class="btn btn-primary">Iniciar sesión</a>
+                            <a href="/register" class="btn btn-primary">Registrarse</a>
                         {{/logged}}
 
                         
