@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Race {
@@ -20,6 +21,7 @@ public class Race {
 
 	private String name;
 
+	@Transient
 	private List<User> results; //ADD METHODS THAT CALCULATE RESULTS
 
     @ManyToMany

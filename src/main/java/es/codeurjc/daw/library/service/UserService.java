@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import jakarta.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,8 +22,6 @@ public class UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
-	@PostConstruct
 
     public Optional<User> findById(long id) {
 		return userRepository.findById(id);
