@@ -40,16 +40,17 @@ public class WebSecurityConfig {
 						// PUBLIC PAGES
 						.requestMatchers("/").permitAll()
 						.requestMatchers("/images/**").permitAll()
-						.requestMatchers("/login").permitAll()
+						.requestMatchers("/login-form").permitAll()
 						.requestMatchers("/ranking").permitAll()
 						.requestMatchers("/register").permitAll()
+						.requestMatchers("/show-marbles-ab").permitAll()
 						.requestMatchers("/assets/**").permitAll() // Allow access to static resources
 						.requestMatchers("/favicon.ico").permitAll()
 						// PRIVATE PAGES
 						.requestMatchers("/statistics").hasAnyRole("USER")
 						
-						.requestMatchers("/editbook").hasAnyRole("USER")
-						.requestMatchers("/editbook/*").hasAnyRole("USER")
+						.requestMatchers("/edit-user").hasAnyRole("USER")
+						.requestMatchers("/edit-marble").hasAnyRole("USER")
 						.requestMatchers("/removebook/*").hasAnyRole("ADMIN"))
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login")

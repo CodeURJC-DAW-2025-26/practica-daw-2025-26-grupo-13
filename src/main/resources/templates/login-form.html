@@ -6,42 +6,38 @@
                     <div class="card-header py-3 text-bg-primary border-primary">
                         <h4 class="my-0 fw-normal text-center">Introduce tus datos de usuario</h4>
                     </div>
-                    <div class="card-body">
+                    <form method="POST" action="/login">
+                        <div class="card-body">
+                            <input type="hidden" name="_csrf" value="{{token}}" />
 
-                        <div class="col-12">
-                            <label for="username" class="form-label">Nombre de usuario: </label>
-                            <div class="input-group has-validation">
-                                <span class="input-group-text">@</span>
-                                <input type="text" class="form-control" id="username" placeholder="" required="">
-                                <div class="invalid-feedback">
-                                    Se debe introducir un nombre de usuario.
+                            <div class="col-12">
+                                <label for="username" class="form-label">Nombre de usuario: </label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text">@</span>
+                                    <input type="text" class="form-control" id="username" name="username" required>
                                 </div>
                             </div>
-                        </div>
-                        <br>
-                        <div class="col-12">
-                            <label for="password" class="form-label">Contraseña: </label>
-                            <div class="input-group has-validation">
-
-                                <input type="text" class="form-control" id="password" placeholder="" required="">
-                                <div class="invalid-feedback">
-                                    Se debe introducir una contraseña.
+                            <br>
+                            <div class="col-12">
+                                <label for="password" class="form-label">Contraseña: </label>
+                                <div class="input-group has-validation">
+                                    <input type="password" class="form-control" id="password" name="password" required>
                                 </div>
                             </div>
+
+                            <br>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="w-40 btn btn-lg btn-success"> Aceptar </button>
+
+                            </div>
+
                         </div>
-
-                        <br>
-                        <div class="d-flex justify-content-center">
-                            <button type="button" class="w-40 btn btn-lg btn-success" onclick=" "> Aceptar </button>
-
-                        </div>
-
-                    </div>
+                    </form>
                 </div>
 
                 <div class="d-flex align-items-center justify-content-between w-100">
                     <!-- Botón izquierdo -->
-                    <button type="button" class="btn btn-danger" onclick=" ">Atrás</button>
+                    <a href="/" class="btn btn-danger">Atrás</a>
                 </div>
 
             </div>
