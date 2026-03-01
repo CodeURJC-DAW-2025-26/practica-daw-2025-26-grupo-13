@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
-import org.springframework.security.core.userdetails.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,9 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Transient;
-
-import es.codeurjc.daw.library.service.UserService;
-import es.codeurjc.daw.library.model.User;
 
 @Entity
 public class Race {
@@ -25,8 +21,6 @@ public class Race {
 	private Long id;
 
 	private String name;
-
-	private UserService userService;
 
 	@Transient
 	private List<User> results; //ADD METHODS THAT CALCULATE RESULTS
@@ -39,11 +33,8 @@ public class Race {
 
 	public Race(String name) {
 		this.name = name;
-		this.users = new ArrayList<>(6);
-		this.results = new ArrayList<>(6);
-		for (int i = 1; i <= 6; i++) {
-			this.users.add(userService.findById(i).orElse(null));//(new User("Usuario " + i, "1234")));
-		}
+		this.users = new ArrayList<>();
+		this.results = new ArrayList<>();
 	}
 
     public Long getId() {
