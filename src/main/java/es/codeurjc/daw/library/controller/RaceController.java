@@ -16,13 +16,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import es.codeurjc.daw.library.model.Race;
+import es.codeurjc.daw.library.repository.UserRepository;
 import es.codeurjc.daw.library.service.RaceService;
 
 @Controller
 public class RaceController {
 
+	private final UserRepository userRepository;
+
 	@Autowired
 	private RaceService raceService;
+
+	RaceController( UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -34,6 +41,7 @@ public class RaceController {
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
+			userRepository.findByName(principal.getName()).ifPresent(user -> model.addAttribute("userid", user.getId()));
 
 		} else {
 			model.addAttribute("logged", false);
@@ -41,7 +49,8 @@ public class RaceController {
 	}
 
 	@GetMapping("/race/{id}")
-	public String showBook(Model model, @PathVariable long id) {
+	public String showRace(Model model, @PathVariable long id) {
+
 
 		Optional<Race> race = raceService.findById(id);
 		if (race.isPresent()) {
