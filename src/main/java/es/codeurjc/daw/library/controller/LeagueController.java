@@ -49,7 +49,7 @@ public class LeagueController {
 	}
 
 	@GetMapping("/league/{id}")
-	public String showBook(Model model, @PathVariable long id) {
+	public String showLeague(Model model, @PathVariable long id) {
 
 		Optional<League> league = leagueService.findById(id);
 		if (league.isPresent()) {
@@ -58,12 +58,12 @@ public class LeagueController {
 			model.addAttribute("status", statusMsg);
 			return "league-view";
 		} else {
-			return "/";
+			return "redirect:/";
 		}
 	}
 
 	@PostMapping("/removeLeague/{id}")
-	public String removeleague(Model model, @PathVariable long id) {
+	public String removeLeague(Model model, @PathVariable long id) {
 
 		Optional<League> league = leagueService.findById(id);
 		if (league.isPresent()) {
@@ -95,7 +95,7 @@ public class LeagueController {
 	}
 
 	@PostMapping("/editLeague")
-	public String editBookProcess(Model model, League league, String name, boolean status)
+	public String editLeagueProcess(Model model, League league, String name, boolean status)
 			throws IOException, SQLException {
 
 		league.setName(name);

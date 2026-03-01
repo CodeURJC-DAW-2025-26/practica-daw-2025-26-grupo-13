@@ -21,7 +21,7 @@ public class LoginWebController {
 		return "login-form";
 	}
 
-	@GetMapping("/loginerror")
+	@GetMapping("/login-error")
 	public String loginerror() {
 		return "login-error";
 	}

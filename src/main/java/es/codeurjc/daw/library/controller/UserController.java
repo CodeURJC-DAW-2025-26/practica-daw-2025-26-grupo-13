@@ -106,7 +106,7 @@ public class UserController {
 		model.addAttribute("users", users);
 			return "user-ranking";
 	}  
-	@GetMapping("/estatistics/{id}")
+	@GetMapping("/statistics/{id}")
 	public String showUserStatistics(Model model, @PathVariable long id) {
 
 		Optional<User> user = userService.findById(id);
