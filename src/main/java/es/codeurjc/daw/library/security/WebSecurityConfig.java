@@ -43,6 +43,7 @@ public class WebSecurityConfig {
 						.requestMatchers("/login-form").permitAll()
 						.requestMatchers("/user-ranking").permitAll()
 						.requestMatchers("/league-view/*").permitAll()
+						.requestMatchers("/league/*").permitAll()
 						.requestMatchers("/race-view/*").permitAll()
 						.requestMatchers("/assets/**").permitAll()
 						.requestMatchers("/favicon.ico").permitAll()
