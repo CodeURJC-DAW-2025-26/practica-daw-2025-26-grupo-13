@@ -11,133 +11,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="css/custom.css" rel="stylesheet" />
-
-    <style>
-        /* Estilos específicos para el panel de administración */
-        .admin-btn {
-            height: 100px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 12px;
-        }
-
-        .admin-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .admin-btn i {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-        }
-
-        .section-title {
-            border-left: 4px solid #0d6efd;
-            padding-left: 10px;
-            margin: 20px 0 15px 0;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #495057;
-        }
-        /* Estilo para los contenedores de las ligas */
-        .league-card {
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-            border: 2px solid #dee2e6;
-            background: #f8f9fa;
-        }
-
-        .league-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
-            border-color: #0d6efd;
-        }
-
-        .league-icon {
-            font-size: 2.5rem;
-            color: #0d6efd;
-            margin-bottom: 10px;
-        }
-
-        .bg-under-header {
-            min-height: 60vh;
-        }
-        /* Estilo ranking */
-        .marble-entity {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            vertical-align: middle;
-            margin-right: 10px;
-            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-
-        /* Colores simulados para las canicas */
-        .m-red {
-            background: radial-gradient(circle at 30% 30%, #ff5e5e, #990000);
-        }
-
-        .m-blue {
-            background: radial-gradient(circle at 30% 30%, #5e8eff, #002f99);
-        }
-
-        .m-green {
-            background: radial-gradient(circle at 30% 30%, #5eff8e, #006622);
-        }
-
-        .m-gold {
-            background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b);
-        }
-
-        .m-purple {
-            background: radial-gradient(circle at 30% 30%, #d45eff, #4b0082);
-        }
-
-        /* Estilos para el podio */
-        .rank-1 {
-            color: #FFD700;
-            font-weight: bold;
-            font-size: 1.2em;
-            text-shadow: 1px 1px 0 #666;
-        }
-
-        /* Oro */
-        .rank-2 {
-            color: #C0C0C0;
-            font-weight: bold;
-            font-size: 1.1em;
-            text-shadow: 1px 1px 0 #666;
-        }
-
-        /* Plata */
-        .rank-3 {
-            color: #CD7F32;
-            font-weight: bold;
-            font-size: 1.1em;
-            text-shadow: 1px 1px 0 #666;
-        }
-
-    </style>
 </head>
 
 <body display="flex" class="bg-under-header d-flex flex-column min-vh-100">
 
 
 
-    <header class="bg-dark py-5">
-        <div class="container px-4 px-lg-5 my-5">
+    <header class="bg-dark py-3">
+        <div class="container px-4 px-lg-5 my-3">
             <div class="text-center text-white">
                 <div class="d-flex align-items-center justify-content-center justify-content-xl-start">
                     <img src="/assets/images/marble-game.png" alt="Logo app" class="me-3 rounded" style="height:80px;">
-                    <h1 class="display-4 fw-bolder">MARBLE RUSH ARENA</h1>
+                    <h1 class="display-6 fw-bolder">MARBLE RUSH ARENA</h1>
                 </div>
             </div>
         </div>
@@ -146,7 +31,7 @@
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="/" class="d-flex align-items-center my-2 my-lg-0 text-white text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                    <svg class="bi me-2" width="20" height="12" role="img" aria-label="Bootstrap">
                         <use xlink:href="#bootstrap"></use>
                     </svg>
                 </a>

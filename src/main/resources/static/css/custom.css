@@ -1,9 +1,10 @@
 .bg-dark {
   /* degradado azul oscuro */
   background: linear-gradient(to bottom, #0d2f66, #214ca8) !important;
+  
+  }
 
   
-}
 
 /* min-height: 400px;  
   display: flex;
@@ -16,3 +17,120 @@
   .boton-flex > button {
     margin-right: 10px;
   }
+
+/* ====== Estilos movidos desde templates/header.html ====== */
+.admin-btn {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 12px;
+}
+
+.admin-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.admin-btn i {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  border-left: 4px solid #0d6efd;
+  padding-left: 10px;
+  margin: 20px 0 15px 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #495057;
+}
+
+.league-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  border: 2px solid #dee2e6;
+  background: #f8f9fa;
+}
+
+.league-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+  border-color: #0d6efd;
+}
+
+.league-icon {
+  font-size: 2.5rem;
+  color: #0d6efd;
+  margin-bottom: 10px;
+}
+
+.bg-under-header {
+  min-height: 60vh;
+}
+
+.marble-entity {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 10px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.m-red { background: radial-gradient(circle at 30% 30%, #ff5e5e, #990000); }
+.m-blue { background: radial-gradient(circle at 30% 30%, #5e8eff, #002f99); }
+.m-green { background: radial-gradient(circle at 30% 30%, #5eff8e, #006622); }
+.m-gold { background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b); }
+.m-purple { background: radial-gradient(circle at 30% 30%, #d45eff, #4b0082); }
+
+.rank-1 { color: #FFD700; font-weight: bold; font-size: 1.2em; text-shadow: 1px 1px 0 #666; }
+.rank-2 { color: #C0C0C0; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 0 #666; }
+.rank-3 { color: #CD7F32; font-weight: bold; font-size: 1.1em; text-shadow: 1px 1px 0 #666; }
+
+/* ====== Estilos movidos desde templates/marbles-view.html ====== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; margin: 0; display: flex; flex-direction: column; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); flex: 1; }
+
+.container { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; max-width: 100px; }
+.canica-card { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.canica-image { width: 150px; height: 150px; max-width: 150px; max-height: 150px; border-radius: 50%; object-fit: cover; border: 5px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: transform 0.3s ease; }
+.canica-image:hover { transform: scale(1.05); }
+.btn-seleccionarA, .btn-seleccionarB { padding: 12px 30px; background-color: #fff; color: #667eea; border: none; border-radius: 25px; font-size: 16px; font-weight: 600; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; display: none; }
+.btn-seleccionarA:hover, .btn-seleccionarB:hover { background-color: #667eea; color: white; transform: translateY(-5px); box-shadow: 0 7px 20px rgba(0,0,0,0.3); }
+.btn-seleccionarA:active, .btn-seleccionarB:active { transform: translateY(0); }
+.buttons { margin-top: 20px; display: flex; gap: 12px; }
+.mostrar-botonesA .btn-seleccionarA { display: block; }
+.mostrar-botonesB .btn-seleccionarB { display: block; }
+.skibid { width: 20.5vw; height: 20.5vw; max-width: 20px; max-height: 20px; }
+
+/* ====== Utilidades para reemplazar estilos inline ====== */
+.flex-1 { flex: 1; }
+.profile-img { width: 30px; height: 30px; object-fit: cover; }
+.logo-img { height: 16px; width: 16px; max-height: 16px; max-width: 16px; object-fit: cover; display: inline-block; vertical-align: middle; }
+.logo-small { height: 30px; width: 30px; object-fit: cover; }
+.padding-20 { padding: 20px !important; }
+.center-items { align-items: center; }
+.w-10p { width: 10% !important; }
+.w-60p { width: 60% !important; }
+.w-30p { width: 30% !important; }
+.stats-title { text-align: center; font-size: 70px; display: block; }
+.mt-3ex { margin-top: 3ex; }
+
+/* Clases adicionales usadas en templates (aliases y utilidades) */
+.bg-bajo-header { background-color: lightblue; }
+
+.btn-nowrap { white-space: nowrap; }
+
+.w-40 { width: 40% !important; }
+
+.input-league { max-width: 100px; margin: 0.6rem auto; }
+
