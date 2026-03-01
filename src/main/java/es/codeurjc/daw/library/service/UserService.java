@@ -46,7 +46,9 @@ public class UserService {
 	public void delete(long id) {
 		userRepository.deleteById(id);
 	}
-	
+	public String encodePassword(String rawPassword) {
+		return passwordEncoder.encode(rawPassword);
+	}
 
 	public void save(User user) {
 		if (user.getRoles() == null || user.getRoles().isEmpty()) {

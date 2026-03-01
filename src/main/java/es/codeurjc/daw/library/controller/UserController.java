@@ -89,9 +89,9 @@ public class UserController {
 	@GetMapping("/edit-user/{id}")
 	public String showUser(Model model, @PathVariable long id) {
 
-		Optional<User> user = userService.findById(id);
-		if (user.isPresent()) {
-			model.addAttribute("user", user.get());
+		Optional<User> User = userService.findById(id);
+		if (User.isPresent()) {
+			model.addAttribute("User", User.get());
 			return "edit-user";
 		} else {
 			return "redirect:/login-form";
@@ -106,9 +106,9 @@ public class UserController {
 			return "redirect:/login-form";
 		}
 
-		Optional<User> user = userService.findByName(principal.getName());
-		if (user.isPresent()) {
-			model.addAttribute("user", user.get());
+		Optional<User> User = userService.findByName(principal.getName());
+		if (User.isPresent()) {
+			model.addAttribute("User", User.get());
 			return "edit-user";
 		}
 
@@ -116,14 +116,21 @@ public class UserController {
 	}
 
     @PostMapping("/edit-user")
-	public String editUserProcess(Model model, User user, boolean removeImage, MultipartFile imageField)
+	public String editUserProcess(Model model, User user, String password, boolean removeImage, MultipartFile imageField)
 			throws IOException, SQLException {
 
+		if (password != null && !password.isEmpty()) {
+			user.setEncodedPassword(userService.encodePassword(password));
+		}
+		else {
+			User dbUser = userService.findById(user.getId()).orElseThrow();
+			user.setEncodedPassword(dbUser.getEncodedPassword());
+		}
+
 		updateImage(user, removeImage, imageField);
-
+				
 		userService.save(user);
-
-		model.addAttribute("userId", user.getId());
+		model.addAttribute("username", user.getName());
 
 		return "redirect:/";
 	}
