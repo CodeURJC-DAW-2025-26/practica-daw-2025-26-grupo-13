@@ -50,10 +50,10 @@
                             {{/admin}}
                             <!--botones registrado-->
                             {{^admin}}
-                            <a href="/statistics" class="btn btn-primary">Ver estadísticas</a>
+                            <a href="/statistics/{{userid}}" class="btn btn-primary">Ver estadísticas</a>
                             <a href="/user-ranking" class="btn btn-primary">Ver ranking</a>
                             <a href="/" class="btn btn-primary">Página principal</a>
-                            <a href="/edit-user" class="btn btn-primary">Editar perfil</a>
+                            <a href="/edit-user/{{userid}}" class="btn btn-primary">Editar perfil</a>
                             <form action="/logout" method="post" class="d-inline">
                                 <button class="btn btn-primary btn-nowrap" type="submit">Cerrar Sesión</button>
                                 <input type="hidden" name="_csrf" value="{{token}}" />

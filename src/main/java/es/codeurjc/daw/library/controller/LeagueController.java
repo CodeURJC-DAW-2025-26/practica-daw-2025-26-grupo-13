@@ -15,14 +15,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.daw.library.model.League;
+import es.codeurjc.daw.library.repository.UserRepository;
 import es.codeurjc.daw.library.service.LeagueService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class LeagueController {
 
+    private final UserRepository userRepository;
+
+
 	@Autowired
 	private LeagueService leagueService;
+
+    LeagueController( UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -30,10 +38,10 @@ public class LeagueController {
 		Principal principal = request.getUserPrincipal();
 
 		if (principal != null) {
-
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
+			userRepository.findByName(principal.getName()).ifPresent(user -> model.addAttribute("userid", user.getId()));
 
 		} else {
 			model.addAttribute("logged", false);

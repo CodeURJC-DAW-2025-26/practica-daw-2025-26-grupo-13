@@ -22,6 +22,7 @@ import es.codeurjc.daw.library.model.Image;
 import es.codeurjc.daw.library.model.User;
 import es.codeurjc.daw.library.service.ImageService;
 import es.codeurjc.daw.library.service.UserService;
+import es.codeurjc.daw.library.repository.UserRepository;
 
 
 @Controller
@@ -31,6 +32,9 @@ public class UserController {
 	private ImageService imageService;
     @Autowired
 	private UserService userService;
+    @Autowired
+	private UserRepository userRepository;
+
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -41,6 +45,7 @@ public class UserController {
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
+			userRepository.findByName(principal.getName()).ifPresent(user -> model.addAttribute("userid", user.getId()));
 
 		} else {
 			model.addAttribute("logged", false);
