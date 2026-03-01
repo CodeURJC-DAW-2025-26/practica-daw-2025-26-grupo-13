@@ -1,10 +1,13 @@
 {{>header}}
+<form action="/edit-user" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" value="{{token}}" />
+    <input type="hidden" name="id" value="{{User.id}}" />
 
     <div class="container px-4 px-lg-5 my-3 text-center">
         <h1 class="fw-bolder">Editar Perfil</h1>     
     </div>
 
-
+    
     <section class="py-5 bg-bajo-header flex-1">
         <div class="container px-4 px-lg-5">
             
@@ -14,35 +17,50 @@
                         <div class="card-body p-5">
                             {{#user}}
                             <div class="text-center mb-4">
-                                <div class="mt-2">
-                                    <button class="btn btn-sm btn-outline-secondary">Cambiar foto</button>
-                                </div>
-                            </div>
+                                {{#User}}
+                                    {{#Image}}
+                                        <img src="/images/{{id}}" alt="Imagen de perfil" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                                        <div class="form-check">
+                                        <input type="checkbox" name="removeImage" class="form-check-input" id="removeImage">
+                                        <label class="form-check-label" for="removeImage">Remove Image</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="updateImage" class="form-label">Update Image</label>
+                                        </div>
+                                    {{/Image}}
+                                    {{^Image}}
+                                    <img src="/assets/images/no_image.png"  class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                                        <div class="mb-3">
+                                                <label for="updateImage" class="form-label">Upload Image</label>
+                                        </div>
+                                    {{/Image}}
 
-                            <form>
+                                    <input type="file" name="imageField" accept=".jpg, .jpeg" class="form-control mb-3" />
+                                {{/User}}
+
+                            </div>
                                 <div class="mb-3">
                                     <label for="username" class="form-label fw-bold">Nombre de usuario</label>
                                     <div class="input-group">
-                                        <button class="btn btn-outline-primary" type="button">
-                                            <i class="bi bi-pencil"></i> Editar
-                                        </button>
+                                        <input type="text" name="name" class="form-control" id="name" value="{{User.name}}">
                                     </div>
                                 </div>
 
                                 <div class="mb-4">
                                     <label for="password" class="form-label fw-bold">Contraseña</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="password"  readonly>
-                                        <button class="btn btn-outline-primary" type="button">
-                                            <i class="bi bi-pencil"></i> Editar
-                                        </button>
+                                        <input type="text" name="password" class="form-control" id="password">
+                                        
                                     </div>
                                 </div>
 
                                 <hr class="my-4">
 
                                 <div class="d-grid gap-2">
-                                    <button type="button" class="btn btn-danger btn-lg">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="bi bi-pencil"></i> Editar Cuenta
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-lg" onclick="DeleteUser()">
                                         <i class="bi bi-trash"></i> Eliminar Cuenta
                                     </button>
                                 </div>
@@ -60,5 +78,6 @@
 
         </div>
     </section>
+</form>
 
     {{>footer}}
