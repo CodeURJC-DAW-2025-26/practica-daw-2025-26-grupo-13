@@ -27,8 +27,23 @@ public class RepositoryUserDetailsService implements UserDetailsService {
 				.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
 		List<GrantedAuthority> roles = new ArrayList<>();
-		for (String role : user.getRoles()) {
-			roles.add(new SimpleGrantedAuthority("ROLE_" + role));
+		if (user.getRoles() != null) {
+			for (String role : user.getRoles()) {
+				if (role == null || role.isBlank()) {
+					continue;
+				}
+
+				String normalizedRole = role.trim().toUpperCase();
+				if (!normalizedRole.startsWith("ROLE_")) {
+					normalizedRole = "ROLE_" + normalizedRole;
+				}
+
+				roles.add(new SimpleGrantedAuthority(normalizedRole));
+			}
+		}
+
+		if (roles.isEmpty()) {
+			roles.add(new SimpleGrantedAuthority("ROLE_USER"));
 		}
 
 		return new org.springframework.security.core.userdetails.User(user.getName(), 
