@@ -42,9 +42,8 @@ public class WebSecurityConfig {
 						.requestMatchers("/register").permitAll()
 						.requestMatchers("/login-form").permitAll()
 						.requestMatchers("/user-ranking").permitAll()
-						.requestMatchers("/league-view/*").permitAll()
 						.requestMatchers("/league/*").permitAll()
-						.requestMatchers("/race-view/*").permitAll()
+						.requestMatchers("/race/*").permitAll()
 						.requestMatchers("/assets/**").permitAll()
 						.requestMatchers("/favicon.ico").permitAll()
 						// PRIVATE PAGES
