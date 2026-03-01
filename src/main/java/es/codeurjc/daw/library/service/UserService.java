@@ -35,19 +35,33 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
+	public boolean existByName(String name) {
+		return userRepository.existsByName(name);
+	}
+
 	public void delete(long id) {
 		userRepository.deleteById(id);
 	}
 	
 
 	public void save(User user) {
-        user.setEncodedPassword(passwordEncoder.encode(user.getEncodedPassword()));
+		if (user.getEncodedPassword() != null && !isEncodedPassword(user.getEncodedPassword())) {
+			user.setEncodedPassword(passwordEncoder.encode(user.getEncodedPassword()));
+		}
 		userRepository.save(user);
 	}
 
+	public User registerUser(User user) {
+		user.setRoles(List.of("USER"));
+		user.setEncodedPassword(passwordEncoder.encode(user.getEncodedPassword()));
+		return userRepository.save(user);
+	}
+
 	public void setUserImage(User user, Image image) throws IOException {
-	
 		user.setImage(image);
-		userRepository.save(user);
+	}
+
+	private boolean isEncodedPassword(String password) {
+		return password.startsWith("$2a$") || password.startsWith("$2b$") || password.startsWith("$2y$");
 	}
 }
