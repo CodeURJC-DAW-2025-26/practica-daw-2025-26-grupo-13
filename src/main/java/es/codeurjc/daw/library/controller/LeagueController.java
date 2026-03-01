@@ -68,16 +68,8 @@ public class LeagueController {
 			String statusMsg = league.get().getStatus() ? "Abierta" : "Finalizada";
 			model.addAttribute("status", statusMsg);
 
-			model.addAttribute("prueba", "GETMAP ACTIVADO");
-
 			List<Race> races = league.get().getRaces();
 			model.addAttribute("races", races);
-			model.addAttribute("race1", races.get(1));
-			model.addAttribute("race2", races.get(2));
-			model.addAttribute("race3", races.get(3));
-			model.addAttribute("race4", races.get(4));
-			model.addAttribute("race5", races.get(5));
-			model.addAttribute("race6", races.get(6));
 
 			return "league-view";
 		} else {
