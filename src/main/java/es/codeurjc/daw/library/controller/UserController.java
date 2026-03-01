@@ -87,8 +87,11 @@ public class UserController {
 	
 
 	@GetMapping("/edit-user/{id}")
-	public String showUser(Model model, @PathVariable long id) {
+	public String showUser(Model model, Principal principal, @PathVariable long id) {
 
+		if (principal == null) {
+			return "redirect:/login-form";
+		}
 		Optional<User> User = userService.findById(id);
 		if (User.isPresent()) {
 			model.addAttribute("User", User.get());

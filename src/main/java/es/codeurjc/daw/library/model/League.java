@@ -36,7 +36,10 @@ public class League {
 	public League(String name) {
 		super();
 		this.name = name;
-		this.races = new ArrayList<Race>(6);
+		this.races = new ArrayList<Race>();
+		for (int i = 1; i <= 6; i++) {
+			this.races.add(new Race("Carrera " + i));
+		}
         this.comments = new ArrayList<>();
         this.status = true;
 	}
