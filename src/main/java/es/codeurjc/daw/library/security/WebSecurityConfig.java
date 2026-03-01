@@ -40,7 +40,6 @@ public class WebSecurityConfig {
 						// PUBLIC PAGES
 						.requestMatchers("/").permitAll()
 						.requestMatchers("/register").permitAll()
-						.requestMatchers("/login-form").permitAll()
 						.requestMatchers("/user-ranking").permitAll()
 						.requestMatchers("/league/*").permitAll()
 						.requestMatchers("/race/*").permitAll()
@@ -55,9 +54,8 @@ public class WebSecurityConfig {
 						.requestMatchers("/user-list", "/user-list/").hasAnyRole("ADMIN"))
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login-form")
-						.loginProcessingUrl("/login-form")
 						.failureUrl("/login-error")
-						.defaultSuccessUrl("/")
+						.defaultSuccessUrl("/", true)
 						.permitAll())
 				.logout(logout -> logout
 						.logoutUrl("/logout")

@@ -142,14 +142,14 @@ public class UserController {
 		model.addAttribute("users", users);
 			return "user-ranking";
 	}  
-	@GetMapping("/statistics")
-	public String showUserStatistics(Model model, Principal principal) {
+	@GetMapping("/statistics/{id}")
+	public String showUserStatistics(Model model, Principal principal, @PathVariable long id) {
 
 		if (principal == null) {
 			return "redirect:/login-form";
 		}
 
-		Optional<User> user = userService.findByName(principal.getName());
+		Optional<User> user = userService.findById(id);
 		if (user.isPresent()) {
 			model.addAttribute("user", user.get());
 			return "statistics";
