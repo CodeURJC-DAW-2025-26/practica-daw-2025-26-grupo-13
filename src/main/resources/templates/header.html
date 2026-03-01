@@ -156,8 +156,12 @@
                         {{#logged}}
                             {{#admin}}
                             <span class="badge bg-danger d-flex align-items-center px-3">MODO ADMINISTRADOR</span>
+                            <a href="/user-ranking" class="btn btn-primary">Ver ranking</a>
                             <a href="/" class="btn btn-primary">Página principal</a>
-                            <a href="/logout" class="btn btn-outline-light">Cerrar Sesión</a>
+                            <form action="/logout" method="post" class="d-inline">
+                                <button class="btn btn-primary btn-nowrap" type="submit">Cerrar Sesión</button>
+                                <input type="hidden" name="_csrf" value="{{token}}" />
+                            </form>
                             {{/admin}}
                             <!--botones registrado-->
                             {{^admin}}

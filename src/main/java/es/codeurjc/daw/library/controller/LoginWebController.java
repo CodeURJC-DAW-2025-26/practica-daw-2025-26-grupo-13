@@ -25,7 +25,7 @@ public class LoginWebController {
 	public String loginerror() {
 		return "login-error";
 	}
-
+	/* 
 	@PostMapping("/logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response,
 				RedirectAttributes redirectAttributes) {
@@ -50,5 +50,6 @@ public class LoginWebController {
 
 		return "redirect:/";
 	}
+		*/
 	
 }
