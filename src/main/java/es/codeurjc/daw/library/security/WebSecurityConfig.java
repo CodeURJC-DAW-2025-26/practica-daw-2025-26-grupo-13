@@ -44,7 +44,7 @@ public class WebSecurityConfig {
 						.requestMatchers("/user-ranking").permitAll()
 						.requestMatchers("/league-view/*").permitAll()
 						.requestMatchers("/race-view/*").permitAll()
-						.requestMatchers("/images/**").permitAll()
+						.requestMatchers("/assets/**").permitAll()
 						.requestMatchers("/favicon.ico").permitAll()
 						// PRIVATE PAGES
 						.requestMatchers("/statistics/*").hasAnyRole("USER")
