@@ -12,14 +12,8 @@
                 <div class="col-lg-6 col-md-8">
                     <div class="card shadow-sm border-0">
                         <div class="card-body p-5">
-                            
+                            {{#user}}
                             <div class="text-center mb-4">
-                                {{#user.image}}
-                                <img src="{{user.image}}" alt="Foto de perfil" class="rounded-circle img-thumbnail profile-img">
-                                {{/user.image}}
-                                {{^user.image}}
-                                <img src="../images/anonymous-user.PNG" alt="Foto de perfil" class="rounded-circle img-thumbnail profile-img">
-                                {{/user.image}}
                                 <div class="mt-2">
                                     <button class="btn btn-sm btn-outline-secondary">Cambiar foto</button>
                                 </div>
@@ -29,7 +23,6 @@
                                 <div class="mb-3">
                                     <label for="username" class="form-label fw-bold">Nombre de usuario</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="username"  placeholder="{{name}}" readonly>
                                         <button class="btn btn-outline-primary" type="button">
                                             <i class="bi bi-pencil"></i> Editar
                                         </button>
@@ -55,6 +48,7 @@
                                 </div>
 
                             </form>
+                            {{/user}}
                         </div>
                     </div>
                 </div>
