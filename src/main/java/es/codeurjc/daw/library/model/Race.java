@@ -5,12 +5,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.userdetails.User;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Transient;
+
+import es.codeurjc.daw.library.service.UserService;
+import es.codeurjc.daw.library.model.User;
 
 @Entity
 public class Race {
@@ -20,6 +25,8 @@ public class Race {
 	private Long id;
 
 	private String name;
+
+	private UserService userService;
 
 	@Transient
 	private List<User> results; //ADD METHODS THAT CALCULATE RESULTS
@@ -32,8 +39,11 @@ public class Race {
 
 	public Race(String name) {
 		this.name = name;
-		this.users = new ArrayList<>();
-		this.results = new ArrayList<>();
+		this.users = new ArrayList<>(6);
+		this.results = new ArrayList<>(6);
+		for (int i = 1; i <= 6; i++) {
+			this.users.add(userService.findById(i).orElse(null));//(new User("Usuario " + i, "1234")));
+		}
 	}
 
     public Long getId() {
@@ -64,6 +74,10 @@ public class Race {
 		this.users.remove(user);
 	}
 
+	public List<User> getResults() {
+		return results;
+	}
+
 	public List<User> calculateResults(List<User> results) {
 		// if you only want this for races with
 		// exactly eight participants you can add a size check here.
@@ -73,9 +87,7 @@ public class Race {
 		return results;
 	}
 
-	/**
-	 * Helper for templates: returns at most three users from the current results.
-	 */
+	/* Helper for templates: returns at most three users from the current results. */
 	public List<User> getTopThreeResults() {
 		if (this.results == null) {
 			return Collections.emptyList();
