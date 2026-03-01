@@ -55,9 +55,9 @@ public class MarbleController {
 		Optional<Marble> marble = marbleService.findById(id);
 		if (marble.isPresent()) {
 			model.addAttribute("marble", marble.get());
-			return "marble";
+			return "marbles-view";
 		} else {
-			return "marble-view";
+			return "redirect:/";
 		}
 
 	}
@@ -70,7 +70,7 @@ public class MarbleController {
 			marbleService.delete(id);
 			model.addAttribute("marble", marble.get());
 		}
-		return "marble-removed";
+		return "redirect:/";
 	}
 
 	@GetMapping("/listMarbles")
@@ -78,7 +78,7 @@ public class MarbleController {
 
 		model.addAttribute("marbleList", marbleService.findAll());
 
-		return "marble-list";
+		return "marbles-view";
 	}
 
 	@PostMapping("/newMarble")
@@ -91,7 +91,7 @@ public class MarbleController {
 
 		model.addAttribute("marbleId", marble.getId());
 
-		return "redirect:/marble-view/" + marble.getId();
+		return "redirect:/marble/" + marble.getId();
 	}
 
 	@PostMapping("/editMarble")
@@ -104,7 +104,7 @@ public class MarbleController {
 
 		model.addAttribute("marbleId", marble.getId());
 
-		return "redirect:/marble-view/" + marble.getId();
+		return "redirect:/marble/" + marble.getId();
 	}
 
 	/*private void updateImage(Marble marble, boolean removeImage, MultipartFile imageField)

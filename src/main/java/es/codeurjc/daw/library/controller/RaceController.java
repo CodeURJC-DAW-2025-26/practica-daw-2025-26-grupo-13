@@ -64,12 +64,12 @@ public class RaceController {
 		return "redirect:/";
 	}
 
-	@GetMapping("/listRaces")
+	@GetMapping({ "/race-list", "/listRaces" })
 	public String listRaces(Model model) {
 
 		model.addAttribute("raceList", raceService.findAll());
 
-		return "race-list";
+		return "redirect:/";
 	}
 
 	@PostMapping("/newRace")
@@ -82,7 +82,7 @@ public class RaceController {
 
 		model.addAttribute("raceId", race.getId());
 
-		return "redirect:/race-view/" + race.getId();
+		return "redirect:/race/" + race.getId();
 	}
 
 	@PostMapping("/editRace")
@@ -95,7 +95,7 @@ public class RaceController {
 
 		model.addAttribute("raceId", race.getId());
 
-		return "redirect:/race-view/" + race.getId();
+		return "redirect:/race/" + race.getId();
 	}
 
 	@GetMapping("/playRace/{id}")
@@ -104,9 +104,9 @@ public class RaceController {
 		Optional<Race> race = raceService.findById(id);
 		if (race.isPresent()) {
 			model.addAttribute("race", race.get());
-			return "race";
-		} else {
 			return "race-view";
+		} else {
+			return "redirect:/";
 		}
 
 	}

@@ -81,12 +81,17 @@ public class LeagueController {
 		return "league-removed";
 	}
 
-	@GetMapping("/listLeagues")
+	@GetMapping({ "/league-list", "/listLeagues" })
 	public String listLeagues(Model model) {
 
 		model.addAttribute("leagueList", leagueService.findAll());
 
 		return "league-list";
+	}
+
+	@GetMapping("/create-league")
+	public String showCreateLeagueForm() {
+		return "create-league";
 	}
 
 	@PostMapping("/newLeague")
@@ -99,7 +104,7 @@ public class LeagueController {
 
 		model.addAttribute("leagueId", league.getId());
 
-		return "redirect:/league-view/" + league.getId();
+		return "redirect:/league/" + league.getId();
 	}
 
 	@PostMapping("/editLeague")
@@ -113,7 +118,7 @@ public class LeagueController {
 
 		model.addAttribute("leagueId", league.getId());
 
-		return "redirect:/league-view/" + league.getId();
+		return "redirect:/league/" + league.getId();
 	}
 
 	@GetMapping("/playLeague/{id}")
@@ -122,9 +127,9 @@ public class LeagueController {
 		Optional<League> league = leagueService.findById(id);
 		if (league.isPresent()) {
 			model.addAttribute("league", league.get());
-			return "league";
-		} else {
 			return "league-view";
+		} else {
+			return "redirect:/";
 		}
 	}
 

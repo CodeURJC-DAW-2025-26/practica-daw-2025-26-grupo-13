@@ -6,9 +6,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +20,8 @@ import es.codeurjc.daw.library.model.User;
 import es.codeurjc.daw.library.service.ImageService;
 import es.codeurjc.daw.library.service.UserService;
 import es.codeurjc.daw.library.repository.UserRepository;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -95,9 +94,25 @@ public class UserController {
 			model.addAttribute("user", user.get());
 			return "edit-user";
 		} else {
-			return "redirect:/login";
+			return "redirect:/login-form";
 		}
 
+	}
+
+	@GetMapping("/edit-user")
+	public String showCurrentUser(Model model, Principal principal) {
+
+		if (principal == null) {
+			return "redirect:/login-form";
+		}
+
+		Optional<User> user = userService.findByName(principal.getName());
+		if (user.isPresent()) {
+			model.addAttribute("user", user.get());
+			return "edit-user";
+		}
+
+		return "redirect:/login-form";
 	}
 
     @PostMapping("/edit-user")
@@ -110,7 +125,7 @@ public class UserController {
 
 		model.addAttribute("userId", user.getId());
 
-		return "redirect:/home/" + user.getId();
+		return "redirect:/";
 	}
     @GetMapping("/user-list")
 	public String showUserList(Model model) {
@@ -127,15 +142,19 @@ public class UserController {
 		model.addAttribute("users", users);
 			return "user-ranking";
 	}  
-	@GetMapping("/statistics/{id}")
-	public String showUserStatistics(Model model, @PathVariable long id) {
+	@GetMapping("/statistics")
+	public String showUserStatistics(Model model, Principal principal) {
 
-		Optional<User> user = userService.findById(id);
+		if (principal == null) {
+			return "redirect:/login-form";
+		}
+
+		Optional<User> user = userService.findByName(principal.getName());
 		if (user.isPresent()) {
 			model.addAttribute("user", user.get());
-			return "user-statistics";
+			return "statistics";
 		} else {
-			return "redirect:/login";
+			return "redirect:/login-form";
 		}
 
 	}
