@@ -31,12 +31,26 @@ public class DatabaseInitializer {
 	@PostConstruct
 	public void init() throws IOException {
 
-		// Create two users
+		// Create eight normal users and one admin user
 		User u1 = new User("manolo", passwordEncoder.encode("qwer"), "USER");
-		User u2 = new User("pepe", passwordEncoder.encode("1234"), "ADMIN");
+		User u2 = new User("jora", passwordEncoder.encode("1234"), "USER");
+		User u3 = new User("juan", passwordEncoder.encode("5678"), "USER");
+		User u4 = new User("ana", passwordEncoder.encode("abcd"), "USER");
+		User u5 = new User("luis", passwordEncoder.encode("efgh"), "USER");
+		User u6 = new User("maria", passwordEncoder.encode("ijkl"), "USER");
+		User u7 = new User("carlos", passwordEncoder.encode("mnop"), "USER");
+		User u8 = new User("sara", passwordEncoder.encode("qrst"), "USER");
+		User u9 = new User("pepe", passwordEncoder.encode("1234"), "ADMIN");
 
 		userRepository.save(u1);
 		userRepository.save(u2);
+		userRepository.save(u3);
+		userRepository.save(u4);
+		userRepository.save(u5);
+		userRepository.save(u6);
+		userRepository.save(u7);
+		userRepository.save(u8);
+		userRepository.save(u9);
 
 		// Create one marble for each user (no image)
 		Marble m1 = new Marble("Canica Manolo", null, u1.getId());
