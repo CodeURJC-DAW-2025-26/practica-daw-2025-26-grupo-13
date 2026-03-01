@@ -1,40 +1,32 @@
 {{>header}}
-    <div class="container px-4 px-lg-5 my-3 text-center">
 
-                <h1 class="fw-bolder">(Nombre carrera)</h1>
-                
+    <div class="container px-4 px-lg-5 my-3 text-center">
+        <h1 class="fw-bolder">{{name}}</h1>                
     </div>
 
-
-    <!-- Section-->
     <section class="py-3 bg-under-header flex-1">
         
-                            <div class="text-center">
-                       
-                                <h5 class="fw-bolder">Ganador : (nombre ganador/canica) </h5>
-                            </div>
-                            <div class="py-5 text-center">
-                                <h5 class="fw-bolder">Posicion 2: (nombre usuario/canica)</h5>
-                              
-                                <h5 class="fw-bolder">Posicion 3: (nombre usuario/canica)</h5>
-                               
-                                <h5 class="fw-bolder">Posicion 4: (nombre usuario/canica)</h5>
-                              
-                                <h5 class="fw-bolder">Posicion 5: (nombre usuario/canica)</h5>
-                                
-                                <h5 class="fw-bolder">Posicion 6: (nombre usuario/canica)</h5>
-                               
-                                <h5 class="fw-bolder">Posicion 7: (nombre usuario/canica)</h5>
-                                
-                                <h5 class="fw-bolder">Posicion 8: (nombre usuario/canica)</h5>
-                                
-                            </div>
-                <div class="d-flex align-items-center justify-content-between w-100 px-4">
-                    <!-- Botón izquierdo -->
-                    <button type="button" class="btn btn-danger" onclick="window.location.href='league-selection-list.html'">Atrás</button>
-                </div>
+        <div class="text-center">
+        
+            <h5 class="fw-bolder">Ganador: {{winnerName}} </h5>
+        </div>
 
-                            
+        {{#results}}
+        <div class="py-5 text-center">
+            <h5 class="fw-bolder">Posición ? : {{name}} </h5>
+            <ul>
+                <li>{{name}}</li>
+            </ul>
+            <ol>
+                <li>{{name}}</li>
+            </ol>
+        </div>
+        {{/results}}
+
+        <div class="d-flex align-items-center justify-content-between w-100 px-4">
+            <button type="button" class="btn btn-danger"
+                onclick="window.history.back()">Atrás</button>
+        </div>
                         
     </section>
     
