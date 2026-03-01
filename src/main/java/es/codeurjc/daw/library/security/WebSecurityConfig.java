@@ -41,7 +41,7 @@ public class WebSecurityConfig {
 						.requestMatchers("/").permitAll()
 						.requestMatchers("/images/**").permitAll()
 						.requestMatchers("/login-form").permitAll()
-						.requestMatchers("/ranking").permitAll()
+						.requestMatchers("/user-ranking").permitAll()
 						.requestMatchers("/register").permitAll()
 						.requestMatchers("/show-marbles-ab").permitAll()
 						.requestMatchers("/assets/**").permitAll() // Allow access to static resources

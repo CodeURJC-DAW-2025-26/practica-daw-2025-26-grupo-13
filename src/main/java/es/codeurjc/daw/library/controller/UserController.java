@@ -37,7 +37,6 @@ public class UserController {
 		Principal principal = request.getUserPrincipal();
 
 		if (principal != null) {
-
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
@@ -80,6 +79,7 @@ public class UserController {
 		}
 
 	}
+
     @PostMapping("/edit-user")
 	public String editUserProcess(Model model, User user, boolean removeImage, MultipartFile imageField)
 			throws IOException, SQLException {
@@ -98,8 +98,26 @@ public class UserController {
 		List<User> users = userService.findAll();
 		model.addAttribute("users", users);
 			return "user-list";
-	} 
-	
+	}
+	@GetMapping("/user-ranking")
+	public String showUserRanking(Model model) {
+
+		List<User> users = userService.findAll();  // Aquí puedes implementar la lógica para ordenar a los usuarios por su puntuación
+		model.addAttribute("users", users);
+			return "user-ranking";
+	}  
+	@GetMapping("/estatistics/{id}")
+	public String showUserStatistics(Model model, @PathVariable long id) {
+
+		Optional<User> user = userService.findById(id);
+		if (user.isPresent()) {
+			model.addAttribute("user", user.get());
+			return "user-statistics";
+		} else {
+			return "redirect:/login";
+		}
+
+	}
 
 
 	private void updateImage(User user, boolean removeImage, MultipartFile imageField)

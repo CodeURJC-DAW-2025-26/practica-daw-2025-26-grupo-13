@@ -33,7 +33,7 @@ public class DatabaseInitializer {
 
 		// Create two users
 		User u1 = new User("manolo", passwordEncoder.encode("qwer"), "USER");
-		User u2 = new User("pepe", passwordEncoder.encode("1234"), "USER");
+		User u2 = new User("pepe", passwordEncoder.encode("1234"), "ADMIN");
 
 		userRepository.save(u1);
 		userRepository.save(u2);

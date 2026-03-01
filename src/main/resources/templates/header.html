@@ -68,6 +68,63 @@
         .bg-under-header {
             min-height: 60vh;
         }
+        /* Estilo ranking */
+        .marble-entity {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 10px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        /* Colores simulados para las canicas */
+        .m-red {
+            background: radial-gradient(circle at 30% 30%, #ff5e5e, #990000);
+        }
+
+        .m-blue {
+            background: radial-gradient(circle at 30% 30%, #5e8eff, #002f99);
+        }
+
+        .m-green {
+            background: radial-gradient(circle at 30% 30%, #5eff8e, #006622);
+        }
+
+        .m-gold {
+            background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b);
+        }
+
+        .m-purple {
+            background: radial-gradient(circle at 30% 30%, #d45eff, #4b0082);
+        }
+
+        /* Estilos para el podio */
+        .rank-1 {
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 1.2em;
+            text-shadow: 1px 1px 0 #666;
+        }
+
+        /* Oro */
+        .rank-2 {
+            color: #C0C0C0;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-shadow: 1px 1px 0 #666;
+        }
+
+        /* Plata */
+        .rank-3 {
+            color: #CD7F32;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-shadow: 1px 1px 0 #666;
+        }
+
     </style>
 </head>
 
@@ -108,14 +165,18 @@
                             <a href="/user-ranking" class="btn btn-primary">Ver ranking</a>
                             <a href="/" class="btn btn-primary">Página principal</a>
                             <a href="/edit-user" class="btn btn-primary">Editar perfil</a>
-                            <a href="/logout" class="btn btn-primary">Cerrar sesión</a>
+                            <form action="/logout" method="post" class="d-inline">
+                                <button class="btn btn-primary btn-nowrap" type="submit">Cerrar Sesión</button>
+                                <input type="hidden" name="_csrf" value="{{token}}" />
+                            </form>
+
                             {{/admin}}
                         {{/logged}}
                         <!--botones anonimo-->
                         {{^logged}}
                             <a href="/user-ranking" class="btn btn-primary">Ver ranking</a>
                             <a href="/" class="btn btn-primary">Página principal</a>
-                            <a href="/login" class="btn btn-primary">Iniciar sesión</a>
+                            <a href="/login-form" class="btn btn-primary">Iniciar sesión</a>
                             <a href="/register" class="btn btn-primary">Registrarse</a>
                         {{/logged}}
 
