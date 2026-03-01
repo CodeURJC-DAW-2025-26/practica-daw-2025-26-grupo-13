@@ -114,6 +114,7 @@ public class UserController {
 		model.addAttribute("users", users);
 			return "user-list";
 	}
+	
 	@GetMapping("/user-ranking")
 	public String showUserRanking(Model model) {
 
