@@ -1,4 +1,13 @@
 {{>header}}
+
+    {{#wasUser}}
+    <div class="container mt-3">
+        <div class="alert alert-info" role="alert">
+            You were logged in as {{#wasAdmin}}an administrator{{/wasAdmin}}{{^wasAdmin}}a normal user{{/wasAdmin}}.
+        </div>
+    </div>
+    {{/wasUser}}
+
     <section class="py-5 bg-under-header" style="flex: 1;">
         <div class="container px-4 px-lg-5 mt-2">
 
@@ -48,7 +57,7 @@
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                         {{#leagues}}
                         <div class="col">
-                            <a href="/league/{{id}}" class="text-decoration-none text-dark">
+                            <a href="/league-view/{{id}}" class="text-decoration-none text-dark">
                             <div class="card h-100 text-center shadow-sm league-card">
                                 <div class="card-body">
                                     <div class="league-icon"><i class="bi bi-trophy"></i></div>

@@ -36,8 +36,7 @@ public class League {
 	public League(String name) {
 		super();
 		this.name = name;
-		this.users = new ArrayList<>();
-		this.races = new ArrayList<>();
+		this.races = new ArrayList<Race>(6);
         this.comments = new ArrayList<>();
         this.status = true;
 	}
@@ -70,22 +69,6 @@ public class League {
 		return races;
 	}
 
-	public void addRace(Race race) {
-		this.races.add(race);
-	}
-
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public void addUser(User user) {
-		this.users.add(user);
-	}
-
-    public void rmvUser(User user) {
-		this.users.remove(user);
-	}
-
     public List<Comment> getComments() {
 		return comments;
 	}
@@ -94,7 +77,7 @@ public class League {
 		this.comments.add(comment);
 	}
 
-    public void rmvUser(Comment comment) {
+    public void rmvComment(Comment comment) {
 		this.comments.remove(comment);
 	}
 

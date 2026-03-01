@@ -39,21 +39,23 @@ public class WebSecurityConfig {
 				.authorizeHttpRequests(authorize -> authorize
 						// PUBLIC PAGES
 						.requestMatchers("/").permitAll()
-						.requestMatchers("/images/**").permitAll()
+						.requestMatchers("/register").permitAll()
 						.requestMatchers("/login-form").permitAll()
 						.requestMatchers("/user-ranking").permitAll()
-						.requestMatchers("/register").permitAll()
-						.requestMatchers("/show-marbles-ab").permitAll()
+						.requestMatchers("/league-view/*").permitAll()
+						.requestMatchers("/race-view/*").permitAll()
+						.requestMatchers("/images/**").permitAll()
 						.requestMatchers("/assets/**").permitAll() // Allow access to static resources
 						.requestMatchers("/favicon.ico").permitAll()
 						// PRIVATE PAGES
-						.requestMatchers("/statistics").hasAnyRole("USER")
-						
-						.requestMatchers("/edit-user").hasAnyRole("USER")
-						.requestMatchers("/edit-marble").hasAnyRole("USER")
-						.requestMatchers("/removebook/*").hasAnyRole("ADMIN"))
+						.requestMatchers("/statistics/*").hasAnyRole("USER")
+						.requestMatchers("/edit-user/*").hasAnyRole("USER")
+						.requestMatchers("/edit-marble/*").hasAnyRole("USER")
+						.requestMatchers("/create-league").hasAnyRole("ADMIN")
+						.requestMatchers("/league-list").hasAnyRole("ADMIN")
+						.requestMatchers("/user-list").hasAnyRole("ADMIN"))
 				.formLogin(formLogin -> formLogin
-						.loginPage("/login")
+						.loginPage("/login-form")
 						.failureUrl("/loginerror")
 						.defaultSuccessUrl("/")
 						.permitAll())

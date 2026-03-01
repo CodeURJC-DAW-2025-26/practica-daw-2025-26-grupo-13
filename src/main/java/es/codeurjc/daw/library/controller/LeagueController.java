@@ -5,8 +5,6 @@ import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-
 import es.codeurjc.daw.library.model.League;
 import es.codeurjc.daw.library.service.LeagueService;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class LeagueController {
@@ -57,9 +54,11 @@ public class LeagueController {
 		Optional<League> league = leagueService.findById(id);
 		if (league.isPresent()) {
 			model.addAttribute("league", league.get());
-			return "league";
-		} else {
+			String statusMsg = league.get().getStatus() ? "Abierta" : "Finalizada";
+			model.addAttribute("status", statusMsg);
 			return "league-view";
+		} else {
+			return "/";
 		}
 	}
 
