@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,18 +53,32 @@ public class UserController {
 		return "register-form";
 	}
     @PostMapping("/register")
-	public String newUserProcess(Model model, User user, MultipartFile imageField) throws IOException {
+	public String newUserProcess(Model model, User user, MultipartFile imageField, HttpServletRequest request) throws IOException {
+
+		if (userService.existByName(user.getName())) {
+			model.addAttribute("registerError", "Ese nombre de usuario ya existe.");
+			return "register-form";
+		}
+
+		String rawPassword = user.getEncodedPassword();
 
 		if (!imageField.isEmpty()) {
 			Image image = imageService.createImage(imageField.getInputStream());
 			userService.setUserImage(user, image);
 		}
 
-		userService.save(user);
+		userService.registerUser(user);
 
 		model.addAttribute("userId", user.getId());
 
-		return "redirect:/home";
+		try {
+			request.login(user.getName(), rawPassword);
+		} catch (ServletException exception) {
+			model.addAttribute("registerError", "Usuario creado, pero no se pudo iniciar sesión automáticamente. Inicia sesión manualmente.");
+			return "login-form";
+		}
+
+		return "redirect:/";
 	}
 	
 
@@ -106,7 +121,7 @@ public class UserController {
 		model.addAttribute("users", users);
 			return "user-ranking";
 	}  
-	@GetMapping("/estatistics/{id}")
+	@GetMapping("/statistics/{id}")
 	public String showUserStatistics(Model model, @PathVariable long id) {
 
 		Optional<User> user = userService.findById(id);

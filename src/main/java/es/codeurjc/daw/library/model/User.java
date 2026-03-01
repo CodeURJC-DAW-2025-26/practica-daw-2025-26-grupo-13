@@ -81,10 +81,9 @@ public class User {
 		this.roles = roles;
 	}
 
-    public void setImage(Image image2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setImage'");
-    }
+	public void setImage(Image image) {
+		this.image = image;
+	}
 
 	public Image getImage() {
 		return image;

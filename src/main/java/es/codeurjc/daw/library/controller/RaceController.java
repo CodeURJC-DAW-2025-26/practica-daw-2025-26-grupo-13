@@ -46,9 +46,9 @@ public class RaceController {
 		Optional<Race> race = raceService.findById(id);
 		if (race.isPresent()) {
 			model.addAttribute("race", race.get());
-			return "race";
-		} else {
 			return "race-view";
+		} else {
+			return "redirect:/";
 		}
 
 	}
@@ -61,7 +61,7 @@ public class RaceController {
 			raceService.delete(id);
 			model.addAttribute("race", race.get());
 		}
-		return "race-removed";
+		return "redirect:/";
 	}
 
 	@GetMapping("/listRaces")

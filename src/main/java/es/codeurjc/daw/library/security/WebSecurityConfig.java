@@ -44,8 +44,7 @@ public class WebSecurityConfig {
 						.requestMatchers("/user-ranking").permitAll()
 						.requestMatchers("/league-view/*").permitAll()
 						.requestMatchers("/race-view/*").permitAll()
-						.requestMatchers("/images/**").permitAll()
-						.requestMatchers("/assets/**").permitAll() // Allow access to static resources
+						.requestMatchers("/assets/**").permitAll()
 						.requestMatchers("/favicon.ico").permitAll()
 						// PRIVATE PAGES
 						.requestMatchers("/statistics/*").hasAnyRole("USER")
@@ -56,7 +55,7 @@ public class WebSecurityConfig {
 						.requestMatchers("/user-list").hasAnyRole("ADMIN"))
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login-form")
-						.failureUrl("/loginerror")
+						.failureUrl("/login-error")
 						.defaultSuccessUrl("/")
 						.permitAll())
 				.logout(logout -> logout
