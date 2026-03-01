@@ -55,7 +55,7 @@ public class RaceController {
 		Optional<Race> race = raceService.findById(id);
 		if (race.isPresent()) {
 			model.addAttribute("race", race.get());
-			model.addAttribute("results", race.get().getResults());
+			
 			
 			return "race-view";
 		} else {
