@@ -33,8 +33,9 @@ public class Race {
 
 	public Race(String name) {
 		this.name = name;
-		this.users = new ArrayList<>();
-		this.results = new ArrayList<>();
+		this.users = new ArrayList<>(6);
+		this.results = new ArrayList<>(6);
+		// add users to the race
 	}
 
     public Long getId() {
