@@ -30,7 +30,7 @@ public class LeagueController {
 	@Autowired
 	private LeagueService leagueService;
 
-    LeagueController( UserRepository userRepository) {
+    LeagueController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -53,7 +53,7 @@ public class LeagueController {
 	@GetMapping("/")
 	public String showLeagues(Model model) {
 
-		model.addAttribute("leagues", leagueService.findAll()); //rellenar con ligas el html home (meter mustache "leagues")
+		model.addAttribute("leagues", leagueService.findAll());
 
 		return "home";
 	}
@@ -66,7 +66,7 @@ public class LeagueController {
 			model.addAttribute("league", league.get());
 
 			String statusMsg = league.get().getStatus() ? "Abierta" : "Finalizada";
-			model.addAttribute("status", statusMsg);
+			model.addAttribute("statusMsg", statusMsg);
 
 			List<Race> races = league.get().getRaces();
 			model.addAttribute("races", races);

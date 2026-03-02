@@ -8,12 +8,17 @@ import org.springframework.stereotype.Service;
 
 import es.codeurjc.daw.library.model.Race;
 import es.codeurjc.daw.library.repository.RaceRepository;
+import es.codeurjc.daw.library.repository.UserRepository;
+import es.codeurjc.daw.library.model.User;
 
 @Service
 public class RaceService {
 
 	@Autowired
 	private RaceRepository repository;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	public Optional<Race> findById(long id) {
 		return repository.findById(id);
@@ -33,5 +38,11 @@ public class RaceService {
 
 	public void delete(long id) {
 		repository.deleteById(id);
+	}
+
+	public void fillWithUsers(Race race) {
+		for (int i = 1; i < 10; i++) {
+			race.addUser(userRepository.findById((long) (i)).orElseThrow());
+		}
 	}
 }
