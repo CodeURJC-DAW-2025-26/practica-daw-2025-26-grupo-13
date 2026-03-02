@@ -85,7 +85,18 @@ public class LeagueController {
 			leagueService.delete(id);
 			model.addAttribute("league", league.get());
 		}
-		return "league-removed";
+		return "league-list";
+	}
+
+	@GetMapping("/remove-league/{id}")
+	public String removeLeagueRedirect(Model model, @PathVariable long id) {
+
+		Optional<League> league = leagueService.findById(id);
+		if (league.isPresent()) {
+			leagueService.delete(id);
+			model.addAttribute("league", league.get());
+		}
+		return "redirect:/league-list";
 	}
 
 	@GetMapping( "/league-list")
@@ -97,15 +108,15 @@ public class LeagueController {
 	}
 
 	@GetMapping("/create-league")
-	public String showCreateLeagueForm() {
+	public String showCreateLeagueForm(Model model) {
 		return "create-league";
 	}
 
-	@PostMapping("/newLeague")
-	public String newLeague(Model model, League league,
-			@RequestParam String name) throws IOException {
+	@PostMapping("/create-league")
+	public String newLeague(Model model, @RequestParam String name, @RequestParam int race_num) throws IOException {
         
-        league = new League(name);
+        League league = new League(name);
+        league.setRace_num(race_num);
 
 		leagueService.save(league);
 
@@ -114,7 +125,18 @@ public class LeagueController {
 		return "redirect:/league/" + league.getId();
 	}
 
-	@PostMapping("/editLeague")
+	@GetMapping("/edit-league/{id}")
+	public String showEditLeagueForm(Model model, @PathVariable long id) {
+		Optional<League> league = leagueService.findById(id);
+		if (league.isPresent()) {
+			model.addAttribute("league", league.get());
+			return "edit-league";
+		} else {
+			return "redirect:/";
+		}
+	}
+
+	@PostMapping("/edit-league/{id}")
 	public String editLeagueProcess(Model model, League league, String name, boolean status)
 			throws IOException, SQLException {
 

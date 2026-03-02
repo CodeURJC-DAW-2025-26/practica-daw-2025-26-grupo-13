@@ -1,0 +1,28 @@
+{{>header}}
+
+<form action="/edit-league/{{league.id}}" method="post">
+    <input type="hidden" name="_csrf" value="{{token}}" />
+
+    <div class="container px-4 px-lg-5 my-5 text-center">
+        <h1 class="fw-bolder">Editar Liga</h1>
+
+        {{#league}}
+        <div class="mb-3 text-start">
+            <label for="league-name" class="form-label fw-bold">Nombre de liga</label>
+            <input type="text" name="name" class="form-control" id="league-name" value="{{name}}" required>
+        </div>
+
+        <div class="mb-3 form-check text-start">
+            <input type="checkbox" name="status" class="form-check-input" id="league-status" {{#status}}checked{{/status}}>
+            <label class="form-check-label" for="league-status">Abierta</label>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-secondary" onclick="history.back()">Atrás</button>
+            <button type="submit" class="btn btn-success">Guardar</button>
+        </div>
+        {{/league}}
+    </div>
+</form>
+
+{{>footer}}

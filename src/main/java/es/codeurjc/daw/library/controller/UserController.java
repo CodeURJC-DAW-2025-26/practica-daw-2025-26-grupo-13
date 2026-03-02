@@ -101,7 +101,7 @@ public class UserController {
 		}
 		Optional<User> User = userService.findById(id);
 		if (User.isPresent()) {
-			model.addAttribute("User", User.get());
+			model.addAttribute("user", User.get());
 			return "edit-user";
 		} else {
 			return "redirect:/login-form";

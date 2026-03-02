@@ -50,8 +50,10 @@ public class WebSecurityConfig {
 						.requestMatchers("/edit-user", "/edit-user/", "/edit-user/**").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/edit-marble", "/edit-marble/", "/edit-marble/*").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/create-league", "/create-league/").hasAnyRole("ADMIN")
+						.requestMatchers("/edit-league", "/edit-league/", "/edit-league/*").hasAnyRole("ADMIN")
 						.requestMatchers("/league-list", "/league-list/").hasAnyRole("ADMIN")
 						.requestMatchers("/user-list", "/user-list/").hasAnyRole("ADMIN")
+						.requestMatchers("/remove-league", "/remove-league/**").hasAnyRole("ADMIN")
 						.requestMatchers("/remove-user", "/remove-user/**").hasAnyRole("ADMIN"))
 
 				.formLogin(formLogin -> formLogin
