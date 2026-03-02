@@ -89,8 +89,6 @@ public class RaceController {
         
         race = new Race(name);
 
-		raceService.fillWithUsers(race);
-
 		raceService.save(race);
 
 		model.addAttribute("raceId", race.getId());
