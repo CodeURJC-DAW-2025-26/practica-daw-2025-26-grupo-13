@@ -47,11 +47,13 @@ public class WebSecurityConfig {
 						.requestMatchers("/favicon.ico").permitAll()
 						// PRIVATE PAGES
 						.requestMatchers("/statistics", "/statistics/", "/statistics/*").hasAnyRole("USER", "ADMIN")
-						.requestMatchers("/edit-user", "/edit-user/", "/edit-user/*").hasAnyRole("USER", "ADMIN")
+						.requestMatchers("/edit-user", "/edit-user/", "/edit-user/**").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/edit-marble", "/edit-marble/", "/edit-marble/*").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/create-league", "/create-league/").hasAnyRole("ADMIN")
 						.requestMatchers("/league-list", "/league-list/").hasAnyRole("ADMIN")
-						.requestMatchers("/user-list", "/user-list/").hasAnyRole("ADMIN"))
+						.requestMatchers("/user-list", "/user-list/").hasAnyRole("ADMIN")
+						.requestMatchers("/remove-user", "/remove-user/**").hasAnyRole("ADMIN"))
+
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login-form")
 						.failureUrl("/login-error")

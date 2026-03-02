@@ -11,150 +11,26 @@
     <section class="py-5 bg-bajo-header flex-1">
         <div class="container px-4 px-lg-5 ">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {{#leagues}}
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Product image-->
-                        <!--<img class="card-img-top" src="/images/anonymous-user.PNG" alt="..."  /> --> 
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <!-- Product name-->
-                                <h5 class="fw-bolder">(Nombre Liga)</h5>
-                                <!-- Product price-->
-                                info liga.
-                            </div>
-                            <div class="text-center">
-                                
-                                numero de usuarios: ...
+                                <h5 class="fw-bolder">{{name}}</h5>
+                                <span class="badge rounded-pill bg-success">{{#status}}Abierta{{/status}}{{^status}}Cerrada{{/status}}</span>
                             </div>
                         </div>
                         <!-- Product actions-->
                         <div class="card-body d-flex flex-column align-items-center gap-3">
-                            <button type="button" class="w-40 btn btn-lg btn-secondary" onclick=" "> Seleccionar</button>
-                            
+                            <button type="button" class="w-40 btn btn-lg btn-secondary" onclick="location.href='/edit-league/{{id}}'"> Editar</button>
+                            <button type="button" class="w-40 btn btn-lg btn-danger" onclick="location.href='/remove-league/{{id}}'"> Eliminar</button>
                         </div>
                     </div>
                 </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <!--<img class="card-img-top" src="/images/anonymous-user.PNG" alt="..."  /> --> 
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">(Nombre Liga)</h5>
-                                <!-- Product price-->
-                                info liga.
-                            </div>
-                            <div class="text-center">
-                                
-                                numero de usuarios: ...
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-body d-flex flex-column align-items-center gap-3">
-                            <button type="button" class="w-40 btn btn-lg btn-secondary" onclick=" "> Seleccionar</button>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <!--<img class="card-img-top" src="/images/anonymous-user.PNG" alt="..."  /> --> 
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">(Nombre Liga)</h5>
-                                <!-- Product price-->
-                                info liga.
-                            </div>
-                            <div class="text-center">
-                                
-                                numero de usuarios: ...
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-body d-flex flex-column align-items-center gap-3">
-                            <button type="button" class="w-40 btn btn-lg btn-secondary" onclick=" "> Seleccionar</button>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <!--<img class="card-img-top" src="/images/anonymous-user.PNG" alt="..."  /> --> 
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">(Nombre Liga)</h5>
-                                <!-- Product price-->
-                                info liga.
-                            </div>
-                            <div class="text-center">
-                                
-                                numero de usuarios: ...
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-body d-flex flex-column align-items-center gap-3">
-                            <button type="button" class="w-40 btn btn-lg btn-secondary" onclick=" "> Seleccionar</button>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <!--<img class="card-img-top" src="/images/anonymous-user.PNG" alt="..."  /> --> 
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">(Nombre Liga)</h5>
-                                <!-- Product price-->
-                                info liga.
-                            </div>
-                            <div class="text-center">
-                                
-                                numero de usuarios: ...
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-body d-flex flex-column align-items-center gap-3">
-                            <button type="button" class="w-40 btn btn-lg btn-secondary" onclick=" "> Seleccionar</button>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <!--<img class="card-img-top" src="/images/anonymous-user.PNG" alt="..."  /> --> 
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">(Nombre Liga)</h5>
-                                <!-- Product price-->
-                                info liga.
-                            </div>
-                            <div class="text-center">
-                                
-                                numero de usuarios: ...
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-body d-flex flex-column align-items-center gap-3">
-                            <button type="button" class="w-40 btn btn-lg btn-secondary" onclick=" "> Seleccionar</button>
-                            
-                        </div>
-                    </div>
-                </div>
+                {{/leagues}}
 
             </div>
 

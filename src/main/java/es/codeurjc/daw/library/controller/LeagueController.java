@@ -77,7 +77,7 @@ public class LeagueController {
 		}
 	}
 
-	@PostMapping("/removeLeague/{id}")
+	@PostMapping("/remove-league/{id}")
 	public String removeLeague(Model model, @PathVariable long id) {
 
 		Optional<League> league = leagueService.findById(id);
@@ -91,7 +91,7 @@ public class LeagueController {
 	@GetMapping( "/league-list")
 	public String listLeagues(Model model) {
 
-		model.addAttribute("leagueList", leagueService.findAll());
+		model.addAttribute("leagues", leagueService.findAll());
 
 		return "league-list";
 	}

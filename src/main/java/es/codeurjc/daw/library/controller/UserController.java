@@ -118,7 +118,7 @@ public class UserController {
 
 		Optional<User> User = userService.findByName(principal.getName());
 		if (User.isPresent()) {
-			model.addAttribute("User", User.get());
+			model.addAttribute("user", User);
 			return "edit-user";
 		}
 
@@ -149,6 +149,19 @@ public class UserController {
 
 		model.addAttribute("users", userService.findAll());
 			return "user-list";
+	}
+	@GetMapping("/remove-user/{id}")
+	public String removeUser(Model model, @PathVariable long id) {
+
+		Optional<User> user = userService.findById(id);
+		if (user.isPresent()) {
+			if (user.get().getImage() != null) {
+				imageService.deleteImage(user.get().getImage().getId());
+			}
+			userService.delete(id);
+			model.addAttribute("User", user.get());
+		}
+		return "redirect:/user-list";
 	}
 	
 	@GetMapping("/user-ranking")

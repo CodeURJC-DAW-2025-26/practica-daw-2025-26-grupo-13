@@ -1,7 +1,7 @@
 {{>header}}
 <form action="/edit-user" method="post" enctype="multipart/form-data">
     <input type="hidden" name="_csrf" value="{{token}}" />
-    <input type="hidden" name="id" value="{{User.id}}" />
+    <input type="hidden" name="id" value="{{user.id}}" />
 
     <div class="container px-4 px-lg-5 my-3 text-center">
         <h1 class="fw-bolder">Editar Perfil</h1>     
@@ -17,7 +17,6 @@
                         <div class="card-body p-5">
                             {{#user}}
                             <div class="text-center mb-4">
-                                {{#User}}
                                     {{#Image}}
                                         <img src="/images/{{id}}" alt="Imagen de perfil" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
                                         <div class="form-check">
@@ -36,13 +35,12 @@
                                     {{/Image}}
 
                                     <input type="file" name="imageField" accept=".jpg, .jpeg" class="form-control mb-3" />
-                                {{/User}}
 
                             </div>
                                 <div class="mb-3">
                                     <label for="username" class="form-label fw-bold">Nombre de usuario</label>
                                     <div class="input-group">
-                                        <input type="text" name="name" class="form-control" id="name" value="{{User.name}}">
+                                        <input type="text" name="name" class="form-control" id="name" value="{{user.name}}">
                                     </div>
                                 </div>
 
