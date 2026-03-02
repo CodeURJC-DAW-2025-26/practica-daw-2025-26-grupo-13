@@ -27,6 +27,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class UserController {
 
+
 	@Autowired
 	private ImageService imageService;
     @Autowired
@@ -34,11 +35,17 @@ public class UserController {
     @Autowired
 	private UserRepository userRepository;
 
+	UserController( UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
 
 		Principal principal = request.getUserPrincipal();
+
+		
 
 		if (principal != null) {
 			model.addAttribute("logged", true);
@@ -140,8 +147,7 @@ public class UserController {
     @GetMapping("/user-list")
 	public String showUserList(Model model) {
 
-		List<User> users = userService.findAll();
-		model.addAttribute("users", users);
+		model.addAttribute("users", userService.findAll());
 			return "user-list";
 	}
 	
