@@ -21,6 +21,7 @@ public class Race {
 	private Long id;
 
 	private String name;
+	private String winnerName;
 
 	@Transient
 	private List<User> results; //ADD METHODS THAT CALCULATE RESULTS
@@ -33,8 +34,8 @@ public class Race {
 
 	public Race(String name) {
 		this.name = name;
-		this.users = new ArrayList<>(6);
-		this.results = new ArrayList<>(6);
+		this.users = new ArrayList<User>(8);
+		this.results = new ArrayList<User>(8);
 		// add users to the race
 	}
 
@@ -70,16 +71,16 @@ public class Race {
 		return results;
 	}
 
-	public List<User> calculateResults(List<User> results) {
-		// if you only want this for races with
-		// exactly eight participants you can add a size check here.
+	public List<User> calculateResults() {
 		if (results != null) {
+			Collections.shuffle(results);
+		} else {
+			Collections.copy(results, users);
 			Collections.shuffle(results);
 		}
 		return results;
 	}
 
-	/* Helper for templates: returns at most three users from the current results. */
 	public List<User> getTopThreeResults() {
 		if (this.results == null) {
 			return Collections.emptyList();

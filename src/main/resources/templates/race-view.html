@@ -6,21 +6,21 @@
 
     <section class="py-3 bg-under-header flex-1">
         
-        {{#results}}
         <div class="text-center">        
             <h5 class="fw-bolder">Ganador: winnerName </h5>
         </div>
 
         <div class="py-5 text-center">
-            <h5 class="fw-bolder">Posición ? : {{.}}</h5>
+            <h5 class="fw-bolder">Posiciones:</h5>
+            {{#results}}
             <ul>
                 <li>{{.}}</li>
             </ul>
             <ol>
                 <li>{{.}}</li>
             </ol>
+            {{/results}}
         </div>
-        {{/results}}
 
         {{^results}}
         <div class="py-5 text-center">
