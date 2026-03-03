@@ -11,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Transient;
 
 @Entity
 public class Race {
@@ -21,22 +20,22 @@ public class Race {
 	private Long id;
 
 	private String name;
-	private String winnerName;
 
-	@Transient
+	@ManyToMany
 	private List<User> results; //ADD METHODS THAT CALCULATE RESULTS
 
     @ManyToMany
     private List<User> users;
 
 	public Race() {
+		this.users = new ArrayList<User>(8);
+		this.results = new ArrayList<User>(8);
 	}
 
 	public Race(String name) {
 		this.name = name;
 		this.users = new ArrayList<User>(8);
 		this.results = new ArrayList<User>(8);
-		// add users to the race
 	}
 
     public Long getId() {
@@ -60,7 +59,13 @@ public class Race {
 	}
 
 	public void addUser(User user) {
+		if (this.users.size() >= 8) {
+			throw new IllegalStateException("Race already has 8 users");
+		}
 		this.users.add(user);
+		if (this.users.size() == 8) {
+			calculateResults();
+		}
 	}
 
     public void rmvUser(User user) {
@@ -72,12 +77,9 @@ public class Race {
 	}
 
 	public List<User> calculateResults() {
-		if (results != null) {
-			Collections.shuffle(results);
-		} else {
-			Collections.copy(results, users);
-			Collections.shuffle(results);
-		}
+		results = new ArrayList<>(users);
+		Collections.shuffle(results);
+		
 		return results;
 	}
 

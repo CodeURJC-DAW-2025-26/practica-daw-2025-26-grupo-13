@@ -64,12 +64,8 @@ public class LeagueController {
 		Optional<League> league = leagueService.findById(id);
 		if (league.isPresent()) {
 			model.addAttribute("league", league.get());
-
-			String statusMsg = league.get().getStatus() ? "Abierta" : "Finalizada";
-			model.addAttribute("statusMsg", statusMsg);
-
-			List<Race> races = league.get().getRaces();
-			model.addAttribute("races", races);
+			model.addAttribute("statusMsg", league.get().getStatus() ? "Abierta" : "Finalizada");
+			model.addAttribute("races", league.get().getRaces());
 
 			return "league-view";
 		} else {

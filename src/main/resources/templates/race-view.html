@@ -7,26 +7,21 @@
     <section class="py-3 bg-under-header flex-1">
         
         <div class="text-center">        
-            <h5 class="fw-bolder">Ganador: winnerName </h5>
+            <h5 class="fw-bolder">Ganador: {{winnerName}} </h5>
         </div>
 
         <div class="py-5 text-center">
             <h5 class="fw-bolder">Posiciones:</h5>
+            <ol style="display: inline-block; text-align: left; list-style-position: outside; margin: 0 auto; padding-left: 1.5rem;">
             {{#results}}
-            <ul>
-                <li>{{.}}</li>
-            </ul>
-            <ol>
-                <li>{{.}}</li>
+                <li>{{name}}</li>
+            {{/results}}
             </ol>
+
+            {{^results}}
+                <h5 class="fw-bolder">No hay resultados disponibles</h5>
             {{/results}}
         </div>
-
-        {{^results}}
-        <div class="py-5 text-center">
-            <h5 class="fw-bolder">No hay resultados disponibles</h5>
-        </div>
-        {{/results}}
 
         <div class="d-flex align-items-center justify-content-between w-100 px-4">
             <button type="button" class="btn btn-danger" onclick="window.history.back()">Atrás</button>

@@ -51,11 +51,17 @@ public class RaceController {
 	@GetMapping("/race/{id}")
 	public String showRace(Model model, @PathVariable long id) {
 
-
 		Optional<Race> race = raceService.findById(id);
 		if (race.isPresent()) {
-			model.addAttribute("race", race.get());
-			model.addAttribute("results", race.get().getResults());
+			Race currentRace = race.get();
+			if (currentRace.getResults().isEmpty() && currentRace.getUsers().size() == 8) {
+				currentRace.calculateResults();
+				raceService.save(currentRace);
+			}
+
+			model.addAttribute("race", currentRace);
+			model.addAttribute("results", currentRace.getResults());
+			model.addAttribute("winnerName", currentRace.getResults().isEmpty() ? "Sin ganador" : currentRace.getResults().get(0).getName());
 			
 			return "race-view";
 		} else {
@@ -84,8 +90,7 @@ public class RaceController {
 	}
 
 	@PostMapping("/newRace")
-	public String newRace(Model model, Race race,
-			@RequestParam String name) throws IOException {
+	public String newRace(Model model, Race race, @RequestParam String name) throws IOException {
         
         race = new Race(name);
 
@@ -114,7 +119,15 @@ public class RaceController {
 
 		Optional<Race> race = raceService.findById(id);
 		if (race.isPresent()) {
-			model.addAttribute("race", race.get());
+			Race currentRace = race.get();
+			if (currentRace.getResults().isEmpty() && currentRace.getUsers().size() == 8) {
+				currentRace.calculateResults();
+				raceService.save(currentRace);
+			}
+
+			model.addAttribute("race", currentRace);
+			model.addAttribute("results", currentRace.getResults());
+			model.addAttribute("winnerName", currentRace.getResults().isEmpty() ? "Sin ganador" : currentRace.getResults().get(0).getName());
 			return "race-view";
 		} else {
 			return "redirect:/";
