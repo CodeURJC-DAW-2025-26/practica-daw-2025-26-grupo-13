@@ -135,10 +135,9 @@ public class LeagueController {
 	}
 
 	@PostMapping("/create-league")
-	public String newLeague(Model model, @RequestParam String name, @RequestParam int race_num) throws IOException {
+	public String newLeague(Model model, @RequestParam String name) throws IOException {
         
         League league = new League(name);
-        league.setRace_num(race_num);
 
 		leagueService.save(league);
 
