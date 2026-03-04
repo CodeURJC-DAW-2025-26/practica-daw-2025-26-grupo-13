@@ -35,6 +35,24 @@
                 </div>
                 {{/races}}
 
+                <!-- comments section -->
+                <div class="mt-5">
+                    <h3>Comentarios</h3>
+                    {{#comments}}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Valoración: {{rating}}</h5>
+                            <p class="card-text">{{text}}</p>
+                            <p class="card-text"><small class="text-muted">Usuario: {{user.name}}</small></p>
+                            {{#editAllowed}}
+                            <a href="/edit-comment/{{id}}" class="btn btn-sm btn-warning">Editar</a>
+                            {{/editAllowed}}
+                        </div>
+                    </div>
+                    {{/comments}}
+                    <a href="/create-comment?leagueId={{id}}" class="btn btn-primary">Nuevo comentario</a>
+                </div>
+
               <!--  {{#race2}}
                 <div class="col mb-5">
                     <div class="card h-100">

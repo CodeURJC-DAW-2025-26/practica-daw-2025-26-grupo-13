@@ -5,6 +5,9 @@ import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import es.codeurjc.daw.library.model.Comment;
 import es.codeurjc.daw.library.model.League;
 import es.codeurjc.daw.library.model.Race;
 import es.codeurjc.daw.library.repository.UserRepository;
@@ -59,17 +63,35 @@ public class LeagueController {
 	}
 
 	@GetMapping("/league/{id}")
-	public String showLeague(Model model, @PathVariable long id) {
+	public String showLeague(Model model, Principal principal, @PathVariable long id) {
 
 		Optional<League> league = leagueService.findById(id);
 		if (league.isPresent()) {
-			model.addAttribute("league", league.get());
+			League l = league.get();
+			model.addAttribute("league", l);
 
-			String statusMsg = league.get().getStatus() ? "Abierta" : "Finalizada";
+			String statusMsg = l.getStatus() ? "Abierta" : "Finalizada";
 			model.addAttribute("statusMsg", statusMsg);
 
-			List<Race> races = league.get().getRaces();
-			model.addAttribute("races", races);
+			model.addAttribute("races", l.getRaces());
+
+			long currentUserId = -1;
+			if (principal != null) {
+				currentUserId = userRepository.findByName(principal.getName())
+					.map(u -> u.getId()).orElse(-1L);
+			}
+
+			List<Map<String, Object>> commentViews = new ArrayList<>();
+			for (Comment c : l.getComments()) {
+				Map<String, Object> m = new HashMap<>();
+				m.put("id", c.getId());
+				m.put("text", c.getText());
+				m.put("rating", c.getRating());
+				m.put("user", c.getUser());
+				m.put("editAllowed", c.getUser() != null && c.getUser().getId() == currentUserId);
+				commentViews.add(m);
+			}
+			model.addAttribute("comments", commentViews);
 
 			return "league-view";
 		} else {
