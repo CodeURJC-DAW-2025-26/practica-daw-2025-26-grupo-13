@@ -11,14 +11,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.daw.library.model.Image;
+import es.codeurjc.daw.library.model.Race;
 import es.codeurjc.daw.library.model.User;
+import es.codeurjc.daw.library.repository.RaceRepository;
 import es.codeurjc.daw.library.repository.UserRepository;
 
 @Service
 public class UserService {
 
 	@Autowired
-	private UserRepository userRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private RaceRepository raceRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -43,9 +48,28 @@ public class UserService {
 		return userRepository.existsByName(name);
 	}
 
-	public void delete(long id) {
-		userRepository.deleteById(id);
-	}
+	public void delete(Long id) {
+        User user = userRepository.findById(id).orElseThrow();
+
+        List<Race> allRaces = raceRepository.findAll();
+        for (Race race : allRaces) {
+            boolean isModified = false;  
+            if (race.getUsers().contains(user)) {
+                race.getUsers().remove(user);
+                isModified = true;
+            }
+            if (race.getResults().contains(user)) {
+                race.getResults().remove(user);
+                isModified = true;
+            }
+            if (isModified) {
+                raceRepository.save(race);
+            }
+        }
+        userRepository.delete(user);
+    }
+
+
 	public String encodePassword(String rawPassword) {
 		return passwordEncoder.encode(rawPassword);
 	}
