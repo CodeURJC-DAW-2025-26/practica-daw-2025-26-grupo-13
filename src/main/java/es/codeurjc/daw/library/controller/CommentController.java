@@ -79,8 +79,10 @@ public class CommentController {
     
     @GetMapping("/edit-comment/{id}")
 	public String editComment(Model model, @PathVariable long id) {
-        // show the list of comments; the user will click on one to edit
-        model.addAttribute("comments", commentService.findAll());
+        Optional<Comment> c = commentService.findById(id);
+        if (c.isPresent()) {
+            model.addAttribute("comment", c.get());
+        }
 		return "edit-comment";
 	}
 
@@ -127,7 +129,6 @@ public class CommentController {
         Optional<Comment> c = commentService.findById(id);
         c.ifPresent(comment -> {
             commentService.delete(id);
-            model.addAttribute("comment", comment);
         });
         return "redirect:/";
 	}
