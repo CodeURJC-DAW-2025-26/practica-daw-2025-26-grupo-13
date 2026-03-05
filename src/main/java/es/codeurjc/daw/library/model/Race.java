@@ -11,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Transient;
 
 @Entity
 public class Race {
@@ -22,20 +21,21 @@ public class Race {
 
 	private String name;
 
-	@Transient
+	@ManyToMany
 	private List<User> results; //ADD METHODS THAT CALCULATE RESULTS
 
     @ManyToMany
     private List<User> users;
 
 	public Race() {
+		this.users = new ArrayList<User>(8);
+		this.results = new ArrayList<User>(8);
 	}
 
 	public Race(String name) {
 		this.name = name;
-		this.users = new ArrayList<>(6);
-		this.results = new ArrayList<>(6);
-		// add users to the race
+		this.users = new ArrayList<User>(8);
+		this.results = new ArrayList<User>(8);
 	}
 
     public Long getId() {
@@ -59,7 +59,13 @@ public class Race {
 	}
 
 	public void addUser(User user) {
+		if (this.users.size() >= 8) {
+			throw new IllegalStateException("Race already has 8 users");
+		}
 		this.users.add(user);
+		if (this.users.size() == 8) {
+			calculateResults();
+		}
 	}
 
     public void rmvUser(User user) {
@@ -70,16 +76,13 @@ public class Race {
 		return results;
 	}
 
-	public List<User> calculateResults(List<User> results) {
-		// if you only want this for races with
-		// exactly eight participants you can add a size check here.
-		if (results != null) {
-			Collections.shuffle(results);
-		}
+	public List<User> calculateResults() {
+		results = new ArrayList<>(users);
+		Collections.shuffle(results);
+		
 		return results;
 	}
 
-	/* Helper for templates: returns at most three users from the current results. */
 	public List<User> getTopThreeResults() {
 		if (this.results == null) {
 			return Collections.emptyList();

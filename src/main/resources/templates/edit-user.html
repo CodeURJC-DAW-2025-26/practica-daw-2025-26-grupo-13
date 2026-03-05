@@ -17,24 +17,7 @@
                         <div class="card-body p-5">
                             {{#user}}
                             <div class="text-center mb-4">
-                                    {{#Image}}
-                                        <img src="/images/{{id}}" alt="Imagen de perfil" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
-                                        <div class="form-check">
-                                        <input type="checkbox" name="removeImage" class="form-check-input" id="removeImage">
-                                        <label class="form-check-label" for="removeImage">Remove Image</label>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="updateImage" class="form-label">Update Image</label>
-                                        </div>
-                                    {{/Image}}
-                                    {{^Image}}
-                                    <img src="/assets/images/no_image.png"  class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
-                                        <div class="mb-3">
-                                                <label for="updateImage" class="form-label">Upload Image</label>
-                                        </div>
-                                    {{/Image}}
-
-                                    <input type="file" name="imageField" accept=".jpg, .jpeg" class="form-control mb-3" />
+                                
 
                             </div>
                                 <div class="mb-3">
@@ -58,8 +41,8 @@
                                     <button type="submit" class="btn btn-primary btn-lg">
                                         <i class="bi bi-pencil"></i> Editar Cuenta
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-lg" onclick="DeleteUser()">
-                                        <i class="bi bi-trash"></i> Eliminar Cuenta
+                                            <button type="button" class="btn btn-danger btn-lg" onclick="location.href='/remove-user'">
+                                                <i class="bi bi-trash"></i> Eliminar Cuenta
                                     </button>
                                 </div>
 

@@ -1,0 +1,27 @@
+{{>header}}
+
+<section class="py-5 bg-under-header flex-1">
+    <div class="container px-4 px-lg-5 mt-5">
+        <h1 class="mb-4">Comentarios</h1>
+
+        {{#comments}}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Valoración: {{rating}}</h5>
+                <p class="card-text">{{text}}</p>
+                <p class="card-text"><small class="text-muted">Liga: {{league.name}}</small></p>
+                <p class="card-text"><small class="text-muted">Usuario: {{user.name}}</small></p>
+                <a href="/edit-comment/{{id}}" class="btn btn-sm btn-warning">Editar</a>
+                <form action="/remove-comment/{{id}}" method="post" class="d-inline">
+                    <input type="hidden" name="_csrf" value="{{token}}" />
+                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                </form>
+            </div>
+        </div>
+        {{/comments}}
+
+        <a href="/create-comment" class="btn btn-primary">Nuevo comentario</a>
+    </div>
+</section>
+
+{{>footer}}

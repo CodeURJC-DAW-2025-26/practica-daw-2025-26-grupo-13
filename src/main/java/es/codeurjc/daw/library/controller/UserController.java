@@ -118,7 +118,7 @@ public class UserController {
 
 		Optional<User> User = userService.findByName(principal.getName());
 		if (User.isPresent()) {
-			model.addAttribute("user", User);
+			model.addAttribute("user", User.get());
 			return "edit-user";
 		}
 
@@ -126,9 +126,22 @@ public class UserController {
 	}
 
     @PostMapping("/edit-user")
-	public String editUserProcess(Model model, User user, String password, boolean removeImage, MultipartFile imageField)
-			throws IOException, SQLException {
+	public String editUserProcess(Model model, User user, String name, String password, HttpServletRequest request) {
 
+		if (request.isUserInRole("ADMIN")) {
+			user.setName(name);		
+			if (password != null && !password.isEmpty()) {
+			user.setEncodedPassword(userService.encodePassword(password));
+			}	
+			else{
+				User dbUser = userService.findById(user.getId()).orElseThrow();
+				user.setEncodedPassword(dbUser.getEncodedPassword());
+			}
+			userService.save(user);
+			return "/login-form";
+		} else {
+		request.getSession().invalidate();
+		user.setName(name);		
 		if (password != null && !password.isEmpty()) {
 			user.setEncodedPassword(userService.encodePassword(password));
 		}
@@ -136,22 +149,22 @@ public class UserController {
 			User dbUser = userService.findById(user.getId()).orElseThrow();
 			user.setEncodedPassword(dbUser.getEncodedPassword());
 		}
-
-		updateImage(user, removeImage, imageField);
-				
 		userService.save(user);
-		model.addAttribute("username", user.getName());
-
-		return "redirect:/";
+		
+		return "/login-form";
+		}
 	}
+
     @GetMapping("/user-list")
 	public String showUserList(Model model) {
 
-		model.addAttribute("users", userService.findAll());
+		model.addAttribute("users", userService.findOnlyUsers());
 			return "user-list";
 	}
+
+
 	@GetMapping("/remove-user/{id}")
-	public String removeUser(Model model, @PathVariable long id) {
+	public String removeUserAdmin(Model model, @PathVariable long id) {
 
 		Optional<User> user = userService.findById(id);
 		if (user.isPresent()) {
@@ -161,7 +174,25 @@ public class UserController {
 			userService.delete(id);
 			model.addAttribute("User", user.get());
 		}
-		return "redirect:/user-list";
+		return "redirect:/";
+	}
+
+	@GetMapping("/remove-user")
+	public String removeUser(Model model, Principal principal, HttpServletRequest request) {
+		if (principal == null) {
+			return "redirect:/login-form";
+		}
+		Optional<User> userOptional = userService.findByName(principal.getName());
+		if (userOptional.isPresent()) {
+			User user = userOptional.get();
+			if (user.getImage() != null) {
+				imageService.deleteImage(user.getImage().getId());
+			}
+			userService.delete(user.getId());
+			request.getSession().invalidate();
+			return "/login-form";
+		}
+		return "redirect:/login-form";
 	}
 	
 	@GetMapping("/user-ranking")

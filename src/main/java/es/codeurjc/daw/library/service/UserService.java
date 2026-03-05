@@ -106,4 +106,7 @@ public class UserService {
 
 		return normalizedRoles;
 	}
+	public List<User> findOnlyUsers() {
+		return userRepository.findByRolesContaining("USER");
+	}
 }
