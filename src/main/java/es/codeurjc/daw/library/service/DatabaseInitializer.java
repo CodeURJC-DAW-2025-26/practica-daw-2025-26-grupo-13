@@ -1,6 +1,7 @@
 package es.codeurjc.daw.library.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import jakarta.annotation.PostConstruct;
 
@@ -9,7 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.daw.library.model.Marble;
+import es.codeurjc.daw.library.model.Race;
 import es.codeurjc.daw.library.model.User;
+import es.codeurjc.daw.library.model.Comment;
 import es.codeurjc.daw.library.model.League;
 import es.codeurjc.daw.library.repository.UserRepository;
 
@@ -98,6 +101,15 @@ public class DatabaseInitializer {
 		l1.setRace(3, r4);
 		l1.setRace(4, r5);
 		l1.setRace(5, r6);
+
+		Comment c1 = new Comment("Me ha encantado esta liga", 5, u1, l1);
+		Comment c2 = new Comment("No me ha gustado nada esta liga", 1, u2, l1);
+
+		l1.addComment(c1);
+		l1.addComment(c2);
+
+		u1.addComment(c1);
+		u2.addComment(c2);
 
 		leagueService.save(l1);
 		leagueService.save(l2);

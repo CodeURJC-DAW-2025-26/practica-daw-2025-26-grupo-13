@@ -55,24 +55,15 @@ public class CommentController {
 		}
 	}
 
-	@GetMapping("/create-comment")
-	public String newComment(Model model, @RequestParam(required = false) Long leagueId) {
+	@GetMapping("/create-comment/{leagueId}")
+	public String newComment(Model model, @PathVariable long leagueId) {
 
-		// supply list of leagues so user can choose where to post the comment
-		model.addAttribute("leagues", leagueService.findAll());
-		if (leagueId != null) {
-			model.addAttribute("selectedLeagueId", leagueId);
-		}
-
+		model.addAttribute("leagueId", leagueId);
 		return "create-comment";
 	}
 
     @PostMapping("/create-comment")
-    public String postCreateComment(Model model,
-                                    @RequestParam String text,
-                                    @RequestParam int rating,
-                                    @RequestParam long leagueId,
-                                    Principal principal) {
+    public String postCreateComment(Model model, @RequestParam String text, @RequestParam int rating, @RequestParam long leagueId, Principal principal) {
 
         // create a comment only if we have a logged user and the league exists
         if (principal != null) {
@@ -83,7 +74,7 @@ public class CommentController {
             });
         }
         // after creation we redirect to the listing page
-        return "redirect:/list-comments";
+        return "/league/" + leagueId;
     }
     
     

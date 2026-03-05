@@ -88,4 +88,12 @@ public class User {
 	public Image getImage() {
 		return image;
 	}
+	
+	public void addComment(Comment comment) {
+		this.comments.add(comment);
+	}
+
+    public void rmvComment(Comment comment) {
+		this.comments.remove(comment);
+	}
 }

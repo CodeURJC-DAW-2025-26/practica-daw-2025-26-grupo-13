@@ -2,26 +2,18 @@
 
 <form action="/create-comment" method="post">
     <input type="hidden" name="_csrf" value="{{token}}" />
+    <input type="hidden" name="leagueId" value="{{leagueId}}" />
     <div class="container px-4 px-lg-5 my-5 text-center">
         <h1 class="fw-bolder mb-4">Crear comentario</h1>
 
         <div class="mb-3 text-start">
             <label for="comment-text" class="form-label fw-bold">Texto</label>
-            <textarea name="text" id="comment-text" class="form-control" required>{{text}}</textarea>
+            <textarea name="text" id="comment-text" class="form-control" required></textarea>
         </div>
 
         <div class="mb-3 text-start">
             <label for="comment-rating" class="form-label fw-bold">Valoración</label>
             <input type="number" name="rating" id="comment-rating" class="form-control" min="0" max="10" required>
-        </div>
-
-        <div class="mb-3 text-start">
-            <label for="comment-league" class="form-label fw-bold">Liga</label>
-            <select name="leagueId" id="comment-league" class="form-select" required>
-                {{#leagues}}
-                    <option value="{{id}}">{{name}}</option>
-                {{/leagues}}
-            </select>
         </div>
 
         <div class="d-flex justify-content-between mt-4">

@@ -93,7 +93,7 @@ public class UserController {
 	}
 	
 
-	@GetMapping("/edit-user/{id}")
+	@GetMapping("/edit-user-admin/{id}")
 	public String showUser(Model model, Principal principal, @PathVariable long id) {
 
 		if (principal == null) {
@@ -163,7 +163,7 @@ public class UserController {
 	}
 
 
-	@GetMapping("/remove-user/{id}")
+	@GetMapping("/remove-user-admin/{id}")
 	public String removeUserAdmin(Model model, @PathVariable long id) {
 
 		Optional<User> user = userService.findById(id);
@@ -180,7 +180,7 @@ public class UserController {
 	@GetMapping("/remove-user")
 	public String removeUser(Model model, Principal principal, HttpServletRequest request) {
 		if (principal == null) {
-			return "redirect:/login-form";
+			return "/login-form";
 		}
 		Optional<User> userOptional = userService.findByName(principal.getName());
 		if (userOptional.isPresent()) {
@@ -192,7 +192,7 @@ public class UserController {
 			request.getSession().invalidate();
 			return "/login-form";
 		}
-		return "redirect:/login-form";
+		return "/login-form";
 	}
 	
 	@GetMapping("/user-ranking")

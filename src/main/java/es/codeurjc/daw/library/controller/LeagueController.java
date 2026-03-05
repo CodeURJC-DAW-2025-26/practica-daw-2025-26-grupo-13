@@ -75,23 +75,20 @@ public class LeagueController {
 
 			model.addAttribute("races", l.getRaces());
 
-			long currentUserId = -1;
-			if (principal != null) {
-				currentUserId = userRepository.findByName(principal.getName())
-					.map(u -> u.getId()).orElse(-1L);
-			}
+			// 1. Obtener el ID del usuario logueado actualmente
+        	long currentUserId = -1;
+        	if (principal != null) {
+            	currentUserId = userRepository.findByName(principal.getName()).map(u -> u.getId()).orElse(-1L);
+        }
 
-			List<Map<String, Object>> commentViews = new ArrayList<>();
-			for (Comment c : l.getComments()) {
-				Map<String, Object> m = new HashMap<>();
-				m.put("id", c.getId());
-				m.put("text", c.getText());
-				m.put("rating", c.getRating());
-				m.put("user", c.getUser());
-				m.put("editAllowed", c.getUser() != null && c.getUser().getId() == currentUserId);
-				commentViews.add(m);
-			}
-			model.addAttribute("comments", commentViews);
+        	// 2. Iterar sobre los comentarios de la liga y establecer 'editAllowed'
+        	for (Comment comment : l.getComments()) {
+            	boolean isOwner = (comment.getUser() != null && comment.getUser().getId() == currentUserId);
+            	comment.setEditAllowed(isOwner); 
+        	}
+
+			List<Comment> comments = l.getComments();
+			model.addAttribute("comments", comments);
 
 			return "league-view";
 		} else {
