@@ -27,8 +27,6 @@ public class DatabaseInitializer {
 	@Autowired
 	private LeagueService leagueService;
 
-	@Autowired
-	private RaceService raceService;
 
 	@Autowired
 	private UserRepository userRepository;

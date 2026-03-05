@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.Optional;
 import es.codeurjc.daw.library.model.Comment;
-import es.codeurjc.daw.library.model.League;
 import es.codeurjc.daw.library.model.User;
 import es.codeurjc.daw.library.service.LeagueService;
 import es.codeurjc.daw.library.service.UserService;
@@ -74,18 +73,18 @@ public class CommentController {
             });
         }
         // after creation we redirect to the listing page
-        return "/league/" + leagueId;
+        return "redirect:/";
     }
     
     
-    @GetMapping("/edit-comment")
-	public String editComment(Model model) {
+    @GetMapping("/edit-comment/{id}")
+	public String editComment(Model model, @PathVariable long id) {
         // show the list of comments; the user will click on one to edit
         model.addAttribute("comments", commentService.findAll());
-		return "comment-list";
+		return "edit-comment";
 	}
 
-     @GetMapping("/edit-comment/{id}")
+     @GetMapping("/edit-comment-admin/{id}")
 	public String editCommentAdmin(Model model, @PathVariable long id) {
 
         Optional<Comment> c = commentService.findById(id);
@@ -97,10 +96,7 @@ public class CommentController {
 	}
 
     @PostMapping("/edit-comment")
-	public String postEditComment(Model model,
-                                  @RequestParam long id,
-                                  @RequestParam String text,
-                                  @RequestParam int rating) {
+	public String postEditComment(Model model, @RequestParam long id, @RequestParam String text, @RequestParam int rating) {
 
         Optional<Comment> c = commentService.findById(id);
         if (c.isPresent()) {
@@ -109,7 +105,7 @@ public class CommentController {
             comment.setRating(rating);
             commentService.save(comment);
         }
-        return "redirect:/list-comments";
+        return "redirect:/";
 	}
 
 
@@ -120,25 +116,19 @@ public class CommentController {
 
 		return "comment-list";
 	}
-    @GetMapping("/remove-comment")
-	public String removeComment(Model model) {
-        // simply redirect to the list, this endpoint is not really used
-        return "redirect:/list-comments";
+    @GetMapping("/remove-comment-admin/{id}")
+	public String removeCommentAdmin(Model model, @PathVariable long id) {
+        commentService.delete(id);
+        return "redirect:/";
 	}
 
-    @PostMapping("/remove-comment/{id}")
+    @GetMapping("/remove-comment/{id}")
 	public String removeComment(Model model, @PathVariable long id) {
         Optional<Comment> c = commentService.findById(id);
         c.ifPresent(comment -> {
             commentService.delete(id);
             model.addAttribute("comment", comment);
         });
-        return "redirect:/list-comments";
-	}
-
-    @GetMapping("/remove-comment/{id}")
-	public String removeCommentAdmin(Model model, @PathVariable long id) {
-        commentService.delete(id);
-        return "redirect:/list-comments";
+        return "redirect:/";
 	}
 }

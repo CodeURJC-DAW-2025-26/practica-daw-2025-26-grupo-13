@@ -5,9 +5,7 @@ import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.daw.library.model.Comment;
 import es.codeurjc.daw.library.model.League;
-import es.codeurjc.daw.library.model.Race;
 import es.codeurjc.daw.library.repository.UserRepository;
 import es.codeurjc.daw.library.service.LeagueService;
 import jakarta.servlet.http.HttpServletRequest;

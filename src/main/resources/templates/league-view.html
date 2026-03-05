@@ -40,7 +40,8 @@
                                 <p class="card-text">{{text}}</p>
                                 <p class="card-text"><small class="text-muted">Usuario: {{user.name}}</small></p>
                                 {{#editAllowed}}
-                                <a href="/edit-comment" class="btn btn-sm btn-warning">Editar</a>
+                                <a href="/edit-comment/{{league.id}}" class="btn btn-sm btn-warning">Editar</a>
+                                <a href="/remove-comment/{{league.id}}" class="btn btn-sm btn-danger">Eliminar</a>
                                 {{/editAllowed}}
                             </div>
                         </div>

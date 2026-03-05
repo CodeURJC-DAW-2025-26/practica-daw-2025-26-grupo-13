@@ -11,16 +11,14 @@
                 <p class="card-text">{{text}}</p>
                 <p class="card-text"><small class="text-muted">Liga: {{league.name}}</small></p>
                 <p class="card-text"><small class="text-muted">Usuario: {{user.name}}</small></p>
-                <a href="/edit-comment/{{id}}" class="btn btn-sm btn-warning">Editar</a>
-                <form action="/remove-comment/{{id}}" method="post" class="d-inline">
+                <a href="/edit-comment-admin/{{id}}" class="btn btn-sm btn-warning">Editar</a>
+                <form action="/remove-comment-admin/{{id}}" method="post" class="d-inline">
                     <input type="hidden" name="_csrf" value="{{token}}" />
                     <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                 </form>
             </div>
         </div>
         {{/comments}}
-
-        <a href="/create-comment" class="btn btn-primary">Nuevo comentario</a>
     </div>
 </section>
 

@@ -2,7 +2,6 @@ package es.codeurjc.daw.library.controller;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -220,7 +219,7 @@ public class UserController {
 	}
 
 
-	private void updateImage(User user, boolean removeImage, MultipartFile imageField)
+	/*private void updateImage(User user, boolean removeImage, MultipartFile imageField)
 			throws IOException, SQLException {
 
 		if (!imageField.isEmpty()) {
@@ -245,6 +244,6 @@ public class UserController {
 				user.setImage(dbUser.getImage());
 			}
 		}
-	}
+	}*/
 
 }
