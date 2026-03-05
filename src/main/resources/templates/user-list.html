@@ -33,7 +33,13 @@
                 {{#users}}
                 <div class="col mb-5">
                     <div class="card h-100">
-                        <!-- Product image-->
+                        <!-- User image-->
+                        {{#image}}
+                        <img src="/images/{{id}}" class="card-img-top" style="height:180px;object-fit:cover;" alt="Foto de usuario">
+                        {{/image}}
+                        {{^image}}
+                        <img src="/assets/images/no_image.png" class="card-img-top" style="height:180px;object-fit:cover;" alt="Sin imagen">
+                        {{/image}}
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">

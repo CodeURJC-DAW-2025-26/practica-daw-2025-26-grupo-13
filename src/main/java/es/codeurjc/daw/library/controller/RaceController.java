@@ -5,8 +5,6 @@ import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import es.codeurjc.daw.library.model.Race;
 import es.codeurjc.daw.library.repository.UserRepository;
 import es.codeurjc.daw.library.service.RaceService;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class RaceController {
@@ -41,7 +41,12 @@ public class RaceController {
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
-			userRepository.findByName(principal.getName()).ifPresent(user -> model.addAttribute("userid", user.getId()));
+			userRepository.findByName(principal.getName()).ifPresent(user -> {
+				model.addAttribute("userid", user.getId());
+				if (user.getImage() != null) {
+					model.addAttribute("userImageId", user.getImage().getId());
+				}
+			});
 
 		} else {
 			model.addAttribute("logged", false);

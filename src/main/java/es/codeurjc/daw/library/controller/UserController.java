@@ -16,9 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.daw.library.model.Image;
 import es.codeurjc.daw.library.model.User;
+import es.codeurjc.daw.library.repository.UserRepository;
 import es.codeurjc.daw.library.service.ImageService;
 import es.codeurjc.daw.library.service.UserService;
-import es.codeurjc.daw.library.repository.UserRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -50,7 +50,12 @@ public class UserController {
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
-			userRepository.findByName(principal.getName()).ifPresent(user -> model.addAttribute("userid", user.getId()));
+			userRepository.findByName(principal.getName()).ifPresent(user -> {
+				model.addAttribute("userid", user.getId());
+				if (user.getImage() != null) {
+					model.addAttribute("userImageId", user.getImage().getId());
+				}
+			});
 
 		} else {
 			model.addAttribute("logged", false);
@@ -125,32 +130,28 @@ public class UserController {
 	}
 
     @PostMapping("/edit-user")
-	public String editUserProcess(Model model, User user, String name, String password, HttpServletRequest request) {
+	public String editUserProcess(Model model, User user, String name, String password, MultipartFile imageField, HttpServletRequest request) throws IOException {
+
+		User dbUser = userService.findById(user.getId()).orElseThrow();
+		Long oldImageId = (dbUser.getImage() != null) ? dbUser.getImage().getId() : null;
+
+		dbUser.setName(name);
+		if (password != null && !password.isEmpty()) {
+			dbUser.setEncodedPassword(userService.encodePassword(password));
+		}
+		if (imageField != null && !imageField.isEmpty()) {
+			if (oldImageId != null) {
+				imageService.replaceImageFile(oldImageId, imageField.getInputStream());
+			} else {
+				dbUser.setImage(imageService.createImage(imageField.getInputStream()));
+			}
+		}
+		userService.save(dbUser);
 
 		if (request.isUserInRole("ADMIN")) {
-			user.setName(name);		
-			if (password != null && !password.isEmpty()) {
-			user.setEncodedPassword(userService.encodePassword(password));
-			}	
-			else{
-				User dbUser = userService.findById(user.getId()).orElseThrow();
-				user.setEncodedPassword(dbUser.getEncodedPassword());
-			}
-			userService.save(user);
-			return "/login-form";
+			return "redirect:/user-list";
 		} else {
-		request.getSession().invalidate();
-		user.setName(name);		
-		if (password != null && !password.isEmpty()) {
-			user.setEncodedPassword(userService.encodePassword(password));
-		}
-		else {
-			User dbUser = userService.findById(user.getId()).orElseThrow();
-			user.setEncodedPassword(dbUser.getEncodedPassword());
-		}
-		userService.save(user);
-		
-		return "/login-form";
+			return "redirect:/edit-user";
 		}
 	}
 
@@ -165,13 +166,17 @@ public class UserController {
 	@GetMapping("/remove-user-admin/{id}")
 	public String removeUserAdmin(Model model, @PathVariable long id) {
 
-		Optional<User> user = userService.findById(id);
-		if (user.isPresent()) {
-			if (user.get().getImage() != null) {
-				imageService.deleteImage(user.get().getImage().getId());
+		Optional<User> userOpt = userService.findById(id);
+		if (userOpt.isPresent()) {
+			User user = userOpt.get();
+			if (user.getImage() != null) {
+				long imageId = user.getImage().getId();
+				user.setImage(null);
+				userRepository.save(user);
+				imageService.deleteImage(imageId);
 			}
 			userService.delete(id);
-			model.addAttribute("User", user.get());
+			model.addAttribute("User", user);
 		}
 		return "redirect:/";
 	}
@@ -179,19 +184,22 @@ public class UserController {
 	@GetMapping("/remove-user")
 	public String removeUser(Model model, Principal principal, HttpServletRequest request) {
 		if (principal == null) {
-			return "/login-form";
+			return "redirect:/login-form";
 		}
 		Optional<User> userOptional = userService.findByName(principal.getName());
 		if (userOptional.isPresent()) {
 			User user = userOptional.get();
 			if (user.getImage() != null) {
-				imageService.deleteImage(user.getImage().getId());
+				long imageId = user.getImage().getId();
+				user.setImage(null);
+				userRepository.save(user);
+				imageService.deleteImage(imageId);
 			}
 			userService.delete(user.getId());
 			request.getSession().invalidate();
 			return "/login-form";
 		}
-		return "/login-form";
+		return "redirect:/login-form";
 	}
 	
 	@GetMapping("/user-ranking")

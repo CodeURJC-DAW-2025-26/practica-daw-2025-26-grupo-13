@@ -47,7 +47,12 @@ public class CommentController {
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
-			userRepository.findByName(principal.getName()).ifPresent(user -> model.addAttribute("userid", user.getId()));
+			userRepository.findByName(principal.getName()).ifPresent(user -> {
+				model.addAttribute("userid", user.getId());
+				if (user.getImage() != null) {
+					model.addAttribute("userImageId", user.getImage().getId());
+				}
+			});
 
 		} else {
 			model.addAttribute("logged", false);
