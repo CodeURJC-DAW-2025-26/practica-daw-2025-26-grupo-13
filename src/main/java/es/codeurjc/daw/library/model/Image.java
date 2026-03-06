@@ -37,7 +37,7 @@ public class Image {
         return imageFile;
     }
 
-    public void setImageFile(Blob imageFile) {
+    public void setImageFile(Blob imageFile) { //???? Makes no sense IMO
         this.imageFile = imageFile;
     }
 

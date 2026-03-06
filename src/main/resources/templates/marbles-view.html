@@ -23,16 +23,24 @@
                 </div>
             </div>
 
-            <div class="canica-card">
-                <img src="/assets/images/Canica_base.png" alt="Canica 3" class="canica-image" id="canica3">
-                <div class="buttons">
-                    <button class="btn-seleccionarA" onclick="chooseMarble(3)">ELEGIR</button>
-                    <button class="btn-seleccionarB" onclick="getMarbleStats(3)">ESTADÍSTICAS</button>
-                    <button class="btn-seleccionarB" onclick="editMarble(3)">EDITAR</button>
-                    <button class="btn-seleccionarB" onclick="deleteMarble(3)">BORRAR</button>
+            {{#marbles}}
+            <div class="col">
+                <a href="/marble/{{id}}" class="text-decoration-none text-dark">
+                <div class="card h-100 text-center shadow-sm league-card">
+                    <div class="card-body">
+                        <img src="/assets/images/Canica_base.png" alt="Canica 3" class="canica-image" id="canica3">
+                        <button class="btn-seleccionarA" onclick="chooseMarble(3)">ELEGIR</button>
+                        <button class="btn-seleccionarB" href="/editMarble/{{id}}">EDITAR</button>
+                        <button class="btn-seleccionarB" href="/removeMarble/{{id}}">BORRAR</button>
+                    </div>
                 </div>
+                </a>
             </div>
-        </div>
+            {{/marbles}}
+
+            <div class="d-flex align-items-center justify-content-between w-100 mt-5">
+                <button type="button" class="btn btn-danger" onclick="window.location.href='/'">Atrás</button>                
+            </div>
 
         <script>
             // Variable que controla si se muestran los botones

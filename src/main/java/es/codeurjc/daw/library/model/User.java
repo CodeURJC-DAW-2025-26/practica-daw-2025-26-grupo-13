@@ -24,9 +24,9 @@ public class User {
 
 	private String encodedPassword;
 
-	private int victorias;
+	private int winCount;
 
-	private int derrotas;
+	private int loseCounter;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
@@ -50,8 +50,8 @@ public class User {
 		this.roles = List.of(roles);
 		this.comments = new ArrayList<>();
 		this.marbles = new ArrayList<>(3);
-		this.victorias = 1;
-		this.derrotas = 0;
+		this.winCount = 1;
+		this.loseCounter = 0;
 	}
 
 	public long getId() {
