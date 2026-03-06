@@ -148,7 +148,7 @@ public class UserController {
 	public String showUserList(Model model) {
 
 		model.addAttribute("users", userService.findAll());
-			return "user-list";
+		return "user-list";
 	}
 	@GetMapping("/remove-user/{id}")
 	public String removeUser(Model model, @PathVariable long id) {
@@ -167,10 +167,11 @@ public class UserController {
 	@GetMapping("/user-ranking")
 	public String showUserRanking(Model model) {
 
-		List<User> users = userService.findAll();  // Aquí puedes implementar la lógica para ordenar a los usuarios por su puntuación
+		List<User> users = userService.findAll();
 		model.addAttribute("users", users);
-			return "user-ranking";
-	}  
+		return "user-ranking";
+	}
+
 	@GetMapping("/statistics/{id}")
 	public String showUserStatistics(Model model, Principal principal, @PathVariable long id) {
 
