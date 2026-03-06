@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Comment {
@@ -25,6 +26,8 @@ public class Comment {
     @ManyToOne
     private User user;
 
+	@Transient
+    private boolean editAllowed;
 
 	public Comment() {}
 
@@ -68,4 +71,12 @@ public class Comment {
 	public League getLeague() {
 		return league;
 	}
+
+	public boolean isEditAllowed() {
+        return editAllowed;
+    }
+
+    public void setEditAllowed(boolean editAllowed) {
+        this.editAllowed = editAllowed;
+    }
 }

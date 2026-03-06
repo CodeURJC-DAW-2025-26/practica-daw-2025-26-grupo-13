@@ -17,30 +17,17 @@
                         <div class="card-body p-5">
                             {{#user}}
                             <div class="text-center mb-4">
-                                    {{#Image}}
-                                        <img src="/images/{{id}}" alt="Imagen de perfil" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
-                                        <div class="form-check">
-                                        <input type="checkbox" name="removeImage" class="form-check-input" id="removeImage">
-                                        <label class="form-check-label" for="removeImage">Remove Image</label>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="updateImage" class="form-label">Update Image</label>
-                                        </div>
-                                    {{/Image}}
-                                    {{^Image}}
-                                    <img src="/assets/images/no_image.png"  class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
-                                        <div class="mb-3">
-                                                <label for="updateImage" class="form-label">Upload Image</label>
-                                        </div>
-                                    {{/Image}}
-
-                                    <input type="file" name="imageField" accept=".jpg, .jpeg" class="form-control mb-3" />
-
+                                {{#image}}
+                                <img src="/images/{{id}}" class="rounded-circle mb-2" style="width:100px;height:100px;object-fit:cover;" alt="Foto de perfil">
+                                {{/image}}
+                                {{^image}}
+                                <img src="/assets/images/no_image.png" class="rounded-circle mb-2" style="width:100px;height:100px;object-fit:cover;" alt="Foto de perfil">
+                                {{/image}}
                             </div>
                                 <div class="mb-3">
                                     <label for="username" class="form-label fw-bold">Nombre de usuario</label>
                                     <div class="input-group">
-                                        <input type="text" name="name" class="form-control" id="name" value="{{user.name}}">
+                                        <input type="text" name="name" class="form-control" id="name" value="{{name}}">
                                     </div>
                                 </div>
 
@@ -52,10 +39,9 @@
                                     </div>
                                 </div>
 
-                                <div class="mb-4">
-                                    <button type="button" class="btn btn-primary btn-lg" onclick="/marble/{{user.id}}">
-                                        <i class="bi bi-trash"></i> Ver mis canicas
-                                    </button>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Foto de perfil</label>
+                                    <input type="file" name="imageField" accept="image/*" class="form-control">
                                 </div>
 
                                 <hr class="my-4">
@@ -64,8 +50,8 @@
                                     <button type="submit" class="btn btn-primary btn-lg">
                                         <i class="bi bi-pencil"></i> Editar Cuenta
                                     </button>
-                                    <button type="button" class="btn btn-danger btn-lg" onclick="DeleteUser()">
-                                        <i class="bi bi-trash"></i> Eliminar Cuenta
+                                            <button type="button" class="btn btn-danger btn-lg" onclick="location.href='/remove-user'">
+                                                <i class="bi bi-trash"></i> Eliminar Cuenta
                                     </button>
                                 </div>
 

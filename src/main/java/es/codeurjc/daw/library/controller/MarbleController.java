@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.model.User;
 import es.codeurjc.daw.library.model.Image;
+import es.codeurjc.daw.library.repository.UserRepository;
 import es.codeurjc.daw.library.service.MarbleService;
 //import es.codeurjc.daw.library.service.ImageService;
 
@@ -29,6 +30,9 @@ public class MarbleController {
 
 	@Autowired
 	private MarbleService marbleService;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	//@Autowired
 	//private ImageService imageService;
@@ -43,6 +47,12 @@ public class MarbleController {
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
+			userRepository.findByName(principal.getName()).ifPresent(user -> {
+				model.addAttribute("userid", user.getId());
+				if (user.getImage() != null) {
+					model.addAttribute("userImageId", user.getImage().getId());
+				}
+			});
 
 		} else {
 			model.addAttribute("logged", false);

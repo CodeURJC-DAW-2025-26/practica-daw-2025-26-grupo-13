@@ -1,17 +1,17 @@
 {{>header}}
     {{#league}}
     <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center text-black">
-                <div class="d-flex align-items-center justify-content-between w-100">
-                    <h2 class="fw-bolder">{{name}}</h2>
-            <!--    <h2 class="fw-bolder">GANADOR: winnerName</h2> -->
-                    <h2 class="fw-bolder" style="margin: 0; padding: 0;">{{statusMsg}}</h2>
-                </div>
+        <div class="text-center text-black">
+            <div class="d-flex align-items-center justify-content-between w-100">
+                <h2 class="fw-bolder">{{name}}</h2>
+                <h2 class="fw-bolder" style="margin: 0; padding: 0;">{{statusMsg}}</h2>
             </div>
+        </div>
     </div>    
     
     <section class="py-5 bg-bajo-header flex-1">
-        <div class="container px-4 px-lg-5 ">
+        <div class="container px-4 px-lg-5">
+            
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 {{#races}}
                 <div class="col mb-5">
@@ -19,23 +19,42 @@
                         <div class="card-body p-4">
                             <div class="text-center">
                                 <h5 class="fw-bolder">{{name}}</h5>
-                                <!-- show first three results for this race -->
                                 <ul class="list-unstyled mt-2 mb-0">
-                                <!--    {{#topThreeResults}}
-                                        <li>{{name}}</li>
-                                    {{/topThreeResults}} -->
-                                </ul>
+                                    </ul>
                             </div>                            
                         </div>
-
                         <div class="card-body d-flex flex-column align-items-center gap-3">
                             <a class="w-40 btn btn-lg btn-secondary" href="/race/{{id}}">Ver detalles</a>
                         </div>
                     </div>
                 </div>
                 {{/races}}                
+            </div> <hr class="my-5"> <div class="row">
+                <div class="col-12">
+                    <div class="mt-2">
+                        <h3 class="mb-4">Comentarios</h3>
+                        {{#comments}}
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Valoración: {{rating}}</h5>
+                                <p class="card-text">{{text}}</p>
+                                <p class="card-text"><small class="text-muted">Usuario: {{user.name}}</small></p>
+                                {{#editAllowed}}
+                                <a href="/edit-comment/{{id}}" class="btn btn-sm btn-warning">Editar</a>
+                                <a href="/remove-comment/{{id}}" class="btn btn-sm btn-danger">Eliminar</a>
+                                {{/editAllowed}}
+                            </div>
+                        </div>
+                        {{/comments}}
+                        
+                        <div class="mt-4">
+                            <a href="/create-comment/{{league.id}}" class="btn btn-primary">Nuevo comentario</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="d-flex align-items-center justify-content-between w-100 mt-5">
                 <button type="button" class="btn btn-danger" onclick="window.location.href='/'">Atrás</button>                
             </div>
 

@@ -2,7 +2,6 @@ package es.codeurjc.daw.library.controller;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,9 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.daw.library.model.Image;
 import es.codeurjc.daw.library.model.User;
+import es.codeurjc.daw.library.repository.UserRepository;
 import es.codeurjc.daw.library.service.ImageService;
 import es.codeurjc.daw.library.service.UserService;
-import es.codeurjc.daw.library.repository.UserRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -51,7 +50,12 @@ public class UserController {
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
-			userRepository.findByName(principal.getName()).ifPresent(user -> model.addAttribute("userid", user.getId()));
+			userRepository.findByName(principal.getName()).ifPresent(user -> {
+				model.addAttribute("userid", user.getId());
+				if (user.getImage() != null) {
+					model.addAttribute("userImageId", user.getImage().getId());
+				}
+			});
 
 		} else {
 			model.addAttribute("logged", false);
@@ -93,7 +97,7 @@ public class UserController {
 	}
 	
 
-	@GetMapping("/edit-user/{id}")
+	@GetMapping("/edit-user-admin/{id}")
 	public String showUser(Model model, Principal principal, @PathVariable long id) {
 
 		if (principal == null) {
@@ -118,7 +122,7 @@ public class UserController {
 
 		Optional<User> User = userService.findByName(principal.getName());
 		if (User.isPresent()) {
-			model.addAttribute("user", User);
+			model.addAttribute("user", User.get());
 			return "edit-user";
 		}
 
@@ -126,42 +130,76 @@ public class UserController {
 	}
 
     @PostMapping("/edit-user")
-	public String editUserProcess(Model model, User user, String password, boolean removeImage, MultipartFile imageField)
-			throws IOException, SQLException {
+	public String editUserProcess(Model model, User user, String name, String password, MultipartFile imageField, HttpServletRequest request) throws IOException {
 
+		User dbUser = userService.findById(user.getId()).orElseThrow();
+		Long oldImageId = (dbUser.getImage() != null) ? dbUser.getImage().getId() : null;
+
+		dbUser.setName(name);
 		if (password != null && !password.isEmpty()) {
-			user.setEncodedPassword(userService.encodePassword(password));
+			dbUser.setEncodedPassword(userService.encodePassword(password));
 		}
-		else {
-			User dbUser = userService.findById(user.getId()).orElseThrow();
-			user.setEncodedPassword(dbUser.getEncodedPassword());
+		if (imageField != null && !imageField.isEmpty()) {
+			if (oldImageId != null) {
+				imageService.replaceImageFile(oldImageId, imageField.getInputStream());
+			} else {
+				dbUser.setImage(imageService.createImage(imageField.getInputStream()));
+			}
 		}
+		userService.save(dbUser);
 
-		updateImage(user, removeImage, imageField);
-				
-		userService.save(user);
-		model.addAttribute("username", user.getName());
-
-		return "redirect:/";
+		if (request.isUserInRole("ADMIN")) {
+			return "redirect:/user-list";
+		} else {
+			return "redirect:/edit-user";
+		}
 	}
+
     @GetMapping("/user-list")
 	public String showUserList(Model model) {
 
-		model.addAttribute("users", userService.findAll());
-		return "user-list";
+		model.addAttribute("users", userService.findOnlyUsers());
+			return "user-list";
 	}
-	@GetMapping("/remove-user/{id}")
-	public String removeUser(Model model, @PathVariable long id) {
 
-		Optional<User> user = userService.findById(id);
-		if (user.isPresent()) {
-			if (user.get().getImage() != null) {
-				imageService.deleteImage(user.get().getImage().getId());
+
+	@GetMapping("/remove-user-admin/{id}")
+	public String removeUserAdmin(Model model, @PathVariable long id) {
+
+		Optional<User> userOpt = userService.findById(id);
+		if (userOpt.isPresent()) {
+			User user = userOpt.get();
+			if (user.getImage() != null) {
+				long imageId = user.getImage().getId();
+				user.setImage(null);
+				userRepository.save(user);
+				imageService.deleteImage(imageId);
 			}
 			userService.delete(id);
-			model.addAttribute("User", user.get());
+			model.addAttribute("User", user);
 		}
-		return "redirect:/user-list";
+		return "redirect:/";
+	}
+
+	@GetMapping("/remove-user")
+	public String removeUser(Model model, Principal principal, HttpServletRequest request) {
+		if (principal == null) {
+			return "redirect:/login-form";
+		}
+		Optional<User> userOptional = userService.findByName(principal.getName());
+		if (userOptional.isPresent()) {
+			User user = userOptional.get();
+			if (user.getImage() != null) {
+				long imageId = user.getImage().getId();
+				user.setImage(null);
+				userRepository.save(user);
+				imageService.deleteImage(imageId);
+			}
+			userService.delete(user.getId());
+			request.getSession().invalidate();
+			return "/login-form";
+		}
+		return "redirect:/login-form";
 	}
 	
 	@GetMapping("/user-ranking")
@@ -169,17 +207,16 @@ public class UserController {
 
 		List<User> users = userService.findAll();
 		model.addAttribute("users", users);
-		return "user-ranking";
-	}
-
-	@GetMapping("/statistics/{id}")
-	public String showUserStatistics(Model model, Principal principal, @PathVariable long id) {
+			return "user-ranking";
+	}  
+	@GetMapping("/statistics")
+	public String showUserStatistics(Model model, Principal principal) {
 
 		if (principal == null) {
 			return "redirect:/login-form";
 		}
 
-		Optional<User> user = userService.findById(id);
+		Optional<User> user = userService.findByName(principal.getName());
 		if (user.isPresent()) {
 			model.addAttribute("user", user.get());
 			return "statistics";
@@ -190,7 +227,7 @@ public class UserController {
 	}
 
 
-	private void updateImage(User user, boolean removeImage, MultipartFile imageField)
+	/*private void updateImage(User user, boolean removeImage, MultipartFile imageField)
 			throws IOException, SQLException {
 
 		if (!imageField.isEmpty()) {
@@ -215,6 +252,6 @@ public class UserController {
 				user.setImage(dbUser.getImage());
 			}
 		}
-	}
+	}*/
 
 }

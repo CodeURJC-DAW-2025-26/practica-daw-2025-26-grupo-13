@@ -24,6 +24,10 @@ public class User {
 
 	private String encodedPassword;
 
+	private int victorias;
+
+	private int derrotas;
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles;
 
@@ -46,6 +50,8 @@ public class User {
 		this.roles = List.of(roles);
 		this.comments = new ArrayList<>();
 		this.marbles = new ArrayList<>(3);
+		this.victorias = 1;
+		this.derrotas = 0;
 	}
 
 	public long getId() {
@@ -87,5 +93,13 @@ public class User {
 
 	public Image getImage() {
 		return image;
+	}
+	
+	public void addComment(Comment comment) {
+		this.comments.add(comment);
+	}
+
+    public void rmvComment(Comment comment) {
+		this.comments.remove(comment);
 	}
 }

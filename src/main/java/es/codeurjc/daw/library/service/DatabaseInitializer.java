@@ -1,19 +1,24 @@
 package es.codeurjc.daw.library.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
 import jakarta.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import es.codeurjc.daw.library.model.Image;
 import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.model.Race;
 import es.codeurjc.daw.library.model.User;
+import es.codeurjc.daw.library.model.Comment;
 import es.codeurjc.daw.library.model.League;
 import es.codeurjc.daw.library.repository.UserRepository;
+import es.codeurjc.daw.library.service.ImageService;
 
 @Service
 public class DatabaseInitializer {
@@ -21,13 +26,17 @@ public class DatabaseInitializer {
     private final UserService userService;
 
 	@Autowired
+	private ImageService imageService;
+
+	@Autowired
+	private ResourceLoader resourceLoader;
+
+	@Autowired
 	private MarbleService marbleService;
 
 	@Autowired
 	private LeagueService leagueService;
 
-	@Autowired
-	private RaceService raceService;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -54,6 +63,12 @@ public class DatabaseInitializer {
 		User u9 = new User("pepe", passwordEncoder.encode("1234"), "ADMIN");
 
 		List<User> usersList = List.of(u1, u2, u3, u4, u5, u6, u7, u8, u9);
+
+		// Assign default profile image to all users
+		byte[] defImg = resourceLoader.getResource("classpath:/static/assets/images/Canica_base.jpg").getInputStream().readAllBytes();
+		for (User u : usersList) {
+			u.setImage(imageService.createImage(new ByteArrayInputStream(defImg)));
+		}
 
 		userService.save(u1);
 		userService.save(u2);
@@ -100,6 +115,15 @@ public class DatabaseInitializer {
 		l1.setRace(3, r4);
 		l1.setRace(4, r5);
 		l1.setRace(5, r6);
+
+		Comment c1 = new Comment("Me ha encantado esta liga", 5, u1, l1);
+		Comment c2 = new Comment("No me ha gustado nada esta liga", 1, u2, l1);
+
+		l1.addComment(c1);
+		l1.addComment(c2);
+
+		u1.addComment(c1);
+		u2.addComment(c2);
 
 		leagueService.save(l1);
 		leagueService.save(l2);

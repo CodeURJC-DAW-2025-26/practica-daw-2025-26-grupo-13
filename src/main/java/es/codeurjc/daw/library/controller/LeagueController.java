@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import es.codeurjc.daw.library.model.Comment;
 import es.codeurjc.daw.library.model.League;
-import es.codeurjc.daw.library.model.Race;
 import es.codeurjc.daw.library.repository.UserRepository;
 import es.codeurjc.daw.library.service.LeagueService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,7 +44,12 @@ public class LeagueController {
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
-			userRepository.findByName(principal.getName()).ifPresent(user -> model.addAttribute("userid", user.getId()));
+			userRepository.findByName(principal.getName()).ifPresent(user -> {
+				model.addAttribute("userid", user.getId());
+				if (user.getImage() != null) {
+					model.addAttribute("userImageId", user.getImage().getId());
+				}
+			});
 
 		} else {
 			model.addAttribute("logged", false);
@@ -59,13 +65,32 @@ public class LeagueController {
 	}
 
 	@GetMapping("/league/{id}")
-	public String showLeague(Model model, @PathVariable long id) {
+	public String showLeague(Model model, Principal principal, @PathVariable long id) {
 
 		Optional<League> league = leagueService.findById(id);
 		if (league.isPresent()) {
-			model.addAttribute("league", league.get());
-			model.addAttribute("statusMsg", league.get().getStatus() ? "Abierta" : "Finalizada");
-			model.addAttribute("races", league.get().getRaces());
+			League l = league.get();
+			model.addAttribute("league", l);
+
+			String statusMsg = l.getStatus() ? "Abierta" : "Finalizada";
+			model.addAttribute("statusMsg", statusMsg);
+
+			model.addAttribute("races", l.getRaces());
+
+			// 1. Obtener el ID del usuario logueado actualmente
+        	long currentUserId = -1;
+        	if (principal != null) {
+            	currentUserId = userRepository.findByName(principal.getName()).map(u -> u.getId()).orElse(-1L);
+        }
+
+        	// 2. Iterar sobre los comentarios de la liga y establecer 'editAllowed'
+        	for (Comment comment : l.getComments()) {
+            	boolean isOwner = (comment.getUser() != null && comment.getUser().getId() == currentUserId);
+            	comment.setEditAllowed(isOwner); 
+        	}
+
+			List<Comment> comments = l.getComments();
+			model.addAttribute("comments", comments);
 
 			return "league-view";
 		} else {
