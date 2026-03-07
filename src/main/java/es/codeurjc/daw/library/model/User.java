@@ -24,7 +24,7 @@ public class User {
 
 	private String encodedPassword;
 
-	private int winCount;
+	private int winCounter;
 
 	private int loseCounter;
 
@@ -50,7 +50,7 @@ public class User {
 		this.roles = List.of(roles);
 		this.comments = new ArrayList<>();
 		this.marbles = new ArrayList<>(3);
-		this.winCount = 1;
+		this.winCounter = 1;
 		this.loseCounter = 0;
 	}
 
@@ -94,7 +94,22 @@ public class User {
 	public Image getImage() {
 		return image;
 	}
+
+	public List<Marble> getMarbles() {
+		return marbles;
+	}
+
+	public void setMarble(Marble marble, int position) {
+		if (this.marbles.size() >= 3) {
+			throw new IllegalStateException("User already has 3 marbles");
+		}
+		this.marbles.add(position, marble);
+	}
 	
+	public void rmvMarble(Marble marble) {
+		this.marbles.remove(marble);
+	}
+
 	public void addComment(Comment comment) {
 		this.comments.add(comment);
 	}

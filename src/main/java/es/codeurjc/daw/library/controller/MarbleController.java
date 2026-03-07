@@ -59,25 +59,35 @@ public class MarbleController {
 		}
 	}
 
-	@GetMapping("/marble/{id}")
-	public String showBook(Model model, @PathVariable long id) {
-
-		Optional<Marble> marble = marbleService.findById(id);
-		if (marble.isPresent()) {
-			model.addAttribute("marble", marble.get());
+	@GetMapping("/marbles/{id}")
+	public String showUserMarbles(Model model, @PathVariable long id) {
+		Optional<User> user = userRepository.findById(id);
+		if (user.isPresent()) {
+			model.addAttribute("marbles", user.get().getMarbles());
 			return "marbles-view";
 		} else {
 			return "redirect:/";
 		}
-
 	}
 
 	@PostMapping("/removeMarble/{id}")
-	public String removeMarble(Model model, @PathVariable long id) {
+	public String removeMarble(HttpServletRequest request, Model model, @PathVariable long id) {
 
 		Optional<Marble> marble = marbleService.findById(id);
 		if (marble.isPresent()) {
-			marbleService.delete(id);
+			Principal principal = request.getUserPrincipal();
+			if (principal != null) {
+				Optional<User> opUser = userRepository.findByName(principal.getName());
+				if (opUser.isPresent()) {
+					User user = opUser.get();
+					user.getMarbles().removeIf(m -> m.getId().equals(id));
+					userRepository.save(user);
+				} else {
+					marbleService.delete(id);
+				}
+			} else {
+				marbleService.delete(id);
+			}
 			model.addAttribute("marble", marble.get());
 		}
 		return "redirect:/";
@@ -92,19 +102,33 @@ public class MarbleController {
 	}
 
 	@PostMapping("/newMarble")
-	public String newMarble(Model model, Marble marble,
-			@RequestParam String name, User user, Image image) throws IOException {
-        
-        marble = new Marble(name, image, user.getId());
+	public String newMarble(HttpServletRequest request, Model model, Marble marble,
+			@RequestParam String name, Image image) throws IOException {
 
+		Principal principal = request.getUserPrincipal();
+		if (principal != null) {
+			Optional<User> opUser = userRepository.findByName(principal.getName());
+			if (opUser.isPresent()) {
+				User user = opUser.get();
+				marble = new Marble(name, image, user.getId());
+				
+				user.getMarbles().add(marble);
+				userRepository.save(user);
+
+				model.addAttribute("marbleId", marble.getId());
+				return "redirect:/marbles/" + user.getId();
+			}
+		}
+
+		// Fallback if not logged in or user not found
+        marble = new Marble(name, image, null);
 		marbleService.save(marble);
-
 		model.addAttribute("marbleId", marble.getId());
 
 		return "redirect:/marble/" + marble.getId();
 	}
 
-	@PostMapping("/editMarble")
+	@PostMapping("/editMarble/{id}")
 	public String editBookProcess(Model model, Marble marble, String name, boolean status)
 			throws IOException, SQLException {
 

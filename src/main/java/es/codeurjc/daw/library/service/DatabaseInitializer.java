@@ -80,12 +80,16 @@ public class DatabaseInitializer {
 		userRepository.save(u8);
 		userRepository.save(u9);
 
-		// Create one marble for each user (no image)
-		Marble m1 = new Marble("Canica Manolo", null, u1.getId());
-		Marble m2 = new Marble("Canica Pepe", null, u2.getId());
+		// Create two marbles for manolo
+		Marble m1 = new Marble("Canica Manolo 1", null, u1.getId());
+		Marble m2 = new Marble("Canica Manolo 2", null, u1.getId());
+		
+		u1.getMarbles().add(m1);
+		u1.getMarbles().add(m2);
 
 		marbleService.save(m1);
 		marbleService.save(m2);
+		userService.save(u1);
 
 		// Create 3 leagues
 		League l1 = new League("Liga A");

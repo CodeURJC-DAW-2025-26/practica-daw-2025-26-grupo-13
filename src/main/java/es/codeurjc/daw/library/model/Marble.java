@@ -24,7 +24,7 @@ public class Marble {
 
 	public Marble(String name, Image image, Long userID) {
 		super();
-		this.name = name;
+		this.name = name; //field not used in races yet, will be used when we can show race progress
 		this.image = image;
 		this.userID = userID;
 	}
