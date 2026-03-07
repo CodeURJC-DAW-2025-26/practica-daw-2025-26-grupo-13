@@ -34,14 +34,16 @@
                                 <div class="mb-4">
                                     <label for="password" class="form-label fw-bold">Contraseña</label>
                                     <div class="input-group">
-                                        <input type="text" name="password" class="form-control" id="password">
-                                        
+                                        <input type="password" name="password" class="form-control" id="password" placeholder="Nueva contraseña (dejar vacío para no cambiar)">
                                     </div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label fw-bold">Foto de perfil</label>
-                                    <input type="file" name="imageField" accept="image/*" class="form-control">
+                                    <input type="file" name="imageField" accept="image/*" class="form-control" id="imageField" onchange="previewImage(event)">
+                                    <div class="text-center mt-3" id="previewContainer" style="display:none;">
+                                        <img id="imagePreview" class="rounded-circle" style="width:100px;height:100px;object-fit:cover;" alt="Vista previa">
+                                    </div>
                                 </div>
 
                                 <hr class="my-4">
@@ -69,5 +71,19 @@
         </div>
     </section>
 </form>
+
+<script>
+function previewImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('imagePreview').src = e.target.result;
+            document.getElementById('previewContainer').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+}
+</script>
 
 {{>footer}}
