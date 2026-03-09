@@ -15,69 +15,23 @@
                                 <tr>
                                     <th scope="col" class="text-center w-10p">#</th>
                                     <th scope="col" class="w-60p">Jugador y Canica</th>
-                                    <th scope="col" class="text-end pe-4 w-30p">Puntuación</th>
+                                    <th scope="col" class="text-end pe-4 w-30p">Victorias</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                
+                                {{#users}}
                                 <tr>
-                                    <td class="text-center rank-1">1</td>
+                                    <td class="text-center rank-1">{{-index}}</td>
                                     <td>
                                         <span class="marble-entity m-gold"></span>
-                                        <strong>Joraku</strong> <span class="badge bg-warning text-dark ms-2">P&H</span>
+                                        <strong>{{name}}</strong>  
                                     </td>
-                                    <td class="text-end pe-4 fw-bold">15,420</td>
+                                    <td class="text-end pe-4 fw-bold">{{winCounter}}</td>
                                 </tr>
-                                <tr>
-                                    <td class="text-center rank-2">2</td>
-                                    <td>
-                                        <span class="marble-entity m-red"></span>
-                                        marvel dreamer
-                                    </td>
-                                    <td class="text-end pe-4 fw-bold">14,890</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center rank-3">3</td>
-                                    <td>
-                                        <span class="marble-entity m-blue"></span>
-                                        xxxxxxxxx
-                                    </td>
-                                    <td class="text-end pe-4 fw-bold">14,200</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center text-muted">4</td>
-                                    <td><span class="marble-entity m-green"></span>algo</td>
-                                    <td class="text-end pe-4">13,500</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center text-muted">5</td>
-                                    <td><span class="marble-entity m-purple"></span>yyyyyyyyyyy</td>
-                                    <td class="text-end pe-4">12,850</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center text-muted">6</td>
-                                    <td><span class="marble-entity m-red"></span>qwer</td>
-                                    <td class="text-end pe-4">11,200</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center text-muted">7</td>
-                                    <td><span class="marble-entity m-blue"></span>saaaaaaaas</td>
-                                    <td class="text-end pe-4">10,950</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center text-muted">8</td>
-                                    <td><span class="marble-entity m-purple"></span>lol</td>
-                                    <td class="text-end pe-4">9,800</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center text-muted">9</td>
-                                    <td><span class="marble-entity m-green"></span>tft</td>
-                                    <td class="text-end pe-4">9,450</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center text-muted">10</td>
-                                    <td><span class="marble-entity m-gold"></span>c++</td>
-                                    <td class="text-end pe-4">9,100</td>
-                                </tr>
+                                {{/users}}
+                                
+                                
                             </tbody>
                         </table>
                     </div>

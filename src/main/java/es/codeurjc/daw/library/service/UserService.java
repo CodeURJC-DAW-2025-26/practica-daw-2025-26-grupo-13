@@ -47,6 +47,9 @@ public class UserService {
 	public boolean existByName(String name) {
 		return userRepository.existsByName(name);
 	}
+	public List<User> findtop10List() {
+		return userRepository.findTop10ByWinCounterDesc();
+	}
 
 	public void delete(Long id) {
         User user = userRepository.findById(id).orElseThrow();

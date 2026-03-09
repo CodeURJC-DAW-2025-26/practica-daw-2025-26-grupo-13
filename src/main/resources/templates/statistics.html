@@ -14,12 +14,12 @@
     type: 'pie',
     data: {
   labels:[
-    'Derrotas {{user.derrotas}}',
-    'Victorias {{user.victorias}}',
+    'Derrotas {{user.loseCounter}}',
+    'Victorias {{user.winCounter}}',
   ],
   datasets: [{
     label: 'My First Dataset',
-    data: [{{user.derrotas}}, {{user.victorias}}], 
+    data: [{{user.loseCounter}}, {{user.winCounter}}], 
     backgroundColor: [
       'rgb(255, 99, 132)',
       'rgb(54, 162, 235)',
