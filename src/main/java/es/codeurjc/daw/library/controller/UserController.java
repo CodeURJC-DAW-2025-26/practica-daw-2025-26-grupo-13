@@ -205,7 +205,7 @@ public class UserController {
 	@GetMapping("/user-ranking")
 	public String showUserRanking(Model model) {
 
-		List<User> users = userService.findAll();
+		List<User> users = userService.findtop10List();
 		model.addAttribute("users", users);
 			return "user-ranking";
 	}  
