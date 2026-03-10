@@ -135,18 +135,22 @@ public class UserController {
 		User dbUser = userService.findById(user.getId()).orElseThrow();
 		Long oldImageId = (dbUser.getImage() != null) ? dbUser.getImage().getId() : null;
 
-		dbUser.setName(name);
+		user.setName(name);
 		if (password != null && !password.isEmpty()) {
-			dbUser.setEncodedPassword(userService.encodePassword(password));
+			user.setEncodedPassword(userService.encodePassword(password));
+		} else {
+			user.setEncodedPassword(dbUser.getEncodedPassword());
 		}
+		
 		if (imageField != null && !imageField.isEmpty()) {
 			if (oldImageId != null) {
-				imageService.replaceImageFile(oldImageId, imageField.getInputStream());
+				user.setImage(imageService.replaceImageFile(oldImageId, imageField.getInputStream()));
 			} else {
-				dbUser.setImage(imageService.createImage(imageField.getInputStream()));
+				user.setImage(imageService.createImage(imageField.getInputStream()));
 			}
 		}
-		userService.save(dbUser);
+		user.setRoles(dbUser.getRoles());
+		userService.save(user);
 
 		if (request.isUserInRole("ADMIN")) {
 			return "redirect:/user-list";
