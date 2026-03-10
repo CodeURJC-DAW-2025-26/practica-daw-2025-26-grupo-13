@@ -37,7 +37,6 @@ public class DatabaseInitializer {
 	@Autowired
 	private LeagueService leagueService;
 
-
 	@Autowired
 	private UserRepository userRepository;
 

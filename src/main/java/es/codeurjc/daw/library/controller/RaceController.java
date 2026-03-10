@@ -59,10 +59,6 @@ public class RaceController {
 		Optional<Race> race = raceService.findById(id);
 		if (race.isPresent()) {
 			Race currentRace = race.get();
-			if (currentRace.getResults().isEmpty() && currentRace.getUsers().size() == 8) {
-				currentRace.calculateResults();
-				raceService.save(currentRace);
-			}
 
 			model.addAttribute("race", currentRace);
 			model.addAttribute("results", currentRace.getResults());
@@ -117,27 +113,6 @@ public class RaceController {
 		model.addAttribute("raceId", race.getId());
 
 		return "redirect:/race/" + race.getId();
-	}
-
-	@GetMapping("/playRace/{id}")
-	public String playRace(Model model, @PathVariable long id) {
-
-		Optional<Race> race = raceService.findById(id);
-		if (race.isPresent()) {
-			Race currentRace = race.get();
-			if (currentRace.getResults().isEmpty() && currentRace.getUsers().size() == 8) {
-				currentRace.calculateResults();
-				raceService.save(currentRace);
-			}
-
-			model.addAttribute("race", currentRace);
-			model.addAttribute("results", currentRace.getResults());
-			model.addAttribute("winnerName", currentRace.getResults().isEmpty() ? "Sin ganador" : currentRace.getResults().get(0).getName());
-			return "race-view";
-		} else {
-			return "redirect:/";
-		}
-
 	}
 
 }

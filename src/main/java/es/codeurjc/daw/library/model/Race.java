@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
-
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,8 +22,9 @@ public class Race {
 
 	private String name;
 
-	@ManyToMany
-	private List<User> results; //ADD METHODS THAT CALCULATE RESULTS
+	@ManyToMany(fetch = FetchType.EAGER)
+	@jakarta.persistence.OrderColumn(name = "result_order")
+	private List<User> results;
 
     @ManyToMany
     private List<User> users;
@@ -77,10 +79,13 @@ public class Race {
 	}
 
 	public List<User> calculateResults() {
-		results = new ArrayList<>(users);
-		Collections.shuffle(results);
+		List<User> shuffled = new ArrayList<>(users);
+		Collections.shuffle(shuffled);
 		
-		return results;
+		this.results.clear();
+		this.results.addAll(shuffled);
+		
+		return this.results;
 	}
 
 	public List<User> getTopThreeResults() {

@@ -61,9 +61,23 @@ public class MarbleController {
 
 	@GetMapping("/marbles/{id}")
 	public String showUserMarbles(Model model, @PathVariable long id) {
+
 		Optional<User> user = userRepository.findById(id);
 		if (user.isPresent()) {
 			model.addAttribute("marbles", user.get().getMarbles());
+			return "marbles-view";
+		} else {
+			return "redirect:/";
+		}
+	}
+
+	@GetMapping("/chooseMarble/{id}")
+	public String chooseUserMarble(Model model, @PathVariable long id) {
+
+		Optional<Marble> marble = marbleService.findById(id);
+		if (marble.isPresent()) {
+			marble.get().setChosen(true);
+	//		model.addAttribute("marbles", user.get().getMarbles());
 			return "marbles-view";
 		} else {
 			return "redirect:/";

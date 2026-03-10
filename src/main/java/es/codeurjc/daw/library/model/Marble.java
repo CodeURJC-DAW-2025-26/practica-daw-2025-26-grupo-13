@@ -15,6 +15,7 @@ public class Marble {
 
 	private String name;
 	private Long userID;
+	private boolean isChosen;
 
 	@OneToOne
 	private Image image;
@@ -27,6 +28,7 @@ public class Marble {
 		this.name = name; //field not used in races yet, will be used when we can show race progress
 		this.image = image;
 		this.userID = userID;
+		this.isChosen = false;
 	}
 
 	public String getName() {
@@ -59,6 +61,14 @@ public class Marble {
 
 	public void setUser(Long userId) {
 		this.userID = userId;
+	}
+
+	public boolean isChosen() {
+		return isChosen;
+	}
+
+	public void setChosen(boolean isChosen) {
+		this.isChosen = isChosen;
 	}
 
 	@Override
