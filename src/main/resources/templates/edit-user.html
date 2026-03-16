@@ -59,9 +59,16 @@
                                     <button type="submit" class="btn btn-primary btn-lg">
                                         <i class="bi bi-pencil"></i> Editar Cuenta
                                     </button>
-                                            <button type="button" class="btn btn-danger btn-lg" onclick="location.href='/remove-user'">
-                                                <i class="bi bi-trash"></i> Eliminar Cuenta
+                                    {{#admin}}
+                                    <button type="button" class="btn btn-danger btn-lg" onclick="location.href='/remove-user-admin/{{id}}'">
+                                        <i class="bi bi-trash"></i> Eliminar Cuenta
                                     </button>
+                                    {{/admin}}
+                                    {{^admin}}
+                                    <button type="button" class="btn btn-danger btn-lg" onclick="location.href='/remove-user'">
+                                        <i class="bi bi-trash"></i> Eliminar Cuenta
+                                    </button>
+                                    {{/admin}}
                                 </div>
 
                             </form>
