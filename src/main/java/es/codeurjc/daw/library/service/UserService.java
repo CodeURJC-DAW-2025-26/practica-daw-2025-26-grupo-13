@@ -28,6 +28,9 @@ public class UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Autowired
+	private EmailService emailService;
+
     public Optional<User> findById(long id) {
 		return userRepository.findById(id);
 	}
@@ -103,6 +106,13 @@ public class UserService {
 		user.setRoles(List.of("USER"));
 		user.setRoles(normalizeRoles(user.getRoles()));
 		user.setEncodedPassword(passwordEncoder.encode(user.getEncodedPassword()));
+		//send register email
+		emailService.sendEmail(
+			user.getEmail(),
+			"Bienvenido",
+			"Tu cuenta ha sido creada correctamente."
+		);
+		
 		return userRepository.save(user);
 	}
 
