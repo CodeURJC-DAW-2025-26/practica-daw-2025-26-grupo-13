@@ -1,17 +1,18 @@
 package es.codeurjc.daw.library.model;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToOne;
 
 @Entity(name = "UserTable")
 public class User {
@@ -22,6 +23,9 @@ public class User {
 
 	private String name;
 	private String encodedPassword;
+	@Column(nullable = false)
+	private String email;
+
 	private int winCounter;
 	private int loseCounter;
 
@@ -43,6 +47,7 @@ public class User {
 	public User(String name, String encodedPassword, String... roles) {
 		this.name = name;
 		this.image = null;
+		this.email = null;
 		this.encodedPassword = encodedPassword;
 		this.roles = List.of(roles);
 		this.comments = new ArrayList<>();
@@ -90,6 +95,14 @@ public class User {
 
 	public Image getImage() {
 		return image;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public List<Marble> getMarbles() {

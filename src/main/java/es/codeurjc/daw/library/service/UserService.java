@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -106,14 +104,22 @@ public class UserService {
 		user.setRoles(List.of("USER"));
 		user.setRoles(normalizeRoles(user.getRoles()));
 		user.setEncodedPassword(passwordEncoder.encode(user.getEncodedPassword()));
+		userRepository.save(user);
 		//send register email
-		emailService.sendEmail(
-			user.getEmail(),
-			"Bienvenido",
-			"Tu cuenta ha sido creada correctamente."
-		);
+		String textEmailReg = """
+			Bienvenido %s,
+
+			Te has registrado correctamente en Marble Rush Arena.
+
+			Si no has sido tú, contacta con nuestro soporte.
+
+			Saludos,
+			Marble Rush Arena.
+			""".formatted(user.getName());
+
+		emailService.sendEmail(user.getEmail(),"Registro completado",textEmailReg);
 		
-		return userRepository.save(user);
+		return user;
 	}
 
 	public void setUserImage(User user, Image image) throws IOException {

@@ -46,6 +46,7 @@ public class LeagueController {
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
 			userRepository.findByName(principal.getName()).ifPresent(user -> {
 				model.addAttribute("userid", user.getId());
+				model.addAttribute("userEmail", user.getEmail());
 				if (user.getImage() != null) {
 					model.addAttribute("userImageId", user.getImage().getId());
 				}

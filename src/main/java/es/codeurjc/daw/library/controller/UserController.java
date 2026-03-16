@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import es.codeurjc.daw.library.model.Image;
 import es.codeurjc.daw.library.model.User;
 import es.codeurjc.daw.library.repository.UserRepository;
+import es.codeurjc.daw.library.service.EmailService;
 import es.codeurjc.daw.library.service.ImageService;
 import es.codeurjc.daw.library.service.UserService;
 import jakarta.servlet.ServletException;
@@ -33,6 +34,8 @@ public class UserController {
 	private UserService userService;
     @Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private EmailService emailService;
 
 	UserController( UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -52,6 +55,7 @@ public class UserController {
 			model.addAttribute("admin", request.isUserInRole("ADMIN"));
 			userRepository.findByName(principal.getName()).ifPresent(user -> {
 				model.addAttribute("userid", user.getId());
+				model.addAttribute("userEmail", user.getEmail());
 				if (user.getImage() != null) {
 					model.addAttribute("userImageId", user.getImage().getId());
 				}
@@ -69,6 +73,11 @@ public class UserController {
 	}
     @PostMapping("/register")
 	public String newUserProcess(Model model, User user, MultipartFile imageField, HttpServletRequest request) throws IOException {
+
+		if (user.getEmail() == null || user.getEmail().isBlank()) {
+			model.addAttribute("registerError", "El email es obligatorio.");
+			return "register-form";
+		}
 
 		if (userService.existByName(user.getName())) {
 			model.addAttribute("registerError", "Ese nombre de usuario ya existe.");
@@ -130,7 +139,7 @@ public class UserController {
 	}
 
     @PostMapping("/edit-user")
-	public String editUserProcess(Model model, User user, String name, String password, MultipartFile imageField, HttpServletRequest request) throws IOException {
+	public String editUserProcess(Model model, User user, String name, String password, String email, MultipartFile imageField, HttpServletRequest request) throws IOException {
 
 		User dbUser = userService.findById(user.getId()).orElseThrow();
 		Long oldImageId = (dbUser.getImage() != null) ? dbUser.getImage().getId() : null;
@@ -140,6 +149,12 @@ public class UserController {
 			user.setEncodedPassword(userService.encodePassword(password));
 		} else {
 			user.setEncodedPassword(dbUser.getEncodedPassword());
+		}
+
+		if (email == null || email.isBlank()) {
+			user.setEmail(dbUser.getEmail());
+		} else {
+			user.setEmail(email);
 		}
 		
 		if (imageField != null && !imageField.isEmpty()) {
@@ -153,8 +168,20 @@ public class UserController {
 		}
 		user.setRoles(dbUser.getRoles());
 		userService.save(user);
-		
+		//send email notification about profile update
+		String textEmail = """
+			Hola %s,
 
+			Tu perfil ha sido actualizado correctamente.
+
+			Si no has sido tú, contacta con nuestro soporte.
+
+			Saludos,
+			Marble Rush Arena.
+			""".formatted(user.getName());
+
+		emailService.sendEmail(user.getEmail(),"Perfil actualizado",textEmail);
+	
 		if (request.isUserInRole("ADMIN")) {
 			return "redirect:/user-list";
 		} else {

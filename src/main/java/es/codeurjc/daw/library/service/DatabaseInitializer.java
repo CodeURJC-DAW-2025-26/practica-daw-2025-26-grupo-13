@@ -4,21 +4,18 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
-import jakarta.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import es.codeurjc.daw.library.model.Image;
+import es.codeurjc.daw.library.model.Comment;
+import es.codeurjc.daw.library.model.League;
 import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.model.Race;
 import es.codeurjc.daw.library.model.User;
-import es.codeurjc.daw.library.model.Comment;
-import es.codeurjc.daw.library.model.League;
 import es.codeurjc.daw.library.repository.UserRepository;
-import es.codeurjc.daw.library.service.ImageService;
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class DatabaseInitializer {
@@ -63,9 +60,10 @@ public class DatabaseInitializer {
 
 		List<User> usersList = List.of(u1, u2, u3, u4, u5, u6, u7, u8, u9);
 
-		// Assign default profile image to all users
+		// Assign default profile image to all users and set the same email for all users
 		byte[] defImg = resourceLoader.getResource("classpath:/static/assets/images/Canica_base.jpg").getInputStream().readAllBytes();
 		for (User u : usersList) {
+			u.setEmail("pruebasmarble1@gmail.com");
 			u.setImage(imageService.createImage(new ByteArrayInputStream(defImg)));
 		}
 
