@@ -148,14 +148,18 @@ public class UserController {
 			} else {
 				user.setImage(imageService.createImage(imageField.getInputStream()));
 			}
+		} else {
+			user.setImage(dbUser.getImage()); 
 		}
 		user.setRoles(dbUser.getRoles());
 		userService.save(user);
+		
 
 		if (request.isUserInRole("ADMIN")) {
 			return "redirect:/user-list";
 		} else {
-			return "redirect:/edit-user";
+			request .getSession().invalidate();
+			return "redirect:/login-form";
 		}
 	}
 
