@@ -10,6 +10,64 @@
             <h5 class="fw-bolder">Ganador: {{winnerName}} </h5>
         </div>
 
+        <div class="py-4 text-center">
+            <h5 class="fw-bolder">Participantes:</h5>
+            <ul class="list-unstyled mt-2 mb-0">
+                {{#users}}
+                    <li>{{name}}</li>
+                {{/users}}
+            </ul>
+
+            {{^users}}
+                <p class="text-muted mb-0">Todavía no hay participantes</p>
+            {{/users}}
+        </div>
+
+        {{#canJoinRace}}
+        <div class="text-center mb-4">
+            <form action="/race/{{id}}/join" method="post">
+                <input type="hidden" name="_csrf" value="{{token}}" />
+                <button type="submit" class="btn btn-primary">Apuntarme</button>
+            </form>
+        </div>
+        {{/canJoinRace}}
+
+        {{#alreadyJoined}}
+        <div class="text-center mb-4">
+            <span class="badge rounded-pill bg-success">Ya estás apuntado</span>
+        </div>
+        {{/alreadyJoined}}
+
+        {{#raceFinished}}
+        <div class="text-center mb-4">
+            <span class="badge rounded-pill bg-secondary">Carrera finalizada</span>
+        </div>
+        {{/raceFinished}}
+
+        {{#leagueFinished}}
+        <div class="text-center mb-4">
+            <span class="badge rounded-pill bg-secondary">Liga finalizada</span>
+        </div>
+        {{/leagueFinished}}
+
+        {{#raceFull}}
+        <div class="text-center mb-4">
+            <span class="badge rounded-pill bg-warning text-dark">Carrera completa</span>
+        </div>
+        {{/raceFull}}
+
+        {{^logged}}
+            {{^raceFinished}}
+                {{^leagueFinished}}
+                    {{^raceFull}}
+                    <div class="text-center mb-4">
+                        <a class="btn btn-outline-primary" href="/login-form">Inicia sesión para apuntarte</a>
+                    </div>
+                    {{/raceFull}}
+                {{/leagueFinished}}
+            {{/raceFinished}}
+        {{/logged}}
+
         <div class="py-5 text-center">
             <h5 class="fw-bolder">Posiciones:</h5>
             <ol style="display: inline-block; text-align: left; list-style-position: outside; margin: 0 auto; padding-left: 1.5rem;">

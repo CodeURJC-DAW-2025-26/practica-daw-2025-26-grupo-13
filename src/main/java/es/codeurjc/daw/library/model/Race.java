@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +14,8 @@ import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Race {
+
+	private static final int MAX_USERS = 8;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,8 +27,8 @@ public class Race {
 	@jakarta.persistence.OrderColumn(name = "result_order")
 	private List<User> results;
 
-    @ManyToMany
-    private List<User> users;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<User> users;
 
 	public Race() {
 		this.users = new ArrayList<User>(8);
@@ -61,13 +62,24 @@ public class Race {
 	}
 
 	public void addUser(User user) {
-		if (this.users.size() >= 8) {
-			throw new IllegalStateException("Race already has 8 users");
+		if (user == null) {
+			throw new IllegalArgumentException("User cannot be null");
+		}
+		if (isFinished()) {
+			throw new IllegalStateException("Race already finished");
+		}
+		if (this.users == null) {
+			this.users = new ArrayList<User>(MAX_USERS);
+		}
+		if (this.users.size() >= MAX_USERS) {
+			throw new IllegalStateException("Race already has " + MAX_USERS + " users");
+		}
+		long userId = user.getId();
+		boolean alreadyInRace = this.users.stream().anyMatch(u -> u.getId() == userId);
+		if (alreadyInRace) {
+			return;
 		}
 		this.users.add(user);
-		if (this.users.size() == 8) {
-			calculateResults();
-		}
 	}
 
     public void rmvUser(User user) {
@@ -79,6 +91,12 @@ public class Race {
 	}
 
 	public List<User> calculateResults() {
+		if (isFinished()) {
+			return this.results;
+		}
+		if (this.users == null || this.users.isEmpty()) {
+			return Collections.emptyList();
+		}
 		List<User> shuffled = new ArrayList<>(users);
 		Collections.shuffle(shuffled);
 		
@@ -86,6 +104,14 @@ public class Race {
 		this.results.addAll(shuffled);
 		
 		return this.results;
+	}
+
+	public boolean isFinished() {
+		return this.results != null && !this.results.isEmpty();
+	}
+
+	public String getWinnerName() {
+		return isFinished() ? this.results.get(0).getName() : "Sin ganador";
 	}
 
 	public List<User> getTopThreeResults() {

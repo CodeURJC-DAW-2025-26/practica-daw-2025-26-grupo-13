@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.daw.library.model.Race;
+import es.codeurjc.daw.library.repository.LeagueRepository;
 import es.codeurjc.daw.library.repository.UserRepository;
 import es.codeurjc.daw.library.service.RaceService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,12 +24,14 @@ import jakarta.servlet.http.HttpServletRequest;
 public class RaceController {
 
 	private final UserRepository userRepository;
+	private final LeagueRepository leagueRepository;
 
 	@Autowired
 	private RaceService raceService;
 
-	RaceController( UserRepository userRepository) {
+	RaceController(UserRepository userRepository, LeagueRepository leagueRepository) {
 		this.userRepository = userRepository;
+		this.leagueRepository = leagueRepository;
 	}
 
 	@ModelAttribute
@@ -55,21 +58,82 @@ public class RaceController {
 	}
 
 	@GetMapping("/race/{id}")
-	public String showRace(Model model, @PathVariable long id) {
+	public String showRace(Model model, Principal principal, @PathVariable long id) {
 
 		Optional<Race> race = raceService.findById(id);
 		if (race.isPresent()) {
 			Race currentRace = race.get();
+			boolean leagueOpen = leagueRepository.findByRaces_Id(id)
+					.map(l -> l.getStatus())
+					.orElse(true);
 
 			model.addAttribute("race", currentRace);
 			model.addAttribute("results", currentRace.getResults());
-			model.addAttribute("winnerName", currentRace.getResults().isEmpty() ? "Sin ganador" : currentRace.getResults().get(0).getName());
+			model.addAttribute("winnerName", currentRace.getWinnerName());
+			model.addAttribute("raceFinished", currentRace.isFinished());
+			model.addAttribute("raceFull", currentRace.getUsers() != null && currentRace.getUsers().size() >= 8);
+			model.addAttribute("leagueFinished", !leagueOpen);
+
+			boolean alreadyJoined = false;
+			boolean canJoinRace = false;
+			if (principal != null) {
+				userRepository.findByName(principal.getName()).ifPresent(user -> {
+					long userId = user.getId();
+					boolean joined = currentRace.getUsers() != null && currentRace.getUsers().stream()
+							.anyMatch(u -> u.getId() == userId);
+					model.addAttribute("alreadyJoined", joined);
+					boolean hasRoom = currentRace.getUsers() == null || currentRace.getUsers().size() < 8;
+					model.addAttribute("canJoinRace", leagueOpen && !currentRace.isFinished() && !joined && hasRoom);
+				});
+			}
+			// Defaults when not logged or user not found
+			if (!model.containsAttribute("alreadyJoined")) {
+				model.addAttribute("alreadyJoined", alreadyJoined);
+			}
+			if (!model.containsAttribute("canJoinRace")) {
+				model.addAttribute("canJoinRace", canJoinRace);
+			}
 			
 			return "race-view";
 		} else {
 			return "redirect:/";
 		}
 
+	}
+
+	@PostMapping("/race/{id}/join")
+	public String joinRace(Principal principal, @PathVariable long id) {
+
+		if (principal == null) {
+			return "redirect:/login-form";
+		}
+
+		Optional<Race> raceOpt = raceService.findById(id);
+		if (raceOpt.isEmpty()) {
+			return "redirect:/";
+		}
+
+		Race race = raceOpt.get();
+		boolean leagueOpen = leagueRepository.findByRaces_Id(id)
+				.map(l -> l.getStatus())
+				.orElse(true);
+		if (!leagueOpen) {
+			return "redirect:/race/" + id;
+		}
+		if (race.isFinished()) {
+			return "redirect:/race/" + id;
+		}
+
+		userRepository.findByName(principal.getName()).ifPresent(user -> {
+			try {
+				race.addUser(user);
+				raceService.save(race);
+			} catch (IllegalStateException ignored) {
+				// Race full / already finished / etc.
+			}
+		});
+
+		return "redirect:/race/" + id;
 	}
 
 	@PostMapping("/removeRace/{id}")

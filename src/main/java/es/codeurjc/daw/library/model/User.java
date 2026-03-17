@@ -52,7 +52,7 @@ public class User {
 		this.roles = List.of(roles);
 		this.comments = new ArrayList<>();
 		this.marbles = new ArrayList<>(3);
-		this.winCounter = 1;
+		this.winCounter = 0;
 		this.loseCounter = 0;
 	}
 
@@ -99,6 +99,22 @@ public class User {
 
 	public String getEmail() {
 		return email;
+	}
+
+	public int getWinCounter() {
+		return winCounter;
+	}
+
+	public void incrementWinCounter() {
+		this.winCounter++;
+	}
+
+	public int getLoseCounter() {
+		return loseCounter;
+	}
+
+	public void incrementLoseCounter() {
+		this.loseCounter++;
 	}
 
 	public void setEmail(String email) {

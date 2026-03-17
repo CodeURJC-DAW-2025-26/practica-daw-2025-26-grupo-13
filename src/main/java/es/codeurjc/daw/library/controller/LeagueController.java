@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import es.codeurjc.daw.library.model.Comment;
 import es.codeurjc.daw.library.model.League;
+import es.codeurjc.daw.library.model.Race;
+import es.codeurjc.daw.library.model.User;
 import es.codeurjc.daw.library.repository.UserRepository;
 import es.codeurjc.daw.library.service.LeagueService;
+import es.codeurjc.daw.library.service.RaceService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -30,6 +33,9 @@ public class LeagueController {
 
 	@Autowired
 	private LeagueService leagueService;
+
+	@Autowired
+	private RaceService raceService;
 
     LeagueController(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -151,23 +157,107 @@ public class LeagueController {
 		Optional<League> league = leagueService.findById(id);
 		if (league.isPresent()) {
 			model.addAttribute("league", league.get());
+			model.addAttribute("leagueId", league.get().getId());
+			model.addAttribute("races", league.get().getRaces());
 			return "edit-league";
 		} else {
 			return "redirect:/";
 		}
 	}
 
+	@PostMapping("/edit-league/{leagueId}/race/{raceId}/rename")
+	public String renameRace(@PathVariable long leagueId, @PathVariable long raceId, @RequestParam String name) {
+
+		Optional<League> leagueOpt = leagueService.findById(leagueId);
+		if (leagueOpt.isEmpty()) {
+			return "redirect:/league-list";
+		}
+
+		League league = leagueOpt.get();
+		if (league.getRaces() != null) {
+			for (Race race : league.getRaces()) {
+				if (race.getId() != null && race.getId() == raceId) {
+					race.setName(name);
+					leagueService.save(league);
+					break;
+				}
+			}
+		}
+
+		return "redirect:/edit-league/" + leagueId;
+	}
+
+	@PostMapping("/edit-league/{leagueId}/race/{raceId}/start")
+	public String startRace(@PathVariable long leagueId, @PathVariable long raceId) {
+
+		Optional<League> leagueOpt = leagueService.findById(leagueId);
+		if (leagueOpt.isEmpty()) {
+			return "redirect:/league-list";
+		}
+
+		League league = leagueOpt.get();
+		if (league.getRaces() != null) {
+			for (Race race : league.getRaces()) {
+				if (race.getId() != null && race.getId() == raceId) {
+					if (!race.isFinished() && race.getUsers() != null && !race.getUsers().isEmpty()) {
+						race.calculateResults();
+						if (race.getResults() != null && !race.getResults().isEmpty()) {
+							long winnerId = race.getResults().get(0).getId();
+							for (User user : race.getResults()) {
+								if (user.getId() == winnerId) {
+									user.incrementWinCounter();
+								} else {
+									user.incrementLoseCounter();
+								}
+							}
+							userRepository.saveAll(race.getResults());
+						}
+						leagueService.save(league);
+					}
+					break;
+				}
+			}
+		}
+
+		return "redirect:/edit-league/" + leagueId;
+	}
+
+	@PostMapping("/edit-league/{leagueId}/race/{raceId}/delete")
+	public String deleteRace(@PathVariable long leagueId, @PathVariable long raceId) {
+
+		Optional<League> leagueOpt = leagueService.findById(leagueId);
+		if (leagueOpt.isEmpty()) {
+			return "redirect:/league-list";
+		}
+
+		League league = leagueOpt.get();
+		boolean removed = false;
+		if (league.getRaces() != null) {
+			removed = league.getRaces().removeIf(r -> r.getId() != null && r.getId() == raceId);
+		}
+		if (removed) {
+			leagueService.save(league);
+			raceService.delete(raceId);
+		}
+
+		return "redirect:/edit-league/" + leagueId;
+	}
+
 	@PostMapping("/edit-league/{id}")
-	public String editLeagueProcess(Model model, League league, String name, boolean status)
-			throws IOException, SQLException {
+	public String editLeagueProcess(Model model, @PathVariable long id, @RequestParam String name,
+			@RequestParam(name = "status", defaultValue = "false") boolean status) throws IOException, SQLException {
 
+		Optional<League> leagueOpt = leagueService.findById(id);
+		if (leagueOpt.isEmpty()) {
+			return "redirect:/";
+		}
+
+		League league = leagueOpt.get();
 		league.setName(name);
-        league.setStatus(status);
-
+		league.setStatus(status);
 		leagueService.save(league);
 
 		model.addAttribute("leagueId", league.getId());
-
 		return "redirect:/league/" + league.getId();
 	}
 

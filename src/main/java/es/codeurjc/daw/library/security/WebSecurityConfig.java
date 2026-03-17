@@ -37,6 +37,8 @@ public class WebSecurityConfig {
 
 		http
 				.authorizeHttpRequests(authorize -> authorize
+						// PRIVATE ACTIONS (must go before broad permitAll matchers)
+						.requestMatchers("/race/*/join").hasAnyRole("USER", "ADMIN")
 						// PUBLIC PAGES
 						.requestMatchers("/").permitAll()
 						.requestMatchers("/register").permitAll()
@@ -52,7 +54,7 @@ public class WebSecurityConfig {
 						.requestMatchers("/edit-user-admin/", "/edit-user-admin/**").hasAnyRole("ADMIN")
 						.requestMatchers("/edit-marble", "/edit-marble/", "/edit-marble/*").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/create-league", "/create-league/").hasAnyRole("ADMIN")
-						.requestMatchers("/edit-league", "/edit-league/", "/edit-league/*").hasAnyRole("ADMIN")
+						.requestMatchers("/edit-league/**").hasAnyRole("ADMIN")
 						.requestMatchers("/league-list", "/league-list/").hasAnyRole("ADMIN")
 						.requestMatchers("/user-list", "/user-list/").hasAnyRole("ADMIN")
 						.requestMatchers("/remove-league", "/remove-league/**").hasAnyRole("ADMIN")
