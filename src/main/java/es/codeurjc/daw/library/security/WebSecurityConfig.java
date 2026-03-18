@@ -51,6 +51,8 @@ public class WebSecurityConfig {
 						.requestMatchers("/images/**").permitAll()						
 						// PRIVATE PAGES
 						.requestMatchers("/statistics", "/statistics/", "/statistics/*").hasAnyRole("USER", "ADMIN")
+						.requestMatchers("/view-user", "/view-user/").hasAnyRole("USER", "ADMIN")
+						.requestMatchers("/view-user/marbles", "/view-user/marbles/").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/edit-user").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/edit-user-admin/", "/edit-user-admin/**").hasAnyRole("ADMIN")
 						.requestMatchers("/edit-marble", "/edit-marble/", "/edit-marble/*").hasAnyRole("USER", "ADMIN")

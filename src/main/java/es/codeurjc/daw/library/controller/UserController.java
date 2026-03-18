@@ -138,6 +138,39 @@ public class UserController {
 		return "redirect:/login-form";
 	}
 
+	@GetMapping("/view-user")
+	public String viewCurrentUser(Model model, Principal principal) {
+
+		if (principal == null) {
+			return "redirect:/login-form";
+		}
+
+		Optional<User> user = userService.findByName(principal.getName());
+		if (user.isPresent()) {
+			model.addAttribute("user", user.get());
+			return "view-user";
+		}
+
+		return "redirect:/login-form";
+	}
+
+	@GetMapping("/view-user/marbles")
+	public String viewCurrentUserMarbles(Model model, Principal principal) {
+
+		if (principal == null) {
+			return "redirect:/login-form";
+		}
+
+		Optional<User> user = userService.findByName(principal.getName());
+		if (user.isPresent()) {
+			model.addAttribute("user", user.get());
+			model.addAttribute("marbles", user.get().getMarbles());
+			return "view-user-marbles";
+		}
+
+		return "redirect:/login-form";
+	}
+
     @PostMapping("/edit-user")
 	public String editUserProcess(Model model, User user, String name, String password, String email, MultipartFile imageField, HttpServletRequest request) throws IOException {
 
