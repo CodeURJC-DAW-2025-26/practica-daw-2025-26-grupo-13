@@ -56,7 +56,7 @@ public class WebSecurityConfig {
 						.requestMatchers("/edit-marble", "/edit-marble/", "/edit-marble/*").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/create-league", "/create-league/").hasAnyRole("ADMIN")
 						.requestMatchers("/edit-league/**").hasAnyRole("ADMIN")
-						.requestMatchers("/league-list", "/league-list/").hasAnyRole("ADMIN")
+						.requestMatchers("/league-list", "/league-list/", "/league-list-filtered").hasAnyRole("ADMIN")
 						.requestMatchers("/user-list", "/user-list/").hasAnyRole("ADMIN")
 						.requestMatchers("/remove-league", "/remove-league/**").hasAnyRole("ADMIN")
 						.requestMatchers("/create-comment/**", "/create-comment").hasAnyRole("USER")

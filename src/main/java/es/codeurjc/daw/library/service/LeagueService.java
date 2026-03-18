@@ -25,6 +25,11 @@ public class LeagueService {
 		return repository.findAllById(ids);
 	}
 
+	public List<League> findFiltered(){
+		return repository.findAllOrderByCommentsCountDesc();
+	}
+
+
 	public Page<League> findAll(Pageable pageable) {
     return repository.findAll(pageable);
 }

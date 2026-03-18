@@ -84,10 +84,15 @@ public class CommentController {
     
     
     @GetMapping("/edit-comment/{id}")
-	public String editComment(Model model, @PathVariable long id) {
+	public String editComment(Model model, @PathVariable long id, Principal principal) {
         Optional<Comment> c = commentService.findById(id);
         if (c.isPresent()) {
-            model.addAttribute("comment", c.get());
+            if (principal != null && principal.getName().equals(c.get().getUser().getName())) {
+                model.addAttribute("comment", c.get());
+            }
+            else {
+                return "redirect:/";
+            }
         }
 		return "edit-comment";
 	}

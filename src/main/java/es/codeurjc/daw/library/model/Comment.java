@@ -1,6 +1,8 @@
 package es.codeurjc.daw.library.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,7 @@ public class Comment {
 	private int rating;
 
     @ManyToOne
+	@JsonIgnore
     private League league;
 
     @ManyToOne

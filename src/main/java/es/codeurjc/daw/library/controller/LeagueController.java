@@ -149,6 +149,14 @@ public class LeagueController {
 		return "league-list";
 	}
 
+	@GetMapping( "/league-list-filtered")
+	public String listLeaguesFiltered(Model model) {
+
+		model.addAttribute("leagues", leagueService.findFiltered());
+
+		return "league-list";
+	}
+
 	@GetMapping("/create-league")
 	public String showCreateLeagueForm(Model model) {
 		return "create-league";
