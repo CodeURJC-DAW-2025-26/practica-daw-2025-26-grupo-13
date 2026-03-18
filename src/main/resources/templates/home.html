@@ -64,7 +64,7 @@
                 <div class="card-body">
                     <p class="text-muted text-center mb-4">Selecciona una liga para unirte.</p>
                     
-                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="leagues-container">
                         {{#leagues}}
                         <div class="col">
                             <a href="/league/{{id}}" class="text-decoration-none text-dark">
@@ -79,11 +79,64 @@
                         </div>
                         {{/leagues}}
                     </div>
+                    {{#hasMore}}
+                    <div class="text-center mt-4">
+                        <button id="btn-load-more" class="btn btn-outline-primary px-4" data-page="1">
+                            Cargar más ligas
+                        </button>
+                    </div>
+                    {{/hasMore}}
                 </div> 
                 {{/admin}}
             </div>
 
         </div>
     </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnLoadMore = document.getElementById('btn-load-more');
+            const container = document.getElementById('leagues-container');
+
+            if (btnLoadMore) {
+                btnLoadMore.addEventListener('click', function() {
+                    let currentPage = parseInt(btnLoadMore.getAttribute('data-page'));
+                    
+                    fetch(`/api/leagues?page=${currentPage}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.length > 0) {
+                                data.forEach(league => {
+                                    const statusText = league.status ? 'Abierta' : 'Finalizada';
+                                    
+                                    const htmlCard = `
+                                        <div class="col">
+                                            <a href="/league/${league.id}" class="text-decoration-none text-dark">
+                                            <div class="card h-100 text-center shadow-sm league-card">
+                                                <div class="card-body">
+                                                    <div class="league-icon"><i class="bi bi-trophy"></i></div>
+                                                    <h5 class="card-title fw-bold">${league.name}</h5>
+                                                    <span class="badge rounded-pill bg-success">${statusText}</span>
+                                                </div>
+                                            </div>
+                                            </a>
+                                        </div>
+                                    `;
+                                    container.insertAdjacentHTML('beforeend', htmlCard);
+                                });
+
+                                btnLoadMore.setAttribute('data-page', currentPage + 1);
+                                
+                                if (data.length < 3) {
+                                    btnLoadMore.style.display = 'none';
+                                }
+                            } else {
+                                btnLoadMore.style.display = 'none';
+                            }
+                        })
+                        .catch(error => console.error('Error al cargar ligas:', error));
+                });
+            }
+        });
+    </script>
 
     {{>footer}}

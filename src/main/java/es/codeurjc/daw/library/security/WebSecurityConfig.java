@@ -40,6 +40,7 @@ public class WebSecurityConfig {
 						// PRIVATE ACTIONS (must go before broad permitAll matchers)
 						.requestMatchers("/race/*/join").hasAnyRole("USER", "ADMIN")
 						// PUBLIC PAGES
+						.requestMatchers("/api/leagues").permitAll()
 						.requestMatchers("/").permitAll()
 						.requestMatchers("/register").permitAll()
 						.requestMatchers("/user-ranking").permitAll()

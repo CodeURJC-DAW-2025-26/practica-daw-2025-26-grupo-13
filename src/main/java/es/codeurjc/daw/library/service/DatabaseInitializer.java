@@ -92,6 +92,7 @@ public class DatabaseInitializer {
 		League l1 = new League("Liga A");
 		League l2 = new League("Liga B");
 		League l3 = new League("Liga C");
+		League l4 = new League("Liga D");
 
 		// Create races
 		Race r1 = new Race("Carrera Frirum");
@@ -129,5 +130,6 @@ public class DatabaseInitializer {
 		leagueService.save(l1);
 		leagueService.save(l2);
 		leagueService.save(l3);
+		leagueService.save(l4);
 	}
 }
