@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -65,7 +67,18 @@ public class MarbleController {
 
 		Optional<User> user = userRepository.findById(id);
 		if (user.isPresent()) {
-			model.addAttribute("marbles", user.get().getMarbles());
+			List<Marble> marbles = user.get().getMarbles();
+			model.addAttribute("marbles", marbles);
+			
+			int emptySlotsCount = Math.max(0, 3 - marbles.size());
+			if (emptySlotsCount > 0) {
+				List<Boolean> emptySlots = new ArrayList<>();
+				for (int i = 0; i < emptySlotsCount; i++) {
+					emptySlots.add(true);
+				}
+				model.addAttribute("emptySlots", emptySlots);
+			}
+
 			return "marbles-view";
 		} else {
 			return "redirect:/";
@@ -116,8 +129,20 @@ public class MarbleController {
 		return "marbles-view";
 	}
 
+	@GetMapping("/newMarble")
+	public String createMarbleForm(Model model, HttpServletRequest request) {
+		Principal principal = request.getUserPrincipal();
+		if (principal != null) {
+			Optional<User> user = userRepository.findByName(principal.getName());
+			if (user.isPresent()) {
+				model.addAttribute("userId", user.get().getId());
+			}
+		}
+		return "create-marble";
+	}
+
 	@PostMapping("/newMarble")
-	public String newMarble(HttpServletRequest request, Model model, Marble marble,
+	public String newMarble(HttpServletRequest request, Model model,
 			@RequestParam String name, Image image) throws IOException {
 
 		Principal principal = request.getUserPrincipal();
@@ -125,7 +150,7 @@ public class MarbleController {
 			Optional<User> opUser = userRepository.findByName(principal.getName());
 			if (opUser.isPresent()) {
 				User user = opUser.get();
-				marble = new Marble(name, image, user.getId());
+				Marble marble = new Marble(name, image, user.getId());
 				
 				user.getMarbles().add(marble);
 				userRepository.save(user);
@@ -136,7 +161,7 @@ public class MarbleController {
 		}
 
 		// Fallback if not logged in or user not found
-        marble = new Marble(name, image, null);
+        Marble marble = new Marble(name, image, null);
 		marbleService.save(marble);
 		model.addAttribute("marbleId", marble.getId());
 

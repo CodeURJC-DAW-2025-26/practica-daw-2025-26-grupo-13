@@ -59,7 +59,7 @@ public class WebSecurityConfig {
 						.requestMatchers("/user-list", "/user-list/").hasAnyRole("ADMIN")
 						.requestMatchers("/remove-league", "/remove-league/**").hasAnyRole("ADMIN")
 						.requestMatchers("/create-comment/**", "/create-comment").hasAnyRole("USER")
-						.requestMatchers("/marbles/**", "/removeMarble/**", "/listMarbles", "/newMarble", "/editMarble/**").hasAnyRole("USER", "ADMIN")
+						.requestMatchers("/marbles/**", "/removeMarble/**", "/listMarbles", "/newMarble/**", "/newMarble/", "/editMarble/**").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/edit-comment/**").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/edit-comment-admin/**").hasAnyRole("ADMIN")
 						.requestMatchers("/remove-comment/**").hasAnyRole("USER")
