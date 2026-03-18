@@ -8,6 +8,9 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.codeurjc.daw.library.model.Comment;
 import es.codeurjc.daw.library.model.League;
@@ -66,10 +70,20 @@ public class LeagueController {
 	@GetMapping("/")
 	public String showLeagues(Model model) {
 
-		model.addAttribute("leagues", leagueService.findAll());
-
+		Page<League> leaguesPage = leagueService.findAll(PageRequest.of(0, 3));
+		
+		model.addAttribute("leagues", leaguesPage.getContent());
+		model.addAttribute("hasMore", leaguesPage.hasNext()); // Para saber si mostrar el botón
+		
 		return "home";
 	}
+
+	@GetMapping("/api/leagues")
+	@ResponseBody
+	public ResponseEntity<List<League>> getMoreLeagues(@RequestParam int page) {
+		Page<League> leaguesPage = leagueService.findAll(PageRequest.of(page, 3));
+		return ResponseEntity.ok(leaguesPage.getContent());
+}
 
 	@GetMapping("/league/{id}")
 	public String showLeague(Model model, Principal principal, @PathVariable long id) {
@@ -131,6 +145,14 @@ public class LeagueController {
 	public String listLeagues(Model model) {
 
 		model.addAttribute("leagues", leagueService.findAll());
+
+		return "league-list";
+	}
+
+	@GetMapping( "/league-list-filtered")
+	public String listLeaguesFiltered(Model model) {
+
+		model.addAttribute("leagues", leagueService.findFiltered());
 
 		return "league-list";
 	}

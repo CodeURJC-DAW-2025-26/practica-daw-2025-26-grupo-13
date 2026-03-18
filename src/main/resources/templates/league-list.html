@@ -9,6 +9,10 @@
 
     <!-- Section-->
     <section class="py-5 bg-bajo-header flex-1">
+        <div class="container d-flex justify-content-end gap-2 mb-4">
+            <button type="button" class="btn btn-sm btn-outline-primary" onclick="location.href='/league-list-filtered'">Aplicar filtro por número de comentarios</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='/league-list'">Aplicar filtro de búsqueda normales</button>
+        </div>
         <div class="container px-4 px-lg-5 ">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 {{#leagues}}

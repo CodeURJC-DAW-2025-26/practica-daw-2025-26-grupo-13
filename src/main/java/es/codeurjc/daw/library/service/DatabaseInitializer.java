@@ -92,6 +92,7 @@ public class DatabaseInitializer {
 		League l1 = new League("Liga A");
 		League l2 = new League("Liga B");
 		League l3 = new League("Liga C");
+		League l4 = new League("Liga D");
 
 		// Create races
 		Race r1 = new Race("Carrera Frirum");
@@ -117,17 +118,24 @@ public class DatabaseInitializer {
 		l1.setRace(4, r5);
 		l1.setRace(5, r6);
 
-		Comment c1 = new Comment("Me ha encantado esta liga", 5, u1, l1);
-		Comment c2 = new Comment("No me ha gustado nada esta liga", 1, u2, l1);
+		Comment c1 = new Comment("Me ha encantado esta liga", 5, u1, l2);
+		Comment c2 = new Comment("No me ha gustado nada esta liga", 1, u2, l2);
+		Comment c3 = new Comment("ni fu ni fa", 1, u2, l1);
+		Comment c4 = new Comment("No me ha gustado nada esta liga", 1, u1, l4);
 
-		l1.addComment(c1);
-		l1.addComment(c2);
+		l2.addComment(c1);
+		l2.addComment(c2);
+		l1.addComment(c3);
+		l4.addComment(c4);
 
 		u1.addComment(c1);
 		u2.addComment(c2);
+		u2.addComment(c3);
+		u1.addComment(c4);
 
 		leagueService.save(l1);
 		leagueService.save(l2);
 		leagueService.save(l3);
+		leagueService.save(l4);
 	}
 }

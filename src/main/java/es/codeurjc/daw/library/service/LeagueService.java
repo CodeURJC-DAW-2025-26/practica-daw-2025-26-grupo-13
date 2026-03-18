@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.daw.library.model.League;
@@ -22,6 +24,15 @@ public class LeagueService {
 	public List<League> findAllById(List<Long> ids){
 		return repository.findAllById(ids);
 	}
+
+	public List<League> findFiltered(){
+		return repository.findAllOrderByCommentsCountDesc();
+	}
+
+
+	public Page<League> findAll(Pageable pageable) {
+    return repository.findAll(pageable);
+}
 	
 	public boolean exist(long id) {
 		return repository.existsById(id);

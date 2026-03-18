@@ -40,6 +40,7 @@ public class WebSecurityConfig {
 						// PRIVATE ACTIONS (must go before broad permitAll matchers)
 						.requestMatchers("/race/*/join").hasAnyRole("USER", "ADMIN")
 						// PUBLIC PAGES
+						.requestMatchers("/api/leagues").permitAll()
 						.requestMatchers("/").permitAll()
 						.requestMatchers("/register").permitAll()
 						.requestMatchers("/user-ranking").permitAll()
@@ -50,12 +51,14 @@ public class WebSecurityConfig {
 						.requestMatchers("/images/**").permitAll()						
 						// PRIVATE PAGES
 						.requestMatchers("/statistics", "/statistics/", "/statistics/*").hasAnyRole("USER", "ADMIN")
+						.requestMatchers("/view-user", "/view-user/").hasAnyRole("USER", "ADMIN")
+						.requestMatchers("/view-user/marbles", "/view-user/marbles/").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/edit-user").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/edit-user-admin/", "/edit-user-admin/**").hasAnyRole("ADMIN")
 						.requestMatchers("/edit-marble", "/edit-marble/", "/edit-marble/*").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/create-league", "/create-league/").hasAnyRole("ADMIN")
 						.requestMatchers("/edit-league/**").hasAnyRole("ADMIN")
-						.requestMatchers("/league-list", "/league-list/").hasAnyRole("ADMIN")
+						.requestMatchers("/league-list", "/league-list/", "/league-list-filtered").hasAnyRole("ADMIN")
 						.requestMatchers("/user-list", "/user-list/").hasAnyRole("ADMIN")
 						.requestMatchers("/remove-league", "/remove-league/**").hasAnyRole("ADMIN")
 						.requestMatchers("/create-comment/**", "/create-comment").hasAnyRole("USER")
