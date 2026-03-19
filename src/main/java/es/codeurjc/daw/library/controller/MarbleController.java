@@ -182,16 +182,24 @@ public class MarbleController {
 	}
 
 	@GetMapping("/editMarble/{id}")
-    public String editMarbleForm(Model model, @PathVariable long id) {
+    public String editMarbleForm(HttpServletRequest request, Model model, @PathVariable long id) {
         Optional<Marble> marble = marbleService.findById(id);
-        
+		
         if (marble.isPresent()) {
-            model.addAttribute("marble", marble.get());
-            return "edit-marble";
-        } else {
-            return "redirect:/marbles";
-        }
-    }
+			Principal principal = request.getUserPrincipal();
+			if (principal != null) {
+				Optional<User> opUser = userRepository.findByName(principal.getName());
+				if (opUser.isPresent()) {
+					User user = opUser.get();
+					if (marble.get().getUser() != null && marble.get().getUser().equals(user.getId())) {
+            			model.addAttribute("marble", marble.get());
+            			return "edit-marble";
+					}
+        		} 
+			}
+    	}
+		return "/marbles";
+	}
 
     @PostMapping("/editMarble/{id}")
     public String editMarblePost(Model model, @PathVariable long id, 
@@ -221,6 +229,7 @@ public class MarbleController {
         return "redirect:/marbles";
     }
 	
+
 	/*private void updateImage(Marble marble, boolean removeImage, MultipartFile imageField)
 			throws IOException, SQLException {
 
