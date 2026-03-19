@@ -6,9 +6,9 @@
         <h1 class="display-5 fw-bold mb-4">Algo salió mal.</h1>
         
         <div class="error-details text-start" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 8px; border-left: 4px solid #ffb300;">
-            <p class="mb-2"><strong>Estado:</strong> <span th:text="${status}">N/A</span></p>
-            <p class="mb-2"><strong>Error:</strong> <span th:text="${error}">No disponible</span></p>
-            <p class="mb-0"><strong>Mensaje:</strong> <span th:text="${message}">No disponible</span></p>
+            <p class="mb-2"><strong>Estado:</strong> <span>{{status}}</span></p>
+            <p class="mb-2"><strong>Error:</strong> <span>{{error}}</span></p>
+            <p class="mb-0"><strong>Mensaje:</strong> <span>{{message}}</span></p>
         </div>
         
         <div class="mt-4">
