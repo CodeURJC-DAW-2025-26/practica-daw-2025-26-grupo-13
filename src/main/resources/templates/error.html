@@ -1,0 +1,20 @@
+{{>header}}
+
+<div class="container d-flex flex-column justify-content-center align-items-center text-center my-5 py-5">
+    <div class="error-card p-5 rounded shadow-lg" style="background: linear-gradient(to bottom, #0d2f66, #214ca8); color: white; max-width: 600px; border: 2px solid #214ca8;">
+        <i class="bi bi-exclamation-triangle-fill" style="font-size: 4rem; margin-bottom: 20px; color: #ffb300;"></i>
+        <h1 class="display-5 fw-bold mb-4">Algo salió mal.</h1>
+        
+        <div class="error-details text-start" style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 8px; border-left: 4px solid #ffb300;">
+            <p class="mb-2"><strong>Estado:</strong> <span th:text="${status}">N/A</span></p>
+            <p class="mb-2"><strong>Error:</strong> <span th:text="${error}">No disponible</span></p>
+            <p class="mb-0"><strong>Mensaje:</strong> <span th:text="${message}">No disponible</span></p>
+        </div>
+        
+        <div class="mt-4">
+            <a href="/" class="btn btn-warning btn-lg fw-bold px-5">Volver a inicio</a>
+        </div>
+    </div>
+</div>
+
+{{>footer}}

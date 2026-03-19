@@ -9,6 +9,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -40,6 +46,7 @@ public class WebSecurityConfig {
 						// PRIVATE ACTIONS (must go before broad permitAll matchers)
 						.requestMatchers("/race/*/join").hasAnyRole("USER", "ADMIN")
 						// PUBLIC PAGES
+						.requestMatchers("/error", "/error/**").permitAll()
 						.requestMatchers("/api/leagues").permitAll()
 						.requestMatchers("/").permitAll()
 						.requestMatchers("/register").permitAll()
@@ -72,7 +79,11 @@ public class WebSecurityConfig {
 						.requestMatchers("/remove-comment-admin/**").hasAnyRole("ADMIN")
 						.requestMatchers("/list-comments").hasAnyRole("ADMIN")
 						.requestMatchers("/remove-user").hasAnyRole("USER")
-						.requestMatchers("/remove-user-admin/**").hasAnyRole("ADMIN"))
+						.requestMatchers("/remove-user-admin/**").hasAnyRole("ADMIN")
+						.anyRequest().authenticated())
+
+				.exceptionHandling(ex -> ex
+						.authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
 
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login-form")
@@ -85,5 +96,14 @@ public class WebSecurityConfig {
 						.permitAll());
 
 		return http.build();
+	}
+
+	public static class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
+		@Override
+		public void commence(HttpServletRequest request, HttpServletResponse response,
+				AuthenticationException authException) throws IOException, ServletException {
+			// Forward to error handler instead of redirecting to login
+			request.getRequestDispatcher("/error").forward(request, response);
+		}
 	}
 }
