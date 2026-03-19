@@ -58,6 +58,7 @@
                             <a href="/" class="btn btn-primary">Página principal</a>
                             <a href="/view-user" class="btn btn-primary">Ver perfil</a>
                             <a href="/edit-user" class="btn btn-primary">Editar perfil</a>
+                            <a href="/marbles" class="btn btn-primary">editar mis canicas</a>
                             <form action="/logout" method="post" class="d-inline">
                                 <button class="btn btn-primary btn-nowrap" type="submit">
                                     Cerrar Sesión
@@ -82,6 +83,7 @@
                         <img src="/images/{{userImageId}}" class="rounded-circle me-2" style="width:36px;height:36px;object-fit:cover;" alt="Avatar">
                         {{/userImageId}}
                         <span class="badge px-3">{{userName}}</span>
+                        <span class="badge px-3">{{marble}}</span>
                     {{/logged}}
                 </div>
         

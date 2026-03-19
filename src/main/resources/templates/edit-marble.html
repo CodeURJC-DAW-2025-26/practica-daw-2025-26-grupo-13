@@ -1,55 +1,35 @@
 {{>header}}
 
-    <div class="container px-4 px-lg-5 my-3 text-center">
-        <h1 class="fw-bolder">Editar canica</h1>     
-    </div>
-
-
-    <section class="py-5 bg-bajo-header flex-1">
-        <div class="container px-4 px-lg-5">
-            
+    <section>
+        <div class="container mt-5 mb-5 padding-20" id="container">
+            <h1 class="text-center mb-4 text-primary">Editar canica</h1>
             <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-8">
-                    <div class="card shadow-sm border-0">
-                        <div class="card-body p-5">
+                <div class="col-md-6">
+                    <div class="card shadow-sm p-4">
+                        <form action="/editMarble/{{marble.id}}" method="post" enctype="multipart/form-data">
                             
-                            <div class="text-center mb-4">
-                                <img src="../images/Canica_base.jpg" alt="Foto de perfil" class="rounded-circle img-thumbnail profile-img">
-                                <div class="mt-2">
-                                    <button class="btn btn-sm btn-outline-secondary">Cambiar foto</button>
-                                </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label fw-bold">Nombre de la canica</label>
+                                <input type="text" class="form-control" id="name" name="name" required value="{{marble.name}}">
                             </div>
 
-                            <form>
-                                <div class="mb-3">
-                                    <label for="marble" class="form-label fw-bold">Nombre de canica</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="marble" value="speed" readonly>
-                                        <button class="btn btn-outline-primary" type="button">
-                                            <i class="bi bi-pencil"></i> Editar
-                                        </button>
-                                    </div>
-                                </div>
+                            <div class="mb-4">
+                                <label for="imageField" class="form-label fw-bold">Actualizar Imagen (Opcional)</label>
+                                <input type="file" class="form-control" id="imageField" name="imageField" accept="image/*">
+                                <small class="text-muted">Si no seleccionas ningún archivo, se mantendrá la imagen actual.</small>
+                            </div>
 
-                                <hr class="my-4">
-
-                                <div class="d-grid gap-2">
-                                    <button type="button" class="btn btn-danger btn-lg">
-                                        <i class="bi bi-trash"></i> Eliminar canica
-                                    </button>
-                                </div>
-
-                            </form>
-                        </div>
+                            <input type="hidden" name="_csrf" value="{{token}}"/>
+                            
+                            <div class="d-flex justify-content-between">
+                                <a href="javascript:history.back()" class="btn btn-danger">Cancelar</a>
+                                <button type="submit" class="btn btn-success">Guardar cambios</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-
-            <div class="d-flex align-items-center justify-content-between w-100 mt-4">
-                <button type="button" class="btn btn-secondary" onclick="history.back()">Volver</button>
-            </div>
-
         </div>
     </section>
 
-    {{>footer}}
+{{>footer}}

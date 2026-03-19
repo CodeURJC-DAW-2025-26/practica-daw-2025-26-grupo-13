@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.codeurjc.daw.library.model.Comment;
 import es.codeurjc.daw.library.model.League;
+import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.model.Race;
 import es.codeurjc.daw.library.model.User;
 import es.codeurjc.daw.library.repository.UserRepository;
@@ -57,6 +58,18 @@ public class LeagueController {
 			userRepository.findByName(principal.getName()).ifPresent(user -> {
 				model.addAttribute("userid", user.getId());
 				model.addAttribute("userEmail", user.getEmail());
+				List<Marble> marbles = user.getMarbles();
+				Boolean found = false;
+				for (Marble marble : marbles) {
+					if (marble.isChosen()) {
+						model.addAttribute("marble", marble.getName());
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					model.addAttribute("marble", "Sin canica elegida");
+				}
 				if (user.getImage() != null) {
 					model.addAttribute("userImageId", user.getImage().getId());
 				}

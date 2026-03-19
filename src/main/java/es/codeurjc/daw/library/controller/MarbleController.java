@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 //import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.model.User;
 import es.codeurjc.daw.library.model.Image;
 import es.codeurjc.daw.library.repository.UserRepository;
+import es.codeurjc.daw.library.service.ImageService;
 import es.codeurjc.daw.library.service.MarbleService;
 //import es.codeurjc.daw.library.service.ImageService;
 
@@ -36,8 +38,9 @@ public class MarbleController {
 	@Autowired
 	private UserRepository userRepository;
 
-	//@Autowired
-	//private ImageService imageService;
+	@Autowired
+	private ImageService imageService;
+
 
 	@ModelAttribute
 	public void addAttributes(Model model, HttpServletRequest request) {
@@ -52,6 +55,18 @@ public class MarbleController {
 			userRepository.findByName(principal.getName()).ifPresent(user -> {
 				model.addAttribute("userid", user.getId());
 				model.addAttribute("userEmail", user.getEmail());
+				List<Marble> marbles = user.getMarbles();
+				Boolean found = false;
+				for (Marble marble : marbles) {
+					if (marble.isChosen()) {
+						model.addAttribute("marble", marble.getName());
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					model.addAttribute("marble", "Sin canica elegida");
+				}
 				if (user.getImage() != null) {
 					model.addAttribute("userImageId", user.getImage().getId());
 				}
@@ -62,10 +77,10 @@ public class MarbleController {
 		}
 	}
 
-	@GetMapping("/marbles/{id}")
-	public String showUserMarbles(Model model, @PathVariable long id) {
+	@GetMapping("/marbles")
+	public String showUserMarbles(Model model, Principal principal) {
 
-		Optional<User> user = userRepository.findById(id);
+		Optional<User> user = userRepository.findByName(principal.getName());
 		if (user.isPresent()) {
 			List<Marble> marbles = user.get().getMarbles();
 			model.addAttribute("marbles", marbles);
@@ -91,11 +106,15 @@ public class MarbleController {
 		Optional<Marble> marble = marbleService.findById(id);
 		if (marble.isPresent()) {
 			marble.get().setChosen(true);
-	//		model.addAttribute("marbles", user.get().getMarbles());
-			return "marbles-view";
-		} else {
-			return "redirect:/";
+			marbleService.save(marble.get());
+			for (Marble m : marbleService.findAll()) {
+				if (m.getUser() == marble.get().getUser() && m.getId() != id) {
+					m.setChosen(false);
+					marbleService.save(m);
+				}
+			}
 		}
+		return "/";
 	}
 
 	@PostMapping("/removeMarble/{id}")
@@ -121,14 +140,6 @@ public class MarbleController {
 		return "redirect:/";
 	}
 
-	@GetMapping("/listMarbles")
-	public String listMarbles(Model model) {
-
-		model.addAttribute("marbleList", marbleService.findAll());
-
-		return "marbles-view";
-	}
-
 	@GetMapping("/newMarble")
 	public String createMarbleForm(Model model, HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();
@@ -143,24 +154,26 @@ public class MarbleController {
 
 	@PostMapping("/newMarble")
 	public String newMarble(HttpServletRequest request, Model model,
-			@RequestParam String name, Image image) throws IOException {
+			@RequestParam String name, @RequestParam(required = false) MultipartFile imageField) throws IOException {
 
 		Principal principal = request.getUserPrincipal();
+		Image image = null;
 		if (principal != null) {
 			Optional<User> opUser = userRepository.findByName(principal.getName());
 			if (opUser.isPresent()) {
 				User user = opUser.get();
+				if (!imageField.isEmpty()) {
+					image = imageService.createImage(imageField.getInputStream());
+				}
 				Marble marble = new Marble(name, image, user.getId());
 				
 				user.getMarbles().add(marble);
 				userRepository.save(user);
 
 				model.addAttribute("marbleId", marble.getId());
-				return "redirect:/marbles/" + user.getId();
+				return "redirect:/marbles";
 			}
 		}
-
-		// Fallback if not logged in or user not found
         Marble marble = new Marble(name, image, null);
 		marbleService.save(marble);
 		model.addAttribute("marbleId", marble.getId());
@@ -168,19 +181,46 @@ public class MarbleController {
 		return "redirect:/marble/" + marble.getId();
 	}
 
-	@PostMapping("/editMarble/{id}")
-	public String editBookProcess(Model model, Marble marble, String name, boolean status)
-			throws IOException, SQLException {
+	@GetMapping("/editMarble/{id}")
+    public String editMarbleForm(Model model, @PathVariable long id) {
+        Optional<Marble> marble = marbleService.findById(id);
+        
+        if (marble.isPresent()) {
+            model.addAttribute("marble", marble.get());
+            return "edit-marble";
+        } else {
+            return "redirect:/marbles";
+        }
+    }
 
-		marble.setName(name);
+    @PostMapping("/editMarble/{id}")
+    public String editMarblePost(Model model, @PathVariable long id, 
+            @RequestParam String name, 
+            @RequestParam(required = false) MultipartFile imageField) throws IOException, SQLException {
 
-		marbleService.save(marble);
+        Optional<Marble> opMarble = marbleService.findById(id);
+        
+        if (opMarble.isPresent()) {
+            Marble marble = opMarble.get();
+            
+            marble.setName(name);
 
-		model.addAttribute("marbleId", marble.getId());
+            if (imageField != null && !imageField.isEmpty()) {
+                if (marble.getImage() == null) {
+                    Image image = imageService.createImage(imageField.getInputStream());
+                    marble.setImage(image);
+                } else {
+                    Image image = imageService.replaceImageFile(marble.getImage().getId(), imageField.getInputStream());
+                    marble.setImage(image);
+                }
+            }
 
-		return "redirect:/marble/" + marble.getId();
-	}
+            marbleService.save(marble);
+        }
 
+        return "redirect:/marbles";
+    }
+	
 	/*private void updateImage(Marble marble, boolean removeImage, MultipartFile imageField)
 			throws IOException, SQLException {
 

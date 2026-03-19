@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.daw.library.model.Image;
+import es.codeurjc.daw.library.model.Marble;
 import es.codeurjc.daw.library.model.User;
 import es.codeurjc.daw.library.repository.UserRepository;
 import es.codeurjc.daw.library.service.EmailService;
@@ -56,6 +57,18 @@ public class UserController {
 			userRepository.findByName(principal.getName()).ifPresent(user -> {
 				model.addAttribute("userid", user.getId());
 				model.addAttribute("userEmail", user.getEmail());
+				List<Marble> marbles = user.getMarbles();
+				Boolean found = false;
+				for (Marble marble : marbles) {
+					if (marble.isChosen()) {
+						model.addAttribute("marble", marble.getName());
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					model.addAttribute("marble", "Sin canica elegida");
+				}
 				if (user.getImage() != null) {
 					model.addAttribute("userImageId", user.getImage().getId());
 				}
