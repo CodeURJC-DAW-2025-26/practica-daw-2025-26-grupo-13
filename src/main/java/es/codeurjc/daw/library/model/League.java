@@ -32,7 +32,7 @@ public class League {
 
 	public League() {
 	}
-
+	// The constructor creates a league with the given name and initializes 6 races
 	public League(String name) {
 		super();
 		this.name = name;

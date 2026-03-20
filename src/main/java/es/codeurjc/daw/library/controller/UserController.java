@@ -49,7 +49,7 @@ public class UserController {
 		Principal principal = request.getUserPrincipal();
 
 		
-
+		// If the user is logged in, add their name ,role and marbles to the model
 		if (principal != null) {
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
@@ -59,6 +59,7 @@ public class UserController {
 				model.addAttribute("userEmail", user.getEmail());
 				List<Marble> marbles = user.getMarbles();
 				Boolean found = false;
+				//save the name of the chosen marble in the model, if there is one
 				for (Marble marble : marbles) {
 					if (marble.isChosen()) {
 						model.addAttribute("marble", marble.getName());
@@ -86,7 +87,7 @@ public class UserController {
 	}
     @PostMapping("/register")
 	public String newUserProcess(Model model, User user, MultipartFile imageField, HttpServletRequest request) throws IOException {
-
+		// Validate required fields
 		if (user.getEmail() == null || user.getEmail().isBlank()) {
 			model.addAttribute("registerError", "El email es obligatorio.");
 			return "register-form";
@@ -141,7 +142,7 @@ public class UserController {
 		if (principal == null) {
 			return "redirect:/login-form";
 		}
-
+		// Find yourself and goes to edit your profile
 		Optional<User> User = userService.findByName(principal.getName());
 		if (User.isPresent()) {
 			model.addAttribute("user", User.get());
@@ -186,10 +187,10 @@ public class UserController {
 
     @PostMapping("/edit-user")
 	public String editUserProcess(Model model, User user, String name, String password, String email, MultipartFile imageField, HttpServletRequest request) throws IOException {
-
+		// Validate required fields
 		User dbUser = userService.findById(user.getId()).orElseThrow();
 		Long oldImageId = (dbUser.getImage() != null) ? dbUser.getImage().getId() : null;
-
+		//old values for email, images and password in case they are not updated
 		user.setName(name);
 		if (password != null && !password.isEmpty()) {
 			user.setEncodedPassword(userService.encodePassword(password));
@@ -212,6 +213,7 @@ public class UserController {
 		} else {
 			user.setImage(dbUser.getImage()); 
 		}
+		// Keep the same roles as before
 		user.setRoles(dbUser.getRoles());
 		userService.save(user);
 		//send email notification about profile update
@@ -248,6 +250,7 @@ public class UserController {
 	public String removeUserAdmin(Model model, @PathVariable long id) {
 
 		Optional<User> userOpt = userService.findById(id);
+		// If the user has an image, delete it before deleting the user
 		if (userOpt.isPresent()) {
 			User user = userOpt.get();
 			if (user.getImage() != null) {
@@ -267,9 +270,11 @@ public class UserController {
 		if (principal == null) {
 			return "redirect:/login-form";
 		}
+		// Find yourself and delete your profile, then invalidate the session to log out
 		Optional<User> userOptional = userService.findByName(principal.getName());
 		if (userOptional.isPresent()) {
 			User user = userOptional.get();
+			// If the user has an image, delete it before deleting the user
 			if (user.getImage() != null) {
 				long imageId = user.getImage().getId();
 				user.setImage(null);
@@ -306,33 +311,5 @@ public class UserController {
 		}
 
 	}
-
-
-	/*private void updateImage(User user, boolean removeImage, MultipartFile imageField)
-			throws IOException, SQLException {
-
-		if (!imageField.isEmpty()) {
-			User dbUser = userService.findById(user.getId()).orElseThrow();
-
-			if (dbUser.getImage() == null) {
-				Image image = imageService.createImage(imageField.getInputStream());
-				user.setImage(image);
-			} else {
-				Image image = imageService.replaceImageFile(dbUser.getImage().getId(), imageField.getInputStream());
-				user.setImage(image);
-			}
-		} else {
-			if (removeImage) {
-				if (user.getImage() != null) {
-					imageService.deleteImage(user.getImage().getId());
-					user.setImage(null);
-				}
-			} else {
-				// Maintain the same image loading it before updating the user
-				User dbUser = userService.findById(user.getId()).orElseThrow();
-				user.setImage(dbUser.getImage());
-			}
-		}
-	}*/
 
 }

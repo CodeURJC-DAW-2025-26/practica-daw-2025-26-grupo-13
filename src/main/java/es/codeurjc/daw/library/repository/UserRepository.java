@@ -16,6 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public List<User> findByRolesContaining(String role);
 
+    // This query retrieves the top 10 users ordered by their win counter in descending order
     @Query("SELECT u FROM UserTable u ORDER BY u.winCounter DESC")
     public List<User> findTop10ByWinCounterDesc();
 

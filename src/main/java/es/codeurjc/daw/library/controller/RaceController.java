@@ -90,6 +90,7 @@ public class RaceController {
 
 			boolean alreadyJoined = false;
 			boolean canJoinRace = false;
+			// If the user is logged in, check if they have already joined in the race and if they can join
 			if (principal != null) {
 				userRepository.findByName(principal.getName()).ifPresent(user -> {
 					long userId = user.getId();
@@ -128,6 +129,7 @@ public class RaceController {
 		}
 
 		Race race = raceOpt.get();
+		// Check if the league is still open for joining  or finished and redirects to the correct page 
 		boolean leagueOpen = leagueRepository.findByRaces_Id(id)
 				.map(l -> l.getStatus())
 				.orElse(true);
@@ -154,6 +156,7 @@ public class RaceController {
 	public String removerace(Model model, @PathVariable long id) {
 
 		Optional<Race> race = raceService.findById(id);
+		// check if the race exists before deleting it
 		if (race.isPresent()) {
 			raceService.delete(id);
 			model.addAttribute("race", race.get());

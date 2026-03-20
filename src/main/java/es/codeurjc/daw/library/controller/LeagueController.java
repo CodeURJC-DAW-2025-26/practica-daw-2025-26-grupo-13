@@ -50,7 +50,7 @@ public class LeagueController {
 	public void addAttributes(Model model, HttpServletRequest request) {
 
 		Principal principal = request.getUserPrincipal();
-
+		// If the user is logged in, add their name ,role and marbles to the model
 		if (principal != null) {
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
@@ -82,15 +82,15 @@ public class LeagueController {
 
 	@GetMapping("/")
 	public String showLeagues(Model model) {
-
+		// Show the first 3 leagues in the home page, and if there are more than 3 show a button to load more leagues
 		Page<League> leaguesPage = leagueService.findAll(PageRequest.of(0, 3));
 		
 		model.addAttribute("leagues", leaguesPage.getContent());
-		model.addAttribute("hasMore", leaguesPage.hasNext()); // Para saber si mostrar el botón
+		model.addAttribute("hasMore", leaguesPage.hasNext()); // this attribute will be used to show the load more button if there are more leagues to load
 		
 		return "home";
 	}
-
+	// Endpoint to load more leagues in the home page, it will return a list of leagues in json format
 	@GetMapping("/api/leagues")
 	@ResponseBody
 	public ResponseEntity<List<League>> getMoreLeagues(@RequestParam int page) {
@@ -102,6 +102,7 @@ public class LeagueController {
 	public String showLeague(Model model, Principal principal, @PathVariable long id) {
 
 		Optional<League> league = leagueService.findById(id);
+		// If the league is found, add it to the model and show the league view, otherwise redirect to home
 		if (league.isPresent()) {
 			League l = league.get();
 			model.addAttribute("league", l);
@@ -111,13 +112,13 @@ public class LeagueController {
 
 			model.addAttribute("races", l.getRaces());
 
-			// 1. Obtener el ID del usuario logueado actualmente
+			// 1. obtain the current user id if the user is logged in, otherwise set it to -1
         	long currentUserId = -1;
         	if (principal != null) {
             	currentUserId = userRepository.findByName(principal.getName()).map(u -> u.getId()).orElse(-1L);
         }
 
-        	// 2. Iterar sobre los comentarios de la liga y establecer 'editAllowed'
+        	// 2.  for each comment in the league, check if the current user is the owner of the comment, if yes then set the editAllowed attribute of the comment to true, otherwise set it to false
         	for (Comment comment : l.getComments()) {
             	boolean isOwner = (comment.getUser() != null && comment.getUser().getId() == currentUserId);
             	comment.setEditAllowed(isOwner); 
@@ -178,6 +179,7 @@ public class LeagueController {
 	@PostMapping("/create-league")
 	public String newLeague(Model model, @RequestParam String name) throws IOException {
         
+		// Create a new league with the given name and save it, then redirect to the league view
         League league = new League(name);
 
 		leagueService.save(league);
@@ -190,6 +192,7 @@ public class LeagueController {
 	@GetMapping("/edit-league/{id}")
 	public String showEditLeagueForm(Model model, @PathVariable long id) {
 		Optional<League> league = leagueService.findById(id);
+		// If the league is found, add it to the model and show the edit league form, otherwise redirect to home
 		if (league.isPresent()) {
 			model.addAttribute("league", league.get());
 			model.addAttribute("leagueId", league.get().getId());
@@ -207,7 +210,7 @@ public class LeagueController {
 		if (leagueOpt.isEmpty()) {
 			return "redirect:/league-list";
 		}
-
+		// If the league is found, find the race with the given raceId and rename it, then save the league, otherwise redirect to league list
 		League league = leagueOpt.get();
 		if (league.getRaces() != null) {
 			for (Race race : league.getRaces()) {
@@ -224,16 +227,18 @@ public class LeagueController {
 
 	@PostMapping("/edit-league/{leagueId}/race/{raceId}/start")
 	public String startRace(@PathVariable long leagueId, @PathVariable long raceId) {
-
+		// If the league is not found redirect to league list
 		Optional<League> leagueOpt = leagueService.findById(leagueId);
 		if (leagueOpt.isEmpty()) {
 			return "redirect:/league-list";
 		}
-
+	
+		// If the league is found, find the race with the given raceId 
 		League league = leagueOpt.get();
 		if (league.getRaces() != null) {
 			for (Race race : league.getRaces()) {
 				if (race.getId() != null && race.getId() == raceId) {
+					// If the race is not finished and has users, calculate the results and update the win/lose counters of the users, then save the league
 					if (!race.isFinished() && race.getUsers() != null && !race.getUsers().isEmpty()) {
 						race.calculateResults();
 						if (race.getResults() != null && !race.getResults().isEmpty()) {
@@ -267,6 +272,7 @@ public class LeagueController {
 
 		League league = leagueOpt.get();
 		boolean removed = false;
+		// if the race  is found with the given raceId remove it from the league and  then save the league and remove the race
 		if (league.getRaces() != null) {
 			removed = league.getRaces().removeIf(r -> r.getId() != null && r.getId() == raceId);
 		}
@@ -286,7 +292,7 @@ public class LeagueController {
 		if (leagueOpt.isEmpty()) {
 			return "redirect:/";
 		}
-
+		// If the league is found, update its name and status, then save it, otherwise redirect to home
 		League league = leagueOpt.get();
 		league.setName(name);
 		league.setStatus(status);
@@ -298,7 +304,7 @@ public class LeagueController {
 
 	@GetMapping("/playLeague/{id}")
 	public String playLeague(Model model, @PathVariable long id) {
-
+		
 		Optional<League> league = leagueService.findById(id);
 		if (league.isPresent()) {
 			model.addAttribute("league", league.get());

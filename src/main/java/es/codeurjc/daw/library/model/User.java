@@ -126,6 +126,7 @@ public class User {
 	}
 
 	public void setMarble(Marble marble, int position) {
+		// We check if the user already has 3 marbles, if it does we throw an exception, otherwise we add the marble to the user's marbles
 		if (this.marbles.size() >= 3) {
 			throw new IllegalStateException("User already has 3 marbles");
 		}

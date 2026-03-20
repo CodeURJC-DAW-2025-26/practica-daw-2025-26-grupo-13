@@ -45,7 +45,7 @@ public class CommentController {
 	public void addAttributes(Model model, HttpServletRequest request) {
 
 		Principal principal = request.getUserPrincipal();
-
+        // If the user is logged in, add their name ,role and marbles to the model
 		if (principal != null) {
 			model.addAttribute("logged", true);
 			model.addAttribute("userName", principal.getName());
@@ -55,6 +55,7 @@ public class CommentController {
                 model.addAttribute("userEmail", user.getEmail());
                 List<Marble> marbles = user.getMarbles();
 				Boolean found = false;
+                // check wich is the chosen marble and add it to the model
 				for (Marble marble : marbles) {
 					if (marble.isChosen()) {
 						model.addAttribute("marble", marble.getName());
@@ -101,6 +102,7 @@ public class CommentController {
     @GetMapping("/edit-comment/{id}")
 	public String editComment(Model model, @PathVariable long id, Principal principal) {
         Optional<Comment> c = commentService.findById(id);
+        // we only allow to edit the comment if the logged user is the owner of the comment, otherwise redirect to home
         if (c.isPresent()) {
             if (principal != null && principal.getName().equals(c.get().getUser().getName())) {
                 model.addAttribute("comment", c.get());
@@ -127,6 +129,7 @@ public class CommentController {
 	public String postEditComment(Model model, @RequestParam long id, @RequestParam String text, @RequestParam int rating) {
 
         Optional<Comment> c = commentService.findById(id);
+        // Checks if the comment exists, if it does update its text and rating and save it, otherwise redirect to home
         if (c.isPresent()) {
             Comment comment = c.get();
             comment.settext(text);
