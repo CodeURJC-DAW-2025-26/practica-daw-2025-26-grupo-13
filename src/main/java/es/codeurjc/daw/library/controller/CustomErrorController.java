@@ -11,23 +11,44 @@ public class CustomErrorController {
     @GetMapping("/error")
     public String handleError(HttpServletRequest request, Model model) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-        String message = (String) request.getAttribute("javax.servlet.error.message");
-        String exceptionType = (String) request.getAttribute("javax.servlet.error.exception_type");
-        
+        String originalMessage = (String) request.getAttribute("javax.servlet.error.message");
+
         if (statusCode == null) {
             statusCode = 500;
         }
-        if (message == null) {
-            message = "Error desconocido";
+
+        String errorTitle;
+        String friendlyMessage;
+
+        switch (statusCode) {
+            case 401:
+                errorTitle = "No autenticado";
+                friendlyMessage = "Debes iniciar sesión para acceder a este recurso.";
+                break;
+            case 403:
+                errorTitle = "Acceso denegado";
+                friendlyMessage = "No tienes permisos suficientes para acceder a este contenido.";
+                break;
+            case 404:
+                errorTitle = "Página no encontrada";
+                friendlyMessage = "La página que buscas no existe o ha sido movida.";
+                break;
+            case 500:
+                errorTitle = "Error interno del servidor";
+                friendlyMessage = "Se ha producido un error interno. Inténtalo de nuevo más tarde.";
+                break;
+            default:
+                errorTitle = "Error";
+                friendlyMessage = originalMessage != null && !originalMessage.isBlank()
+                        ? originalMessage
+                        : "Se ha producido un error inesperado.";
+                break;
         }
-        if (exceptionType == null) {
-            exceptionType = "Error";
-        }
-        
+
         model.addAttribute("status", statusCode);
-        model.addAttribute("error", exceptionType);
-        model.addAttribute("message", message);
-        
+        model.addAttribute("error", errorTitle);
+        model.addAttribute("message", friendlyMessage);
+
         return "error";
     }
 }
