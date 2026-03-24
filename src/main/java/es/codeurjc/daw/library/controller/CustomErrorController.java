@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class CustomErrorController {
 
+    //this controller gets the error info and give a personalized error page with the info of the error
     @GetMapping("/error")
     public String handleError(HttpServletRequest request, Model model) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");

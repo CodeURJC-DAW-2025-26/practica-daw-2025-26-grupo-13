@@ -23,13 +23,12 @@ public class Race {
 
 	private String name;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER) // we need to fetch the users eagerly to show their names
 	@jakarta.persistence.OrderColumn(name = "result_order")
 	private List<User> results;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<User> users;
-
 	public Race() {
 		this.users = new ArrayList<User>(8);
 		this.results = new ArrayList<User>(8);
@@ -60,8 +59,8 @@ public class Race {
 	public List<User> getUsers() {
 		return users;
 	}
-
 	public void addUser(User user) {
+		// We check if the user and the state of the race before adding the user to the race
 		if (user == null) {
 			throw new IllegalArgumentException("User cannot be null");
 		}
@@ -91,6 +90,7 @@ public class Race {
 	}
 
 	public List<User> calculateResults() {
+		// If the race is finished, return the results, otherwise calculate the results by shuffling the users and return them
 		if (isFinished()) {
 			return this.results;
 		}
@@ -115,6 +115,7 @@ public class Race {
 	}
 
 	public List<User> getTopThreeResults() {
+		//if there are no results, return an empty list, otherwise return the top 3 results
 		if (this.results == null) {
 			return Collections.emptyList();
 		}

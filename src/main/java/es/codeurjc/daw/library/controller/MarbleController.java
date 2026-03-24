@@ -46,7 +46,7 @@ public class MarbleController {
 	public void addAttributes(Model model, HttpServletRequest request) {
 
 		Principal principal = request.getUserPrincipal();
-
+		// If the user is logged in, add their name ,role and marbles to the model
 		if (principal != null) {
 
 			model.addAttribute("logged", true);
@@ -57,6 +57,7 @@ public class MarbleController {
 				model.addAttribute("userEmail", user.getEmail());
 				List<Marble> marbles = user.getMarbles();
 				Boolean found = false;
+				// check wich is the chosen marble and add it to the model
 				for (Marble marble : marbles) {
 					if (marble.isChosen()) {
 						model.addAttribute("marble", marble.getName());
@@ -81,6 +82,7 @@ public class MarbleController {
 	public String showUserMarbles(Model model, Principal principal) {
 
 		Optional<User> user = userRepository.findByName(principal.getName());
+		// If the user is found, add their marbles to the model and show the marbles view, otherwise redirect to home
 		if (user.isPresent()) {
 			List<Marble> marbles = user.get().getMarbles();
 			model.addAttribute("marbles", marbles);
@@ -104,6 +106,7 @@ public class MarbleController {
 	public String chooseUserMarble(Model model, @PathVariable long id) {
 
 		Optional<Marble> marble = marbleService.findById(id);
+		// If the marble is found, set it as chosen and set all the other marbles of the user as not chosen, then redirect to home
 		if (marble.isPresent()) {
 			marble.get().setChosen(true);
 			marbleService.save(marble.get());
@@ -121,6 +124,7 @@ public class MarbleController {
 	public String removeMarble(HttpServletRequest request, Model model, @PathVariable long id) {
 
 		Optional<Marble> marble = marbleService.findById(id);
+		// If the marble is found, check if  the marble has an owner or not, if yes then disown it and then delete the marble, if not then just delete the marble, then redirect to home
 		if (marble.isPresent()) {
 			Principal principal = request.getUserPrincipal();
 			if (principal != null) {
@@ -143,6 +147,7 @@ public class MarbleController {
 	@GetMapping("/newMarble")
 	public String createMarbleForm(Model model, HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();
+		// If the user is not logged in, redirect to login, otherwise show the create marble form
 		if (principal != null) {
 			Optional<User> user = userRepository.findByName(principal.getName());
 			if (user.isPresent()) {
@@ -158,6 +163,7 @@ public class MarbleController {
 
 		Principal principal = request.getUserPrincipal();
 		Image image = null;
+		// If the user is logged in, create the marble with the user as owner, otherwise create it without owner, then redirect to the marble view
 		if (principal != null) {
 			Optional<User> opUser = userRepository.findByName(principal.getName());
 			if (opUser.isPresent()) {
@@ -184,7 +190,7 @@ public class MarbleController {
 	@GetMapping("/editMarble/{id}")
     public String editMarbleForm(HttpServletRequest request, Model model, @PathVariable long id) {
         Optional<Marble> marble = marbleService.findById(id);
-		
+		// If the marble is found, check if the user is the owner of the marble, if yes then show the edit form, otherwise redirect to home
         if (marble.isPresent()) {
 			Principal principal = request.getUserPrincipal();
 			if (principal != null) {
@@ -208,6 +214,7 @@ public class MarbleController {
 
         Optional<Marble> opMarble = marbleService.findById(id);
         
+		// If the marble is found, check if the user is the owner of the marble, if yes then update the marble with the new name and image, otherwise redirect to home
         if (opMarble.isPresent()) {
             Marble marble = opMarble.get();
             
@@ -230,31 +237,6 @@ public class MarbleController {
     }
 	
 
-	/*private void updateImage(Marble marble, boolean removeImage, MultipartFile imageField)
-			throws IOException, SQLException {
-
-		if (!imageField.isEmpty()) {
-			Marble dbMarble = marbleService.findById(marble.getId()).orElseThrow();
-
-			if (dbMarble.getImage() == null) {
-				Image image = imageService.createImage(imageField.getInputStream());
-				marble.setImage(image);
-			} else {
-				Image image = imageService.replaceImageFile(dbMarble.getImage().getId(), imageField.getInputStream());
-				marble.setImage(image);
-			}
-		} else {
-			if (removeImage) {
-				if (marble.getImage() != null) {
-					imageService.deleteImage(marble.getImage().getId());
-					marble.setImage(null);
-				}
-			} else {
-				// Maintain the same image loading it before updating the marble
-				Marble dbMarble = marbleService.findById(marble.getId()).orElseThrow();
-				marble.setImage(dbMarble.getImage());
-			}
-		}
-	} */
+	
 
 }

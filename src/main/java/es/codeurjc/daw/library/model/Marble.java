@@ -73,6 +73,6 @@ public class Marble {
 
 	@Override
 	public String toString() {
-		return "Marble [id=" + id + ", name=" + name + "]"; //no user?
+		return "Marble [id=" + id + ", name=" + name + "]"; 
 	}
 }

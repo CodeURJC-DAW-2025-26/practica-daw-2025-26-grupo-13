@@ -14,6 +14,7 @@ public interface LeagueRepository extends JpaRepository<League, Long> {
 
 	Optional<League> findByRaces_Id(Long raceId);
 
+    // This query retrieves all leagues and orders them by the number of comments they have in descending order
     @Query("SELECT l FROM League l LEFT JOIN l.comments c GROUP BY l.id ORDER BY COUNT(c) DESC")
     List<League> findAllOrderByCommentsCountDesc();
 }

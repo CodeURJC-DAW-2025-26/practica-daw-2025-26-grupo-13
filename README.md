@@ -229,17 +229,17 @@ Diagrama de clases de la aplicación con diferenciación por colores o secciones
 
 ### **Participación de Miembros en la Práctica 1**
 
-#### **Alumno 1 - [Nombre Completo]**
+#### **Alumno 1 - Mario del Castillo Gómez**
 
-[Descripción de las tareas y responsabilidades principales del alumno en el proyecto]
+Creación de la lógica de las entidades league, comment y admin (user con rol) relacionado con la BBDD y la lógica de negocio. Aporte muy significativo en la lógica de la entidad user y marbles (lógica de negocio y modificaciones de la entidad). Creación del AJAX.
 
 | Nº    | Commits      | Files      |
 |:------------: |:------------:| :------------:|
-|1| [Descripción commit 1](URL_commit_1)  | [Archivo1](URL_archivo_1)   |
-|2| [Descripción commit 2](URL_commit_2)  | [Archivo2](URL_archivo_2)   |
-|3| [Descripción commit 3](URL_commit_3)  | [Archivo3](URL_archivo_3)   |
-|4| [Descripción commit 4](URL_commit_4)  | [Archivo4](URL_archivo_4)   |
-|5| [Descripción commit 5](URL_commit_5)  | [Archivo5](URL_archivo_5)   |
+|1| [edit-delete use fixed and added comments logic incomplete](https://github.com/CodeURJC-DAW-2025-26/practica-daw-2025-26-grupo-13/commit/bece6d912ea7fe87909735d5cd9c5330dd384275)  | [Comment Controller](https://github.com/CodeURJC-DAW-2025-26/practica-daw-2025-26-grupo-13/blob/main/src/main/java/es/codeurjc/daw/library/controller/CommentController.java)   |
+|2| [Race creation and definition of league controller](https://github.com/CodeURJC-DAW-2025-26/practica-daw-2025-26-grupo-13/commit/0ebc2e66d7eec39601c14902d15e7d7fc4df4124)  | [League Controller](https://github.com/CodeURJC-DAW-2025-26/practica-daw-2025-26-grupo-13/blob/main/src/main/java/es/codeurjc/daw/library/controller/LeagueController.java)   |
+|3| [lógica de marbles implementada](https://github.com/CodeURJC-DAW-2025-26/practica-daw-2025-26-grupo-13/commit/0566d89a8c953e6bff96356978c3fec5749b7089)  | [Marble Controller](https://github.com/CodeURJC-DAW-2025-26/practica-daw-2025-26-grupo-13/blob/main/src/main/java/es/codeurjc/daw/library/controller/MarbleController.java)   |
+|4| [load more leagues added](https://github.com/CodeURJC-DAW-2025-26/practica-daw-2025-26-grupo-13/commit/b18e101bfbb951876bec797202a508fad684dc9a)  | [User Controller](https://github.com/CodeURJC-DAW-2025-26/practica-daw-2025-26-grupo-13/blob/main/src/main/java/es/codeurjc/daw/library/controller/UserController.java)   |
+|5| [admin panel create-delete-edit leagues and edit user](https://github.com/CodeURJC-DAW-2025-26/practica-daw-2025-26-grupo-13/commit/29b3e3d9fb3d8a8e218a2f211939acbc97652b4e)  | [Home](https://github.com/CodeURJC-DAW-2025-26/practica-daw-2025-26-grupo-13/blob/main/src/main/resources/templates/home.html)  |
 
 ---
 
