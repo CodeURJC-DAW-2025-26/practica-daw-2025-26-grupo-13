@@ -100,7 +100,7 @@
 html, body { height: 100%; margin: 0; display: flex; flex-direction: column; }
 body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); flex: 1; }
 
-.container { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; max-width: 100px; }
+/*.container { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; max-width: 100px; }*/
 .canica-card { display: flex; flex-direction: column; align-items: center; gap: 20px; }
 .canica-image { width: 150px; height: 150px; max-width: 150px; max-height: 150px; border-radius: 50%; object-fit: cover; border: 5px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: transform 0.3s ease; }
 .canica-image:hover { transform: scale(1.05); }
@@ -133,4 +133,3 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:
 .w-40 { width: 40% !important; }
 
 .input-league { max-width: 100px; margin: 0.6rem auto; }
-
