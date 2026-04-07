@@ -33,7 +33,7 @@ public class CustomErrorController {
                 break;
             case 403:
                 errorTitle = "Acceso denegado";
-                friendlyMessage = "No tienes permisos suficientes para acceder a este contenido.";
+                friendlyMessage = "No tienes permiso para acceder a este contenido.";
                 break;
             case 404:
                 errorTitle = "Página no encontrada";

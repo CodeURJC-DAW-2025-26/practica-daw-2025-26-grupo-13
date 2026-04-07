@@ -100,7 +100,7 @@
 html { height: 100%; }
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-color:#add8e6;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
