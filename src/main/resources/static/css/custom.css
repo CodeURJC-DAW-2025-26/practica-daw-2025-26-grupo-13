@@ -97,8 +97,14 @@
 
 /* ====== Estilos movidos desde templates/marbles-view.html ====== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { height: 100%; margin: 0; display: flex; flex-direction: column; }
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); flex: 1; }
+html { height: 100%; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
 
 /*.container { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; max-width: 100px; }*/
 .canica-card { display: flex; flex-direction: column; align-items: center; gap: 20px; }

@@ -47,6 +47,7 @@ public class WebSecurityConfig {
 						.requestMatchers("/race/*/join").hasAnyRole("USER", "ADMIN")
 						// PUBLIC PAGES
 						.requestMatchers("/error", "/error/**").permitAll()
+						.requestMatchers("/security-error").permitAll()
 						.requestMatchers("/api/leagues").permitAll()
 						.requestMatchers("/").permitAll()
 						.requestMatchers("/register").permitAll()
@@ -54,6 +55,7 @@ public class WebSecurityConfig {
 						.requestMatchers("/league/**").permitAll()
 						.requestMatchers("/race/**").permitAll()
 						.requestMatchers("/assets/**").permitAll()
+						.requestMatchers("/css/**").permitAll()
 						.requestMatchers("/favicon.ico").permitAll()					
 						.requestMatchers("/images/**").permitAll()						
 						// PRIVATE PAGES
@@ -82,8 +84,16 @@ public class WebSecurityConfig {
 						.requestMatchers("/remove-user-admin/**").hasAnyRole("ADMIN")
 						.anyRequest().authenticated())
 
-				.exceptionHandling(ex -> ex
-						.authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
+						.exceptionHandling(ex -> ex
+								.authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+								.accessDeniedHandler((request, response, accessDeniedException) -> {
+									// Logged-in user without required role: send through custom error flow
+									response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+									request.setAttribute("javax.servlet.error.status_code", HttpServletResponse.SC_FORBIDDEN);
+									request.setAttribute("javax.servlet.error.message",
+											"No tienes permisos suficientes para acceder a este contenido.");
+									request.getRequestDispatcher("/security-error").forward(request, response);
+								}))
 
 				.formLogin(formLogin -> formLogin
 						.loginPage("/login-form")
@@ -102,8 +112,51 @@ public class WebSecurityConfig {
 		@Override
 		public void commence(HttpServletRequest request, HttpServletResponse response,
 				AuthenticationException authException) throws IOException, ServletException {
-			// Forward to error handler instead of redirecting to login
-			request.getRequestDispatcher("/error").forward(request, response);
+			String uri = request.getRequestURI();
+
+			if (isProtectedPath(uri)) {
+				// Real protected resource: return 403
+				response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+				request.setAttribute("javax.servlet.error.status_code", HttpServletResponse.SC_FORBIDDEN);
+				request.setAttribute("javax.servlet.error.message",
+						"Acceso restringido. Inicia sesión con una cuenta autorizada.");
+			} else {
+				// Unknown or non-mapped URL for an anonymous user: treat as 404
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				request.setAttribute("javax.servlet.error.status_code", HttpServletResponse.SC_NOT_FOUND);
+				request.setAttribute("javax.servlet.error.message",
+						"La página que buscas no existe o ha sido movida.");
+			}
+
+			request.getRequestDispatcher("/security-error").forward(request, response);
+		}
+
+		private static boolean isProtectedPath(String uri) {
+			return uri != null && (
+					uri.startsWith("/statistics") ||
+					uri.startsWith("/view-user") ||
+					uri.startsWith("/edit-user") ||
+					uri.startsWith("/edit-user-admin") ||
+					uri.startsWith("/create-league") ||
+					uri.startsWith("/edit-league") ||
+					uri.startsWith("/league-list") ||
+					uri.startsWith("/user-list") ||
+					uri.startsWith("/remove-league") ||
+					uri.startsWith("/create-comment") ||
+					uri.startsWith("/marbles") ||
+					uri.startsWith("/chooseMarble") ||
+					uri.startsWith("/removeMarble") ||
+					uri.startsWith("/newMarble") ||
+					uri.startsWith("/editMarble") ||
+					uri.startsWith("/edit-comment") ||
+					uri.startsWith("/edit-comment-admin") ||
+					uri.startsWith("/remove-comment") ||
+					uri.startsWith("/remove-comment-admin") ||
+					uri.startsWith("/list-comments") ||
+					uri.startsWith("/remove-user") ||
+					uri.startsWith("/remove-user-admin") ||
+					(uri.startsWith("/race/") && uri.endsWith("/join"))
+			);
 		}
 	}
 }

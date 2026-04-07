@@ -2,19 +2,24 @@ package es.codeurjc.daw.library.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class CustomErrorController {
 
-    //this controller gets the error info and give a personalized error page with the info of the error
-    @GetMapping("/error")
-    public String handleError(HttpServletRequest request, Model model) {
+    // Custom handler for all error requests; security forwards here
+    @RequestMapping({"/error", "/security-error"})
+    public String handleError(HttpServletRequest request, HttpServletResponse response, Model model) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         String originalMessage = (String) request.getAttribute("javax.servlet.error.message");
 
-        if (statusCode == null) {
+        // Fallback to HTTP response status when the servlet error attribute is missing or invalid
+        if (statusCode == null || statusCode == 0) {
+            statusCode = response.getStatus();
+        }
+        if (statusCode == null || statusCode == 0) {
             statusCode = 500;
         }
 
