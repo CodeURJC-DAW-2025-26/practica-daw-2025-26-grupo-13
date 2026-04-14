@@ -151,7 +151,7 @@ public class CommentController {
     @GetMapping("/remove-comment-admin/{id}")
 	public String removeCommentAdmin(Model model, @PathVariable long id) {
         commentService.delete(id);
-        return "redirect:/";
+        return "redirect:/list-comments";
 	}
 
     @GetMapping("/remove-comment/{id}")

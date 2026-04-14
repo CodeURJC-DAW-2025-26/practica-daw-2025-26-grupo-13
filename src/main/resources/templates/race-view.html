@@ -31,6 +31,13 @@
             </form>
         </div>
         {{/canJoinRace}}
+        {{#needMarble}}
+        <div class="container mt-3">
+            <div class="alert alert-warning text-center" role="alert">
+                Selecciona una canica antes de apuntarte a la carrera.
+            </div>
+        </div>
+        {{/needMarble}}
 
         {{#alreadyJoined}}
         <div class="text-center mb-4">

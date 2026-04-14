@@ -72,7 +72,7 @@ public class RaceController {
 	}
 
 	@GetMapping("/race/{id}")
-	public String showRace(Model model, Principal principal, @PathVariable long id) {
+	public String showRace(Model model, Principal principal, @PathVariable long id, @RequestParam(name = "needMarble", required = false) String needMarble) {
 
 		Optional<Race> race = raceService.findById(id);
 		if (race.isPresent()) {
@@ -108,6 +108,11 @@ public class RaceController {
 			if (!model.containsAttribute("canJoinRace")) {
 				model.addAttribute("canJoinRace", canJoinRace);
 			}
+
+			// propagate needMarble flag to template when requested
+			if (needMarble != null && !needMarble.isEmpty()) {
+				model.addAttribute("needMarble", true);
+			}
 			
 			return "race-view";
 		} else {
@@ -140,15 +145,29 @@ public class RaceController {
 			return "redirect:/race/" + id;
 		}
 
-		userRepository.findByName(principal.getName()).ifPresent(user -> {
+		final boolean[] hasChosen = {false};
+		Optional<es.codeurjc.daw.library.model.User> opUser = userRepository.findByName(principal.getName());
+		if (opUser.isPresent()) {
+			es.codeurjc.daw.library.model.User user = opUser.get();
+			if (user.getMarbles() != null) {
+				for (Marble m : user.getMarbles()) {
+					if (m.isChosen()) {
+						hasChosen[0] = true;
+						break;
+					}
+				}
+			}
+			if (!hasChosen[0]) {
+				// redirect back to race view with flag to show message
+				return "redirect:/race/" + id + "?needMarble=true";
+			}
 			try {
 				race.addUser(user);
 				raceService.save(race);
 			} catch (IllegalStateException ignored) {
 				// Race full / already finished / etc.
 			}
-		});
-
+		}
 		return "redirect:/race/" + id;
 	}
 
