@@ -262,7 +262,8 @@ public class UserController {
 			userService.delete(id);
 			model.addAttribute("User", user);
 		}
-		return "redirect:/";
+		// after admin deletes a user, return to the user list so the admin stays on the same page
+		return "redirect:/user-list";
 	}
 
 	@GetMapping("/remove-user")

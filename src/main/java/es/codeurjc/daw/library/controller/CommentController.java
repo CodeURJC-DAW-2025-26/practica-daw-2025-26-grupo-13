@@ -94,8 +94,8 @@ public class CommentController {
                 commentService.save(comment);
             });
         }
-        // after creation we redirect to the listing page
-        return "redirect:/";
+        // after creation redirect back to the league page so the user stays on the same league
+        return "redirect:/league/" + leagueId;
     }
     
     
@@ -126,18 +126,19 @@ public class CommentController {
 	}
 
     @PostMapping("/edit-comment")
-	public String postEditComment(Model model, @RequestParam long id, @RequestParam String text, @RequestParam int rating) {
+    public String postEditComment(Model model, @RequestParam long id, @RequestParam String text, @RequestParam int rating, @RequestParam long leagueId) {
 
         Optional<Comment> c = commentService.findById(id);
-        // Checks if the comment exists, if it does update its text and rating and save it, otherwise redirect to home
+        // Checks if the comment exists, if it does update its text and rating and save it
         if (c.isPresent()) {
             Comment comment = c.get();
             comment.settext(text);
             comment.setRating(rating);
             commentService.save(comment);
         }
-        return "redirect:/";
-	}
+        // Redirect back to the corresponding league so the user stays on the same page
+        return "redirect:/league/" + leagueId;
+    }
 
 
     @GetMapping("/list-comments")
@@ -156,12 +157,20 @@ public class CommentController {
     @GetMapping("/remove-comment/{id}")
 	public String removeComment(Model model, @PathVariable long id, Principal principal) {
         Optional<Comment> c = commentService.findById(id);
-        
-        c.ifPresent(comment -> {
-            if (principal != null && principal.getName().equals(c.get().getUser().getName())) {
+        long leagueId = -1;
+
+        if (c.isPresent()) {
+            Comment comment = c.get();
+            if (comment.getLeague() != null) {
+                leagueId = comment.getLeague().getId();
+            }
+            if (principal != null && principal.getName().equals(comment.getUser().getName())) {
                 commentService.delete(id);
             }
-        });
+        }
+        if (leagueId != -1) {
+            return "redirect:/league/" + leagueId;
+        }
         return "redirect:/";
 	}
 }

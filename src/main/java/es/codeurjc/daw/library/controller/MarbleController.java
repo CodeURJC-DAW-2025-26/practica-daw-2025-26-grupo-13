@@ -141,7 +141,12 @@ public class MarbleController {
 			}
 			model.addAttribute("marble", marble.get());
 		}
-		return "redirect:/";
+		// try to return to the page the user came from (referer). If not available, go to /marbles
+		String referer = request.getHeader("Referer");
+		if (referer != null && !referer.isEmpty()) {
+			return "redirect:" + referer;
+		}
+		return "redirect:/marbles";
 	}
 
 	@GetMapping("/newMarble")
