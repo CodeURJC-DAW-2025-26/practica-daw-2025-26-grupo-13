@@ -154,10 +154,13 @@ public class CommentController {
 	}
 
     @GetMapping("/remove-comment/{id}")
-	public String removeComment(Model model, @PathVariable long id) {
+	public String removeComment(Model model, @PathVariable long id, Principal principal) {
         Optional<Comment> c = commentService.findById(id);
+        
         c.ifPresent(comment -> {
-            commentService.delete(id);
+            if (principal != null && principal.getName().equals(c.get().getUser().getName())) {
+                commentService.delete(id);
+            }
         });
         return "redirect:/";
 	}

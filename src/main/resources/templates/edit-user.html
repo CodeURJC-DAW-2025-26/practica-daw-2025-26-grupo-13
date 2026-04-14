@@ -60,12 +60,12 @@
                                         <i class="bi bi-pencil"></i> Editar Cuenta
                                     </button>
                                     {{#admin}}
-                                    <button type="button" class="btn btn-danger btn-lg" onclick="location.href='/remove-user-admin/{{id}}'">
+                                    <button type="button" class="btn btn-danger btn-lg" onclick="if (confirm('Are you sure?')) location.href='/remove-user-admin/{{id}}'">
                                         <i class="bi bi-trash"></i> Eliminar Cuenta
                                     </button>
                                     {{/admin}}
                                     {{^admin}}
-                                    <button type="button" class="btn btn-danger btn-lg" onclick="location.href='/remove-user'">
+                                    <button type="button" class="btn btn-danger btn-lg" onclick="if (confirm('Are you sure?')) location.href='/remove-user'">
                                         <i class="bi bi-trash"></i> Eliminar Cuenta
                                     </button>
                                     {{/admin}}
