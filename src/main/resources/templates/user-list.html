@@ -10,7 +10,7 @@
     <!-- Section-->
     <section class="py-5 bg-bajo-header flex-1">
         <div class="container px-4 px-lg-5 ">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="users-container">
                 {{#users}}
                 <div class="col mb-5">
                     <div class="card h-100">
@@ -39,6 +39,12 @@
 
             </div>
 
+            {{#hasMore}}
+            <div class="text-center mt-4">
+                <button id="btn-load-more-users" class="btn btn-outline-primary px-4" data-page="1">Mostrar 4 más</button>
+            </div>
+            {{/hasMore}}
+
             <div class="d-flex align-items-center justify-content-between w-100">
                 <!-- Botón izquierdo -->
                 <button type="button" class="btn btn-danger" onclick="location.href='/'">Atrás</button>
@@ -47,4 +53,44 @@
 
         </div>
     </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('btn-load-more-users');
+            const container = document.getElementById('users-container');
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    let currentPage = parseInt(btn.getAttribute('data-page'));
+                    fetch(`/api/users?page=${currentPage}`)
+                        .then(r => r.json())
+                        .then(data => {
+                            if (data.length > 0) {
+                                data.forEach(user => {
+                                    const html = `
+                                        <div class="col mb-5">
+                                            <div class="card h-100">
+                                                ${user.image ? `<img src="/images/${user.id}" class="card-img-top" style="height:180px;object-fit:cover;" alt="Foto de usuario">` : '<img src="/assets/images/no_image.png" class="card-img-top" style="height:180px;object-fit:cover;" alt="Sin imagen">'}
+                                                <div class="card-body p-4">
+                                                    <div class="text-center">
+                                                        <h5 class="fw-bolder">${user.name}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body d-flex flex-column align-items-center gap-3">
+                                                    <button type="button" class="w-40 btn btn-lg btn-secondary" onclick="location.href='/edit-user-admin/${user.id}'"> Editar</button>
+                                                    <button type="button" class="w-40 btn btn-lg btn-danger" onclick="if (confirm('Are you sure?')) location.href='/remove-user-admin/${user.id}'"> Eliminar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                                    container.insertAdjacentHTML('beforeend', html);
+                                });
+                                btn.setAttribute('data-page', currentPage + 1);
+                                if (data.length < 4) btn.style.display = 'none';
+                            } else {
+                                btn.style.display = 'none';
+                            }
+                        });
+                });
+            }
+        });
+    </script>
     {{>footer}}

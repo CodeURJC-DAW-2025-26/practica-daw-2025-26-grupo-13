@@ -4,6 +4,7 @@
     <div class="container px-4 px-lg-5 mt-5">
         <h1 class="mb-4">Comentarios</h1>
 
+        <div id="comments-container">
         {{#comments}}
                 <div class="card mb-3">
             <div class="card-body">
@@ -16,7 +17,50 @@
             </div>
         </div>
         {{/comments}}
+        </div>
+
+        {{#hasMore}}
+        <div class="text-center mt-4">
+            <button id="btn-load-more-comments" class="btn btn-outline-primary px-4" data-page="1">Mostrar 4 más</button>
+        </div>
+        {{/hasMore}}
     </div>
 </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('btn-load-more-comments');
+            const container = document.getElementById('comments-container');
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    let currentPage = parseInt(btn.getAttribute('data-page'));
+                    fetch(`/api/comments?page=${currentPage}`)
+                        .then(r => r.json())
+                        .then(data => {
+                            if (data.length > 0) {
+                                data.forEach(c => {
+                                    const html = `
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <h5 class="card-title">Valoración: ${c.rating}</h5>
+                                                <p class="card-text">${c.text}</p>
+                                                <p class="card-text"><small class="text-muted">Liga: ${c.league ? c.league.name : ''}</small></p>
+                                                <p class="card-text"><small class="text-muted">Usuario: ${c.user ? c.user.name : ''}</small></p>
+                                                <a href="/edit-comment-admin/${c.id}" class="btn btn-sm btn-warning">Editar</a>
+                                                <a href="/remove-comment-admin/${c.id}" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">Eliminar</a>
+                                            </div>
+                                        </div>
+                                    `;
+                                    container.insertAdjacentHTML('beforeend', html);
+                                });
+                                btn.setAttribute('data-page', currentPage + 1);
+                                if (data.length < 4) btn.style.display = 'none';
+                            } else {
+                                btn.style.display = 'none';
+                            }
+                        });
+                });
+            }
+        });
+    </script>
 
 {{>footer}}

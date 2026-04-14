@@ -158,8 +158,13 @@ public class LeagueController {
 	@GetMapping( "/league-list")
 	public String listLeagues(Model model) {
 
-		model.addAttribute("leagues", leagueService.findAll());
+		List<League> all = leagueService.findAll();
+		int pageSize = 4;
+		int end = Math.min(pageSize, all.size());
+		List<League> slice = (end > 0) ? all.subList(0, end) : List.of();
 
+		model.addAttribute("leagues", slice);
+		model.addAttribute("hasMore", end < all.size());
 		return "league-list";
 	}
 

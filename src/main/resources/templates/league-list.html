@@ -14,7 +14,7 @@
             <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='/league-list'">Aplicar filtro de búsqueda normales</button>
         </div>
         <div class="container px-4 px-lg-5 ">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="leagues-container">
                 {{#leagues}}
                 <div class="col mb-5">
                     <div class="card h-100">
@@ -38,6 +38,12 @@
 
             </div>
 
+            {{#hasMore}}
+            <div class="text-center mt-4">
+                <button id="btn-load-more-leagues" class="btn btn-outline-primary px-4" data-page="1">Cargar más ligas</button>
+            </div>
+            {{/hasMore}}
+
             <div class="d-flex align-items-center justify-content-between w-100">
                 <!-- Botón izquierdo -->
                 <a href="/" class="btn btn-danger">Atrás</a>
@@ -48,4 +54,45 @@
 
         </div>
     </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('btn-load-more-leagues');
+            const container = document.getElementById('leagues-container');
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    let currentPage = parseInt(btn.getAttribute('data-page'));
+                    fetch(`/api/leagues?page=${currentPage}`)
+                        .then(r => r.json())
+                        .then(data => {
+                            if (data.length > 0) {
+                                data.forEach(league => {
+                                    const statusText = league.status ? 'Abierta' : 'Cerrada';
+                                    const html = `
+                                        <div class="col mb-5">
+                                            <div class="card h-100">
+                                                <div class="card-body p-4">
+                                                    <div class="text-center">
+                                                        <h5 class="fw-bolder">${league.name}</h5>
+                                                        <span class="badge rounded-pill bg-success">${statusText}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body d-flex flex-column align-items-center gap-3">
+                                                    <button type="button" class="w-40 btn btn-lg btn-secondary" onclick="location.href='/edit-league/${league.id}'"> Editar</button>
+                                                    <button type="button" class="w-40 btn btn-lg btn-danger" onclick="if (confirm('Are you sure?')) location.href='/remove-league/${league.id}'"> Eliminar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                                    container.insertAdjacentHTML('beforeend', html);
+                                });
+                                btn.setAttribute('data-page', currentPage + 1);
+                                if (data.length < 4) btn.style.display = 'none';
+                            } else {
+                                btn.style.display = 'none';
+                            }
+                        });
+                });
+            }
+        });
+    </script>
     {{>footer}}

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import es.codeurjc.daw.library.model.Image;
@@ -241,8 +242,27 @@ public class UserController {
     @GetMapping("/user-list")
 	public String showUserList(Model model) {
 
-		model.addAttribute("users", userService.findOnlyUsers());
-			return "user-list";
+		List<User> all = userService.findOnlyUsers();
+		int pageSize = 4;
+		int end = Math.min(pageSize, all.size());
+		List<User> slice = (end > 0) ? all.subList(0, end) : List.of();
+
+		model.addAttribute("users", slice);
+		model.addAttribute("hasMore", end < all.size());
+		return "user-list";
+	}
+
+	@GetMapping("/api/users")
+	@ResponseBody
+	public java.util.List<User> getMoreUsers(@org.springframework.web.bind.annotation.RequestParam int page) {
+		List<User> all = userService.findOnlyUsers();
+		int pageSize = 4;
+		int start = page * pageSize;
+		if (start >= all.size()) {
+			return java.util.List.of();
+		}
+		int end = Math.min(start + pageSize, all.size());
+		return all.subList(start, end);
 	}
 
 

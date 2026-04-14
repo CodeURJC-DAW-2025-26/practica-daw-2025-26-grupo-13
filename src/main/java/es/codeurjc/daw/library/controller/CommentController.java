@@ -11,6 +11,7 @@ import es.codeurjc.daw.library.service.CommentService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
@@ -142,12 +143,31 @@ public class CommentController {
 
 
     @GetMapping("/list-comments")
-	public String showComments(Model model) {
+    public String showComments(Model model) {
 
-		model.addAttribute("comments", commentService.findAll());
+        List<Comment> all = commentService.findAll();
+        int pageSize = 4;
+        int end = Math.min(pageSize, all.size());
+        List<Comment> slice = (end > 0) ? all.subList(0, end) : List.of();
 
-		return "comment-list";
-	}
+        model.addAttribute("comments", slice);
+        model.addAttribute("hasMore", end < all.size());
+
+        return "comment-list";
+    }
+
+    @GetMapping("/api/comments")
+    @ResponseBody
+    public java.util.List<Comment> getMoreComments(@org.springframework.web.bind.annotation.RequestParam int page) {
+        List<Comment> all = commentService.findAll();
+        int pageSize = 4;
+        int start = page * pageSize;
+        if (start >= all.size()) {
+            return java.util.List.of();
+        }
+        int end = Math.min(start + pageSize, all.size());
+        return all.subList(start, end);
+    }
     @GetMapping("/remove-comment-admin/{id}")
 	public String removeCommentAdmin(Model model, @PathVariable long id) {
         commentService.delete(id);
